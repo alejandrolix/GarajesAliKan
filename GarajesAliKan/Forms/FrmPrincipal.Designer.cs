@@ -40,15 +40,15 @@
             this.ClientesGarajeToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(800, 27);
+            this.MenuStrip.Size = new System.Drawing.Size(800, 28);
             this.MenuStrip.TabIndex = 0;
             this.MenuStrip.Text = "menuStrip1";
             // 
             // ClientesGarajeToolStripMenuItem
             // 
-            this.ClientesGarajeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.ClientesGarajeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.ClientesGarajeToolStripMenuItem.Name = "ClientesGarajeToolStripMenuItem";
-            this.ClientesGarajeToolStripMenuItem.Size = new System.Drawing.Size(112, 23);
+            this.ClientesGarajeToolStripMenuItem.Size = new System.Drawing.Size(120, 24);
             this.ClientesGarajeToolStripMenuItem.Text = "Clientes Garaje";
             this.ClientesGarajeToolStripMenuItem.Click += new System.EventHandler(this.ClientesGarajeToolStripMenuItem_Click);
             // 

@@ -103,6 +103,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\Foo.cs" />
+    <Compile Include="Clases\TipoAlquiler.cs" />
     <Compile Include="DtClientes.cs">
       <DependentUpon>DtClientes.xsd</DependentUpon>
     </Compile>
@@ -123,8 +125,8 @@
     <Compile Include="Forms\FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="POCOs\Cliente.cs" />
-    <Compile Include="POCOs\Garaje.cs" />
+    <Compile Include="Clases\Cliente.cs" />
+    <Compile Include="Clases\Garaje.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FrmClientesGaraje.resx">
