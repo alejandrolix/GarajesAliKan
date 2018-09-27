@@ -394,6 +394,7 @@
             this.BtnCancelar.TabIndex = 21;
             this.BtnCancelar.Text = "Cancelar";
             this.BtnCancelar.UseVisualStyleBackColor = true;
+            this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // TxtObservaciones
             // 
@@ -755,7 +756,7 @@
             this.Controls.Add(this.panel);
             this.Name = "FrmClientesGaraje";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmClientesGaraje";
+            this.Text = "Clientes Garaje";
             this.Load += new System.EventHandler(this.FrmClientesGaraje_Load);
             this.PBuscarPor.ResumeLayout(false);
             this.PBuscarPor.PerformLayout();

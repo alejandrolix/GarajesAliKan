@@ -13,11 +13,11 @@ namespace GarajesAliKan.Forms
         }
 
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
-        {            
-            List<Cliente> listaClientes = Cliente.ObtenerClientesGarajes();                        
+        {
+            List<Cliente> listaClientes = Cliente.ObtenerClientesGarajes();
             CargarDatosAlDataTable(listaClientes);
 
-            CbConceptos.DataSource = TipoAlquiler.ObtenerConceptos();            
+            CbConceptos.DataSource = TipoAlquiler.ObtenerConceptos();
             CbGarajes.DataSource = Garaje.ObtenerGarajes();
         }
 
@@ -87,7 +87,7 @@ namespace GarajesAliKan.Forms
             TxtIva.Enabled = habilitar;
             TxtTotal.Enabled = habilitar;
             CbGarajes.Enabled = habilitar;
-            PBtnsControl.Enabled = !habilitar;            
+            PBtnsControl.Enabled = !habilitar;
 
             BtnGuardar.Enabled = habilitar;
             BtnCancelar.Enabled = habilitar;
@@ -102,7 +102,7 @@ namespace GarajesAliKan.Forms
             TxtNombre.Clear();
             TxtApellidos.Clear();
             TxtNif.Clear();
-            TxtDireccion.Clear();;
+            TxtDireccion.Clear(); ;
             TxtTelefono.Clear();
             TxtObservaciones.Clear();
 
@@ -112,11 +112,11 @@ namespace GarajesAliKan.Forms
             TxtLlave.Clear();
             TxtPlaza.Clear();
 
-            CbConceptos.Text = "";
+            //CbConceptos.Text = "";
             TxtBaseImponible.Clear();
             TxtIva.Clear();
             TxtTotal.Clear();
-            CbGarajes.Text = "";
+            //CbGarajes.Text = "";
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
@@ -140,7 +140,7 @@ namespace GarajesAliKan.Forms
                 MessageBox.Show("Tiene que introducir un nombre", "Nombre Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
             }
-            else            
+            else
                 datosCorrectos = true;
 
             if (TxtApellidos.Text.Length == 0)
@@ -180,64 +180,64 @@ namespace GarajesAliKan.Forms
                 MessageBox.Show("Tiene que introducir una marca del vehículo", "Marca Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
             }
-            else            
-                datosCorrectos = true;            
+            else
+                datosCorrectos = true;
 
             if (TxtModelo.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir un modelo del vehículo", "Modelo Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
             }
-            else            
-                datosCorrectos = true;                    
+            else
+                datosCorrectos = true;
 
             if (TxtMatricula.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir una matrícula del vehículo", "Matrícula Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
             }
-            else            
-                datosCorrectos = true;            
+            else
+                datosCorrectos = true;
 
             if (TxtLlave.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir un número de llave", "Llave Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
             }
-            else            
-                datosCorrectos = true;            
+            else
+                datosCorrectos = true;
 
             if (TxtPlaza.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir una plaza", "Plaza Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
             }
-            else            
-                datosCorrectos = true;            
+            else
+                datosCorrectos = true;
 
             if (TxtBaseImponible.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir una base imponible", "Base Imponible Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
-            }            
-            else            
-                datosCorrectos = true;            
+            }
+            else
+                datosCorrectos = true;
 
             if (TxtIva.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir un I.V.A.", "I.V.A. Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
-            }            
-            else            
-                datosCorrectos = true;            
+            }
+            else
+                datosCorrectos = true;
 
             if (TxtTotal.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir un total", "Total Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 datosCorrectos = false;
-            }            
-            else            
-                datosCorrectos = true;            
+            }
+            else
+                datosCorrectos = true;
 
             return datosCorrectos;
         }
@@ -249,14 +249,14 @@ namespace GarajesAliKan.Forms
 
         private void TxtBaseImponible_KeyPress(object sender, KeyPressEventArgs e)
         {
-            int numPulsado = (int) char.GetNumericValue(e.KeyChar);
+            int numPulsado = (int)char.GetNumericValue(e.KeyChar);
 
-            if (numPulsado >= 0 && numPulsado <= 9)            
+            if (numPulsado >= 0 && numPulsado <= 9)
                 e.Handled = false;          // Escribe el número pulsado.                   
-            else if (e.KeyChar == ',')            
-                e.Handled = false;            
-            else            
-                e.Handled = true;            
+            else if (e.KeyChar == ',')
+                e.Handled = false;
+            else
+                e.Handled = true;
         }
 
         private void TxtIva_KeyPress(object sender, KeyPressEventArgs e)
@@ -281,6 +281,11 @@ namespace GarajesAliKan.Forms
                 e.Handled = false;
             else
                 e.Handled = true;
+        }
+
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
         }
     }
 }

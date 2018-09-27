@@ -23,12 +23,13 @@ namespace GarajesAliKan.Clases
         /// <returns>Los clientes existentes.</returns>
         public static List<Cliente> ObtenerClientesGarajes()
         {
-            List<Cliente> listaClientes = Foo.ConexionABd().Fetch<Cliente, Garaje, Vehiculo, TipoAlquiler>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, cli.llave, gaj.nombre, veh.matricula, veh.marca, veh.modelo, veh.baseImponible, veh.iva, veh.total, plzVeh.plaza, alq.concepto
+            List<Cliente> listaClientes = Foo.ConexionABd().Fetch<Cliente, Garaje, Vehiculo, TipoAlquiler>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, cli.llave, gaj.nombre, veh.matricula, veh.marca, veh.modelo, veh.baseImponible, veh.iva, veh.total, tAlq.concepto
                                                                                                              FROM   clientes cli
 		                                                                                                            JOIN garajes gaj ON gaj.id = cli.idGaraje
 		                                                                                                            JOIN vehiculos veh ON veh.idCliente = cli.id
-		                                                                                                            JOIN plazasVehiculos plzVeh ON plzVeh.idCliente = cli.id
-		                                                                                                            JOIN tiposAlquileres alq ON alq.id = cli.id;");
+		                                                                                                            JOIN tiposAlquileres tAlq ON tAlq.id = cli.idTipoAlquiler
+                                                                                                            WHERE cli.esClienteGaraje IS TRUE
+                                                                                                            ORDER BY cli.apellidos;");
             Foo.ConexionABd().CloseSharedConnection();
             return listaClientes;
         }
