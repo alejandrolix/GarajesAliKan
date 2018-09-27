@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 
 namespace GarajesAliKan.Forms
 {
@@ -14,9 +13,12 @@ namespace GarajesAliKan.Forms
         }
 
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
-        {
-            List<Cliente> listaClientes = Cliente.ObtenerClientes();
+        {            
+            List<Cliente> listaClientes = Cliente.ObtenerClientesGarajes();                        
             CargarDatosAlDataTable(listaClientes);
+
+            CbConceptos.DataSource = TipoAlquiler.ObtenerConceptos();            
+            CbGarajes.DataSource = Garaje.ObtenerGarajes();
         }
 
         /// <summary>
@@ -29,10 +31,9 @@ namespace GarajesAliKan.Forms
             for (int i = 0; i < listaClientes.Count; i++)
             {
                 dtClientes.Tables["Clientes"].Rows.Add(listaClientes[i].Id, listaClientes[i].Nombre, listaClientes[i].Apellidos, listaClientes[i].Nif, listaClientes[i].Direccion, listaClientes[i].Telefono,
-                    listaClientes[i].Garaje.Id, listaClientes[i].Garaje.SubId, listaClientes[i].Garaje.Nombre, listaClientes[i].Garaje.Llave,
-                    listaClientes[i].Vehiculo.Id, listaClientes[i].Vehiculo.Matricula, listaClientes[i].Vehiculo.Marca, listaClientes[i].Vehiculo.Modelo, listaClientes[i].Vehiculo.Plaza,
-                    listaClientes[i].Alquiler.Id, listaClientes[i].Alquiler.Concepto, listaClientes[i].Alquiler.BaseImponible, listaClientes[i].Alquiler.Iva, listaClientes[i].Alquiler.Total,
-                    listaClientes[i].Observaciones, listaClientes[i].EsClienteGaraje);
+                    listaClientes[i].Garaje.Nombre, listaClientes[i].Llave,
+                    listaClientes[i].Vehiculo.Matricula, listaClientes[i].Vehiculo.Marca, listaClientes[i].Vehiculo.Modelo, listaClientes[i].Vehiculo.Plaza,
+                    listaClientes[i].Alquiler.Concepto, listaClientes[i].Vehiculo.BaseImponible, listaClientes[i].Vehiculo.Iva, listaClientes[i].Vehiculo.Total, listaClientes[i].Observaciones);
             }
             clientesBindingSource.DataSource = dtClientes.Tables["Clientes"];
         }

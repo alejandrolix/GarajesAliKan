@@ -1,0 +1,1 @@
+Server=192.168.99.100;Uid=root;Pwd=manuscrito3po;Database=garajesalikan;Port=3306;Sslmode=none

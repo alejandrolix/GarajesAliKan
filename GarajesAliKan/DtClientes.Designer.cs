@@ -291,15 +291,9 @@ namespace GarajesAliKan {
             
             private global::System.Data.DataColumn columntelefono;
             
-            private global::System.Data.DataColumn columnidGaraje;
-            
-            private global::System.Data.DataColumn columnsubId;
-            
             private global::System.Data.DataColumn columnnombreGaraje;
             
             private global::System.Data.DataColumn columnllave;
-            
-            private global::System.Data.DataColumn columnidVehiculo;
             
             private global::System.Data.DataColumn columnmatricula;
             
@@ -308,8 +302,6 @@ namespace GarajesAliKan {
             private global::System.Data.DataColumn columnmodelo;
             
             private global::System.Data.DataColumn columnplaza;
-            
-            private global::System.Data.DataColumn columnidAlquiler;
             
             private global::System.Data.DataColumn columnconcepto;
             
@@ -320,8 +312,6 @@ namespace GarajesAliKan {
             private global::System.Data.DataColumn columntotal;
             
             private global::System.Data.DataColumn columnobservaciones;
-            
-            private global::System.Data.DataColumn columnesClienteGaraje;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -406,22 +396,6 @@ namespace GarajesAliKan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn idGarajeColumn {
-                get {
-                    return this.columnidGaraje;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn subIdColumn {
-                get {
-                    return this.columnsubId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn nombreGarajeColumn {
                 get {
                     return this.columnnombreGaraje;
@@ -433,14 +407,6 @@ namespace GarajesAliKan {
             public global::System.Data.DataColumn llaveColumn {
                 get {
                     return this.columnllave;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn idVehiculoColumn {
-                get {
-                    return this.columnidVehiculo;
                 }
             }
             
@@ -473,14 +439,6 @@ namespace GarajesAliKan {
             public global::System.Data.DataColumn plazaColumn {
                 get {
                     return this.columnplaza;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn idAlquilerColumn {
-                get {
-                    return this.columnidAlquiler;
                 }
             }
             
@@ -521,14 +479,6 @@ namespace GarajesAliKan {
             public global::System.Data.DataColumn observacionesColumn {
                 get {
                     return this.columnobservaciones;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn esClienteGarajeColumn {
-                get {
-                    return this.columnesClienteGaraje;
                 }
             }
             
@@ -576,22 +526,17 @@ namespace GarajesAliKan {
                         string nif, 
                         string direccion, 
                         string telefono, 
-                        long idGaraje, 
-                        string subId, 
                         string nombreGaraje, 
                         long llave, 
-                        long idVehiculo, 
                         string matricula, 
                         string marca, 
                         string modelo, 
                         string plaza, 
-                        long idAlquiler, 
                         string concepto, 
                         double baseImponible, 
                         double iva, 
                         double total, 
-                        string observaciones, 
-                        bool esClienteGaraje) {
+                        string observaciones) {
                 ClientesRow rowClientesRow = ((ClientesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id,
@@ -600,22 +545,17 @@ namespace GarajesAliKan {
                         nif,
                         direccion,
                         telefono,
-                        idGaraje,
-                        subId,
                         nombreGaraje,
                         llave,
-                        idVehiculo,
                         matricula,
                         marca,
                         modelo,
                         plaza,
-                        idAlquiler,
                         concepto,
                         baseImponible,
                         iva,
                         total,
-                        observaciones,
-                        esClienteGaraje};
+                        observaciones};
                 rowClientesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowClientesRow);
                 return rowClientesRow;
@@ -644,22 +584,17 @@ namespace GarajesAliKan {
                 this.columnnif = base.Columns["nif"];
                 this.columndireccion = base.Columns["direccion"];
                 this.columntelefono = base.Columns["telefono"];
-                this.columnidGaraje = base.Columns["idGaraje"];
-                this.columnsubId = base.Columns["subId"];
                 this.columnnombreGaraje = base.Columns["nombreGaraje"];
                 this.columnllave = base.Columns["llave"];
-                this.columnidVehiculo = base.Columns["idVehiculo"];
                 this.columnmatricula = base.Columns["matricula"];
                 this.columnmarca = base.Columns["marca"];
                 this.columnmodelo = base.Columns["modelo"];
                 this.columnplaza = base.Columns["plaza"];
-                this.columnidAlquiler = base.Columns["idAlquiler"];
                 this.columnconcepto = base.Columns["concepto"];
                 this.columnbaseImponible = base.Columns["baseImponible"];
                 this.columniva = base.Columns["iva"];
                 this.columntotal = base.Columns["total"];
                 this.columnobservaciones = base.Columns["observaciones"];
-                this.columnesClienteGaraje = base.Columns["esClienteGaraje"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -677,16 +612,10 @@ namespace GarajesAliKan {
                 base.Columns.Add(this.columndireccion);
                 this.columntelefono = new global::System.Data.DataColumn("telefono", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntelefono);
-                this.columnidGaraje = new global::System.Data.DataColumn("idGaraje", typeof(long), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnidGaraje);
-                this.columnsubId = new global::System.Data.DataColumn("subId", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnsubId);
                 this.columnnombreGaraje = new global::System.Data.DataColumn("nombreGaraje", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnombreGaraje);
                 this.columnllave = new global::System.Data.DataColumn("llave", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnllave);
-                this.columnidVehiculo = new global::System.Data.DataColumn("idVehiculo", typeof(long), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnidVehiculo);
                 this.columnmatricula = new global::System.Data.DataColumn("matricula", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmatricula);
                 this.columnmarca = new global::System.Data.DataColumn("marca", typeof(string), null, global::System.Data.MappingType.Element);
@@ -695,8 +624,6 @@ namespace GarajesAliKan {
                 base.Columns.Add(this.columnmodelo);
                 this.columnplaza = new global::System.Data.DataColumn("plaza", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnplaza);
-                this.columnidAlquiler = new global::System.Data.DataColumn("idAlquiler", typeof(long), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnidAlquiler);
                 this.columnconcepto = new global::System.Data.DataColumn("concepto", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnconcepto);
                 this.columnbaseImponible = new global::System.Data.DataColumn("baseImponible", typeof(double), null, global::System.Data.MappingType.Element);
@@ -707,8 +634,6 @@ namespace GarajesAliKan {
                 base.Columns.Add(this.columntotal);
                 this.columnobservaciones = new global::System.Data.DataColumn("observaciones", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnobservaciones);
-                this.columnesClienteGaraje = new global::System.Data.DataColumn("esClienteGaraje", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnesClienteGaraje);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -947,38 +872,6 @@ namespace GarajesAliKan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public long idGaraje {
-                get {
-                    try {
-                        return ((long)(this[this.tableClientes.idGarajeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'idGaraje\' de la tabla \'Clientes\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableClientes.idGarajeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string subId {
-                get {
-                    try {
-                        return ((string)(this[this.tableClientes.subIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'subId\' de la tabla \'Clientes\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableClientes.subIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string nombreGaraje {
                 get {
                     try {
@@ -1006,22 +899,6 @@ namespace GarajesAliKan {
                 }
                 set {
                     this[this.tableClientes.llaveColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public long idVehiculo {
-                get {
-                    try {
-                        return ((long)(this[this.tableClientes.idVehiculoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'idVehiculo\' de la tabla \'Clientes\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableClientes.idVehiculoColumn] = value;
                 }
             }
             
@@ -1086,22 +963,6 @@ namespace GarajesAliKan {
                 }
                 set {
                     this[this.tableClientes.plazaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public long idAlquiler {
-                get {
-                    try {
-                        return ((long)(this[this.tableClientes.idAlquilerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'idAlquiler\' de la tabla \'Clientes\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableClientes.idAlquilerColumn] = value;
                 }
             }
             
@@ -1187,22 +1048,6 @@ namespace GarajesAliKan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool esClienteGaraje {
-                get {
-                    try {
-                        return ((bool)(this[this.tableClientes.esClienteGarajeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'esClienteGaraje\' de la tabla \'Clientes\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableClientes.esClienteGarajeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsidNull() {
                 return this.IsNull(this.tableClientes.idColumn);
             }
@@ -1275,30 +1120,6 @@ namespace GarajesAliKan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsidGarajeNull() {
-                return this.IsNull(this.tableClientes.idGarajeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetidGarajeNull() {
-                this[this.tableClientes.idGarajeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IssubIdNull() {
-                return this.IsNull(this.tableClientes.subIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetsubIdNull() {
-                this[this.tableClientes.subIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsnombreGarajeNull() {
                 return this.IsNull(this.tableClientes.nombreGarajeColumn);
             }
@@ -1319,18 +1140,6 @@ namespace GarajesAliKan {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetllaveNull() {
                 this[this.tableClientes.llaveColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsidVehiculoNull() {
-                return this.IsNull(this.tableClientes.idVehiculoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetidVehiculoNull() {
-                this[this.tableClientes.idVehiculoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1379,18 +1188,6 @@ namespace GarajesAliKan {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetplazaNull() {
                 this[this.tableClientes.plazaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsidAlquilerNull() {
-                return this.IsNull(this.tableClientes.idAlquilerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetidAlquilerNull() {
-                this[this.tableClientes.idAlquilerColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1451,18 +1248,6 @@ namespace GarajesAliKan {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetobservacionesNull() {
                 this[this.tableClientes.observacionesColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsesClienteGarajeNull() {
-                return this.IsNull(this.tableClientes.esClienteGarajeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetesClienteGarajeNull() {
-                this[this.tableClientes.esClienteGarajeColumn] = global::System.Convert.DBNull;
             }
         }
         

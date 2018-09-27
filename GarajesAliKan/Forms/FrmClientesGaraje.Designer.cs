@@ -40,8 +40,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CbPlazas = new System.Windows.Forms.ComboBox();
             this.BindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-            this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dtClientes = new GarajesAliKan.DtClientes();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -89,14 +87,16 @@
             this.LApellidos = new System.Windows.Forms.Label();
             this.TxtNombre = new System.Windows.Forms.TextBox();
             this.LNombre = new System.Windows.Forms.Label();
+            this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dtClientes = new GarajesAliKan.DtClientes();
             this.PBuscarPor.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtClientes)).BeginInit();
             this.panel.SuspendLayout();
             this.PBtnsControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtClientes)).BeginInit();
             this.SuspendLayout();
             // 
             // PBuscarPor
@@ -220,17 +220,6 @@
             this.BindingNavigator.Size = new System.Drawing.Size(1007, 25);
             this.BindingNavigator.TabIndex = 25;
             this.BindingNavigator.Text = "bindingNavigator1";
-            // 
-            // clientesBindingSource
-            // 
-            this.clientesBindingSource.DataMember = "Clientes";
-            this.clientesBindingSource.DataSource = this.dtClientes;
-            this.clientesBindingSource.PositionChanged += new System.EventHandler(this.ClientesBindingSource_PositionChanged);
-            // 
-            // dtClientes
-            // 
-            this.dtClientes.DataSetName = "DtClientes";
-            this.dtClientes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // bindingNavigatorCountItem
             // 
@@ -745,6 +734,17 @@
             this.LNombre.TabIndex = 2;
             this.LNombre.Text = "Nombre: ";
             // 
+            // clientesBindingSource
+            // 
+            this.clientesBindingSource.DataMember = "Clientes";
+            this.clientesBindingSource.DataSource = this.dtClientes;
+            this.clientesBindingSource.PositionChanged += new System.EventHandler(this.ClientesBindingSource_PositionChanged);
+            // 
+            // dtClientes
+            // 
+            this.dtClientes.DataSetName = "DtClientes";
+            this.dtClientes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // FrmClientesGaraje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -764,11 +764,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).EndInit();
             this.BindingNavigator.ResumeLayout(false);
             this.BindingNavigator.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtClientes)).EndInit();
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
             this.PBtnsControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtClientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
