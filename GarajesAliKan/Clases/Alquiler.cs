@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GarajesAliKan.Clases
 {
-    class TipoAlquiler
+    class Alquiler
     {
         [BsonId]
         public int Id { get; set; }
@@ -22,9 +22,9 @@ namespace GarajesAliKan.Clases
         /// Obtiene todos los tipos de alquileres.
         /// </summary>
         /// <returns>Los tipos de alquileres</returns>
-        public static List<TipoAlquiler> ObtenerTiposAlquileres()
+        public static List<Alquiler> ObtenerTiposAlquileres()
         {
-            return Foo.ConexionABd().GetCollection<TipoAlquiler>("tiposAlquileres").Find<TipoAlquiler>("{}").Project<TipoAlquiler>("{ _id: 0, descripcion: 1 }").ToList();
+            return Foo.ConexionABd().GetCollection<Alquiler>("tiposAlquileres").Find<Alquiler>("{}").Project<Alquiler>("{ _id: 0, descripcion: 1 }").ToList();
         }
     }
 }

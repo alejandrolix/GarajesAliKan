@@ -27,7 +27,7 @@ namespace GarajesAliKan.Clases
         [BsonElement("vehiculo")]
         public Vehiculo Vehiculo { get; set; }
         [BsonElement("alquiler")]
-        public TipoAlquiler TipoAlquiler { get; set; }
+        public Alquiler Alquiler { get; set; }
         [BsonElement("observaciones")]
         public string Observaciones { get; set; }        
         [BsonElement("esClienteGaraje")]

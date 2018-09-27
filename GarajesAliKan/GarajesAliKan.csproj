@@ -104,7 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Foo.cs" />
-    <Compile Include="Clases\TipoAlquiler.cs" />
+    <Compile Include="Clases\Alquiler.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
     <Compile Include="DtClientes.cs">
       <DependentUpon>DtClientes.xsd</DependentUpon>
