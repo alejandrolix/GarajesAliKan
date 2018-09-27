@@ -1,10 +1,7 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace GarajesAliKan.Clases
 {
@@ -16,6 +13,8 @@ namespace GarajesAliKan.Clases
         public string SubId { get; set; }
         [BsonElement("nombre")]
         public string Nombre { get; set; }
+        [BsonElement("llave")]
+        public int Llave { get; set; }
 
         /// <summary>
         /// Obtiene todos los garajes.

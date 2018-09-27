@@ -24,10 +24,12 @@ namespace GarajesAliKan.Clases
         public string Telefono { get; set; }
         [BsonElement("garaje")]
         public Garaje Garaje { get; set; }
+        [BsonElement("vehiculo")]
+        public Vehiculo Vehiculo { get; set; }
+        [BsonElement("alquiler")]
+        public TipoAlquiler TipoAlquiler { get; set; }
         [BsonElement("observaciones")]
-        public string Observaciones { get; set; }
-        [BsonElement("llaveMando")]
-        public int LlaveMando { get; set; }
+        public string Observaciones { get; set; }        
         [BsonElement("esClienteGaraje")]
         public bool EsClienteGaraje { get; set; }
 

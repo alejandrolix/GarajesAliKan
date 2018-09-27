@@ -2,9 +2,11 @@
 {
 }
 
-namespace GarajesAliKan {
-    
-    
-    public partial class DtClientes {
+namespace GarajesAliKan
+{
+
+
+    public partial class DtClientes
+    {
     }
 }

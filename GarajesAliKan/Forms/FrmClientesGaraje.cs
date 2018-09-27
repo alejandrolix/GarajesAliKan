@@ -1,35 +1,57 @@
-﻿using System;
+﻿using GarajesAliKan.Clases;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using GarajesAliKan.Clases;
 
 namespace GarajesAliKan.Forms
 {
     public partial class FrmClientesGaraje : Form
-    {        
+    {
         public FrmClientesGaraje()
         {
             InitializeComponent();
         }
-        
+
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
         {
-            List<Cliente> listaClientes = Cliente.ObtenerClientes();            
+            List<Cliente> listaClientes = Cliente.ObtenerClientes();
+            CargarDatosAlDataTable(listaClientes);
+        }
+
+        /// <summary>
+        /// Carga los datos de los clientes en un DataTable.
+        /// </summary>
+        /// <param name="listaClientes">La lista de los clientes.</param>
+        private void CargarDatosAlDataTable(List<Cliente> listaClientes)
+        {
             DtClientes dtClientes = new DtClientes();
-            for (int i = 0; i < listaClientes.Count; i++)               // Añadimos los datos al DataTable.
+            for (int i = 0; i < listaClientes.Count; i++)
             {
-                dtClientes.Tables["Clientes"].Rows.Add(listaClientes[i].Id, listaClientes[i].Nombre, listaClientes[i].Apellidos, listaClientes[i].Nif,
-                    listaClientes[i].Direccion, listaClientes[i].Telefono, listaClientes[i].Observaciones, listaClientes[i].LlaveMando, listaClientes[i].Garaje.Nombre);
+                dtClientes.Tables["Clientes"].Rows.Add(listaClientes[i].Id, listaClientes[i].Nombre, listaClientes[i].Apellidos, listaClientes[i].Nif, listaClientes[i].Direccion, listaClientes[i].Telefono,
+                    listaClientes[i].Garaje.Id, listaClientes[i].Garaje.SubId, listaClientes[i].Garaje.Nombre, listaClientes[i].Garaje.Llave,
+                    listaClientes[i].Vehiculo.Id, listaClientes[i].Vehiculo.Matricula, listaClientes[i].Vehiculo.Marca, listaClientes[i].Vehiculo.Modelo, listaClientes[i].Vehiculo.Plaza,
+                    listaClientes[i].TipoAlquiler.Id, listaClientes[i].TipoAlquiler.Concepto, listaClientes[i].TipoAlquiler.BaseImponible, listaClientes[i].TipoAlquiler.Iva, listaClientes[i].TipoAlquiler.Total,
+                    listaClientes[i].Observaciones, listaClientes[i].EsClienteGaraje);
             }
             clientesBindingSource.DataSource = dtClientes.Tables["Clientes"];
-            CbGarajes.DataSource = Garaje.ObtenerGarajes();
-            CbGarajes.DisplayMember = "Nombre";
+        }
+
+        private void ClientesBindingSource_PositionChanged(object sender, EventArgs e)
+        {
+            if (TxtBaseImponible.Text == "0")
+            {
+                TxtBaseImponible.Clear();
+            }
+
+            if (TxtIva.Text == "0")
+            {
+                TxtIva.Clear();
+            }
+
+            if (TxtTotal.Text == "0")
+            {
+                TxtTotal.Clear();
+            }
         }
 
         private void BtnAddCliente_Click(object sender, EventArgs e)
@@ -38,49 +60,35 @@ namespace GarajesAliKan.Forms
         }
 
         /// <summary>
-        /// Habilita varios controles.
+        /// Habilita o deshabilita varios controles.
         /// </summary>
-        /// <param name="habilitar">Habilita o deshabilita los controles</param>
+        /// <param name="habilitar">Indica si habilita o deshabilita varios controles.</param>
         private void HabilitarControles(bool habilitar)
         {
-            TxtNombre.Enabled = habilitar;            
-            TxtApellidos.Enabled = habilitar;            
-            TxtNif.Enabled = habilitar;            
-            TxtDireccion.Enabled = habilitar;            
-            TxtTelefono.Enabled = habilitar;            
-            CbGarajes.Enabled = habilitar;            
-            TxtObservaciones.Enabled = habilitar;            
-            TxtLlaveMando.Enabled = habilitar;            
             BindingNavigator.Enabled = !habilitar;
-            BtnModificarCliente.Enabled = !habilitar;
-            BtnEliminarCliente.Enabled = !habilitar;
+            TxtNombre.Enabled = habilitar;
+            TxtApellidos.Enabled = habilitar;
+            TxtNif.Enabled = habilitar;
+            TxtDireccion.Enabled = habilitar;
+            TxtTelefono.Enabled = habilitar;
+            TxtObservaciones.Enabled = habilitar;
+
+            TxtMarca.Enabled = habilitar;
+            TxtModelo.Enabled = habilitar;
+            TxtMatricula.Enabled = habilitar;
+            TxtLlave.Enabled = habilitar;
+            TxtPlaza.Enabled = habilitar;
+
+            CbConceptos.Enabled = habilitar;
+            TxtBaseImponible.Enabled = habilitar;
+            TxtIva.Enabled = habilitar;
+            TxtTotal.Enabled = habilitar;
+            CbGarajes.Enabled = habilitar;
+            PBtnsControl.Enabled = !habilitar;            
+
             BtnGuardar.Enabled = habilitar;
             BtnCancelar.Enabled = habilitar;
-        }
-
-        /// <summary>
-        /// Limpia varios campos.
-        /// </summary>
-        private void LimpiarCampos()
-        {
-            TxtNombre.Clear();
-            TxtApellidos.Clear();
-            TxtNif.Clear();
-            TxtDireccion.Clear();
-            TxtTelefono.Clear();
-            CbGarajes.Text = "";
-            TxtObservaciones.Clear();
-            TxtLlaveMando.Clear();
-        }
-
-        private void BtnCancelar_Click(object sender, EventArgs e)
-        {
-            LimpiarCampos();
-        }
-
-        private void BtnGuardar_Click(object sender, EventArgs e)
-        {
-
+            PBuscarPor.Enabled = !habilitar;
         }
     }
 }

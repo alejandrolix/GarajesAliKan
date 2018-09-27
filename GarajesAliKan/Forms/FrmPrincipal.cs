@@ -20,8 +20,8 @@ namespace GarajesAliKan
 
         private void ClientesGarajeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmClientesGaraje frmClientes = new FrmClientesGaraje();
-            frmClientes.ShowDialog();
+            FrmClientesGaraje frmClientesGaraje = new FrmClientesGaraje();
+            frmClientesGaraje.ShowDialog();
         }
     }
 }

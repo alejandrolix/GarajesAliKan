@@ -8,6 +8,9 @@ using System.IO;
 
 namespace GarajesAliKan.Clases
 {
+    /// <summary>
+    /// Contiene métodos estáticos que se utilizan en varias clases.
+    /// </summary>
     class Foo
     {
         /// <summary>
