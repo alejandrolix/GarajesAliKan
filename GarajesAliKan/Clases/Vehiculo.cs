@@ -9,10 +9,10 @@ namespace GarajesAliKan.Clases
         public string Matricula { get; set; }
         public string Marca { get; set; }
         public string Modelo { get; set; }
-        public decimal BaseImponible { get; set; }
-        public decimal Iva { get; set; }
-        public decimal Total { get; set; }
-        public string Plaza { get; set; }
+        //public decimal BaseImponible { get; set; }
+        //public decimal Iva { get; set; }
+        //public decimal Total { get; set; }
+        //public string Plaza { get; set; }
 
         /// <summary>
         /// Inserta un vehículo.
@@ -29,10 +29,10 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@marca", Marca);
             comando.Parameters.AddWithValue("@modelo", Modelo);
             comando.Parameters.AddWithValue("@idCliente", idCliente);
-            comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
-            comando.Parameters.AddWithValue("@iva", Iva);
-            comando.Parameters.AddWithValue("@total", Total);
-            comando.Parameters.AddWithValue("@plaza", Plaza);
+            //comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
+            //comando.Parameters.AddWithValue("@iva", Iva);
+            //comando.Parameters.AddWithValue("@total", Total);
+            //comando.Parameters.AddWithValue("@plaza", Plaza);
 
             int numFila = 0;
             try
@@ -46,19 +46,15 @@ namespace GarajesAliKan.Clases
             return numFila >= 1;
         }
 
-        public Vehiculo(string matricula, string marca, string modelo, decimal baseImponible, decimal iva, decimal total, string plaza)
+        public Vehiculo(string matricula, string marca, string modelo)
         {
             Matricula = matricula;
             Marca = marca;
-            Modelo = modelo;
-            BaseImponible = baseImponible;
-            Iva = iva;
-            Total = total;
-            Plaza = plaza;
+            Modelo = modelo;            
         }
 
-        public Vehiculo()
-        {
-        }
+        //public Vehiculo()
+        //{
+        //}
     }
 }

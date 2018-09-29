@@ -98,9 +98,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\AlquilerPorCliente.cs" />
     <Compile Include="Clases\Foo.cs" />
     <Compile Include="Clases\TipoAlquiler.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
+    <Compile Include="DtClientesGarajes.cs">
+      <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DtClientesGarajes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

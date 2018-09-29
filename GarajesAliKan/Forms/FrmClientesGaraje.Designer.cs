@@ -746,6 +746,7 @@
             // 
             this.clientesBindingSource.DataMember = "clientes";
             this.clientesBindingSource.DataSource = this.dtClientesGarajes;
+            this.clientesBindingSource.PositionChanged += new System.EventHandler(this.ClientesBindingSource_PositionChanged);
             // 
             // dtClientesGarajes
             // 

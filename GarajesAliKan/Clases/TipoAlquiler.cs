@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PetaPoco;
 
 namespace GarajesAliKan.Clases
@@ -24,6 +25,11 @@ namespace GarajesAliKan.Clases
         public TipoAlquiler(int id)
         {
             Id = id;
+        }
+
+        public TipoAlquiler(string concepto)
+        {
+            Concepto = concepto;
         }
 
         public TipoAlquiler()

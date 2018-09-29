@@ -27,6 +27,11 @@ namespace GarajesAliKan.Clases
             Id = id;
         }
 
+        public Garaje(string nombre)
+        {
+            Nombre = nombre;
+        }
+
         public Garaje()
         {
         }
