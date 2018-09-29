@@ -1,12 +1,15 @@
 ﻿using GarajesAliKan.Clases;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace GarajesAliKan.Forms
 {
     public partial class FrmClientesGaraje : Form
     {
+        private List<Cliente> ListaClientes;        
+
         public FrmClientesGaraje()
         {
             InitializeComponent();
@@ -14,11 +17,17 @@ namespace GarajesAliKan.Forms
 
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
         {
-            List<Cliente> listaClientes = Cliente.ObtenerClientesGarajes();
-            CargarDatosAlDataTable(listaClientes);
-
+            if (Cliente.HayClientes())
+            {
+                ListaClientes = Cliente.ObtenerClientesGarajes();
+                CargarDatosAlDataTable(ListaClientes);
+            }
             CbConceptos.DataSource = TipoAlquiler.ObtenerConceptos();
+            CbConceptos.DisplayMember = "Concepto";
+            CbConceptos.ValueMember = "Id";
             CbGarajes.DataSource = Garaje.ObtenerGarajes();
+            CbGarajes.DisplayMember = "Nombre";
+            CbGarajes.ValueMember = "Id";
         }
 
         /// <summary>
@@ -26,16 +35,16 @@ namespace GarajesAliKan.Forms
         /// </summary>
         /// <param name="listaClientes">La lista de los clientes.</param>
         private void CargarDatosAlDataTable(List<Cliente> listaClientes)
-        {
-            DtClientes dtClientes = new DtClientes();
+        {            
+            DtClientesGarajes dtClientesGarajes = new DtClientesGarajes();
             for (int i = 0; i < listaClientes.Count; i++)
-            {
-                dtClientes.Tables["Clientes"].Rows.Add(listaClientes[i].Id, listaClientes[i].Nombre, listaClientes[i].Apellidos, listaClientes[i].Nif, listaClientes[i].Direccion, listaClientes[i].Telefono,
+            {                
+                dtClientesGarajes.Tables["clientes"].Rows.Add(listaClientes[i].Nombre, listaClientes[i].Apellidos, listaClientes[i].Nif, listaClientes[i].Direccion, listaClientes[i].Telefono,
                     listaClientes[i].Garaje.Nombre, listaClientes[i].Llave,
                     listaClientes[i].Vehiculo.Matricula, listaClientes[i].Vehiculo.Marca, listaClientes[i].Vehiculo.Modelo, listaClientes[i].Vehiculo.Plaza,
-                    listaClientes[i].Alquiler.Concepto, listaClientes[i].Vehiculo.BaseImponible, listaClientes[i].Vehiculo.Iva, listaClientes[i].Vehiculo.Total, listaClientes[i].Observaciones);
+                    listaClientes[i].TipoAlquiler.Concepto, listaClientes[i].Vehiculo.BaseImponible, listaClientes[i].Vehiculo.Iva, listaClientes[i].Vehiculo.Total, listaClientes[i].Observaciones);
             }
-            clientesBindingSource.DataSource = dtClientes.Tables["Clientes"];
+            clientesBindingSource.DataSource = dtClientesGarajes.Tables["clientes"];
         }
 
         private void ClientesBindingSource_PositionChanged(object sender, EventArgs e)
@@ -112,18 +121,32 @@ namespace GarajesAliKan.Forms
             TxtLlave.Clear();
             TxtPlaza.Clear();
 
-            //CbConceptos.Text = "";
             TxtBaseImponible.Clear();
             TxtIva.Clear();
             TxtTotal.Clear();
-            //CbGarajes.Text = "";
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
             if (ComprobarDatosIntroducidos())
             {
-                // Guardar Cliente.
+                Garaje garaje = new Garaje(((Garaje)CbGarajes.SelectedItem).Id);
+                Vehiculo vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text);
+                TipoAlquiler tipoAlquiler = new TipoAlquiler(((TipoAlquiler)CbConceptos.SelectedItem).Id);
+
+                Cliente cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, garaje, TxtObservaciones.Text, int.Parse(TxtLlave.Text), true, vehiculo, tipoAlquiler);
+                if (cliente.Insertar())
+                {
+                    if (tipoAlquiler.Id == 1)       // Si el concepto es "ALQUILER PLAZA DE GARAJE".
+                        if (vehiculo.Insertar(cliente.Id))                    
+                            MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                        else
+                            MessageBox.Show("Ha habido un problema al insertar el vehículo", "Vehículo no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else
+                        MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    MessageBox.Show("Ha habido un problema al insertar el cliente", "Cliente no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
             }
         }
 
@@ -133,113 +156,90 @@ namespace GarajesAliKan.Forms
         /// <returns>Indica si los datos introducidos son correctos.</returns>        
         private bool ComprobarDatosIntroducidos()
         {
-            bool datosCorrectos = false;
+            bool hayNombre = false;
+            bool hayApellidos = false;
+            bool hayNif = false;
+            bool hayDireccion = false;
+            bool hayTelefono = false;            
+            bool hayMarca = false;
+            bool hayModelo = false;
+            bool hayMatricula = false;
+            bool hayLlave = false;
+            bool hayPlaza = false;
+            bool hayBaseImponible = false;
+            bool hayIva = false;
+            bool hayTotal = false;
 
             if (TxtNombre.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir un nombre", "Nombre Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayNombre = true;
 
             if (TxtApellidos.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir unos apellidos", "Apellidos Vacíos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayApellidos = true;
 
             if (TxtNif.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir un N.I.F.", "N.I.F. Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayNif = true;
 
             if (TxtDireccion.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir una dirección", "Dirección Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayDireccion = true;
 
             if (TxtTelefono.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir un teléfono", "Teléfono Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayTelefono = true;
 
             if (TxtMarca.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir una marca del vehículo", "Marca Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayMarca = true;
 
             if (TxtModelo.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir un modelo del vehículo", "Modelo Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayModelo = true;
 
             if (TxtMatricula.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir una matrícula del vehículo", "Matrícula Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayMatricula = true;
 
             if (TxtLlave.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir un número de llave", "Llave Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayLlave = true;
 
             if (TxtPlaza.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir una plaza", "Plaza Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayPlaza = true;
 
             if (TxtBaseImponible.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir una base imponible", "Base Imponible Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
+                hayBaseImponible = true;
 
             if (TxtIva.Text.Length == 0)
             {
                 MessageBox.Show("Tiene que introducir un I.V.A.", "I.V.A. Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
+
             }
             else
-                datosCorrectos = true;
+                hayIva = true;
 
             if (TxtTotal.Text.Length == 0)
-            {
                 MessageBox.Show("Tiene que introducir un total", "Total Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                datosCorrectos = false;
-            }
             else
-                datosCorrectos = true;
-
-            return datosCorrectos;
+                hayTotal = true;
+                
+            return hayNombre && hayApellidos && hayNif && hayDireccion && hayTelefono && hayMarca && hayModelo && hayMatricula && hayLlave && hayPlaza &&
+                hayBaseImponible && hayIva && hayTotal;
         }
 
         private void CbConceptos_KeyPress(object sender, KeyPressEventArgs e)
@@ -255,6 +255,8 @@ namespace GarajesAliKan.Forms
                 e.Handled = false;          // Escribe el número pulsado.                   
             else if (e.KeyChar == ',')
                 e.Handled = false;
+            else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
+                e.Handled = false;
             else
                 e.Handled = true;
         }
@@ -266,6 +268,8 @@ namespace GarajesAliKan.Forms
             if (numPulsado >= 0 && numPulsado <= 9)
                 e.Handled = false;          // Escribe el número pulsado.                   
             else if (e.KeyChar == ',')
+                e.Handled = false;
+            else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
                 e.Handled = false;
             else
                 e.Handled = true;
@@ -279,6 +283,8 @@ namespace GarajesAliKan.Forms
                 e.Handled = false;          // Escribe el número pulsado.                   
             else if (e.KeyChar == ',')
                 e.Handled = false;
+            else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
+                e.Handled = false;
             else
                 e.Handled = true;
         }
@@ -286,6 +292,79 @@ namespace GarajesAliKan.Forms
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
+            HabilitarControles(false);
+            TxtNombre.Text = ListaClientes[clientesBindingSource.Position].Nombre;
+            TxtApellidos.Text = ListaClientes[clientesBindingSource.Position].Apellidos;
+            TxtNif.Text = ListaClientes[clientesBindingSource.Position].Nif;
+            TxtDireccion.Text = ListaClientes[clientesBindingSource.Position].Direccion;
+            TxtTelefono.Text = ListaClientes[clientesBindingSource.Position].Telefono;
+            TxtObservaciones.Text = ListaClientes[clientesBindingSource.Position].Observaciones;
+            TxtMarca.Text = ListaClientes[clientesBindingSource.Position].Vehiculo.Marca;
+            TxtModelo.Text = ListaClientes[clientesBindingSource.Position].Vehiculo.Modelo;
+            TxtMatricula.Text = ListaClientes[clientesBindingSource.Position].Vehiculo.Matricula;
+            TxtLlave.Text = ListaClientes[clientesBindingSource.Position].Llave.ToString();
+            TxtPlaza.Text = ListaClientes[clientesBindingSource.Position].Vehiculo.Plaza;
+            CbConceptos.Text = ListaClientes[clientesBindingSource.Position].TipoAlquiler.Concepto;
+            TxtBaseImponible.Text = ListaClientes[clientesBindingSource.Position].Vehiculo.BaseImponible.ToString();
+            TxtIva.Text = ListaClientes[clientesBindingSource.Position].Vehiculo.Iva.ToString();
+            TxtTotal.Text = ListaClientes[clientesBindingSource.Position].Vehiculo.Total.ToString();
+            CbGarajes.Text = ListaClientes[clientesBindingSource.Position].Garaje.Nombre;
+        }
+
+        private void TxtNif_Leave(object sender, EventArgs e)
+        {
+            Regex exprReg = new Regex("^[0-9]{8}[A-Z]$");
+
+            if (!exprReg.IsMatch(TxtNif.Text))
+            {
+                MessageBox.Show("Formato de N.I.F. incorrecto", "Formato Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TxtNif.Clear();
+                TxtNif.Focus();
+            }
+        }
+
+        private void TxtTelefono_Leave(object sender, EventArgs e)
+        {
+            Regex exprReg = new Regex("^[0-9]{9}$");
+
+            if (!exprReg.IsMatch(TxtTelefono.Text))
+            {
+                MessageBox.Show("Formato de teléfono incorrecto", "Formato Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TxtTelefono.Clear();
+                TxtTelefono.Focus();
+            }
+        }
+
+        private void TxtMatricula_Leave(object sender, EventArgs e)
+        {
+            Regex exprReg = new Regex("^[0-9]{4} [A-Z]{3}$");
+
+            if (!exprReg.IsMatch(TxtMatricula.Text))
+            {
+                MessageBox.Show("Formato de matrícula incorrecto", "Formato Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TxtMatricula.Clear();
+                TxtMatricula.Focus();
+            }
+        }
+
+        private void TxtLlave_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int numPulsado = (int)char.GetNumericValue(e.KeyChar);
+
+            if (numPulsado >= 0 && numPulsado <= 9)
+                e.Handled = false;          // Escribe el número pulsado.                   
+            else
+                e.Handled = true;
+        }
+
+        private void CbGarajes_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void BtnModificarCliente_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -101,13 +101,10 @@
     <Compile Include="Clases\Foo.cs" />
     <Compile Include="Clases\TipoAlquiler.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
-    <Compile Include="DtClientes.cs">
-      <DependentUpon>DtClientes.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DtClientes.Designer.cs">
+    <Compile Include="DtClientesGarajes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DtClientes.xsd</DependentUpon>
+      <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmClientesGaraje.cs">
       <SubType>Form</SubType>
@@ -146,16 +143,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="DtClientes.xsc">
-      <DependentUpon>DtClientes.xsd</DependentUpon>
+    <None Include="DtClientesGarajes.xsc">
+      <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
     </None>
-    <None Include="DtClientes.xsd">
+    <None Include="DtClientesGarajes.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DtClientes.Designer.cs</LastGenOutput>
+      <LastGenOutput>DtClientesGarajes.Designer.cs</LastGenOutput>
     </None>
-    <None Include="DtClientes.xss">
-      <DependentUpon>DtClientes.xsd</DependentUpon>
+    <None Include="DtClientesGarajes.xss">
+      <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
     </None>
     <None Include="Models\Generated\PetaPoco.Core.ttinclude" />
     <None Include="Models\Generated\PetaPoco.Generator.ttinclude" />

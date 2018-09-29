@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using PetaPoco;
 
 namespace GarajesAliKan.Clases
-{
+{    
     class Garaje
-    {
+    {        
         public int Id { get; set; }
         public string SubId { get; set; }
         public string Nombre { get; set; }        
@@ -12,12 +13,22 @@ namespace GarajesAliKan.Clases
         /// Obtiene todos los garajes.
         /// </summary>
         /// <returns>Los Garajes.</returns>
-        public static List<string> ObtenerGarajes()
+        public static List<Garaje> ObtenerGarajes()
         {
-            List<string> listaNombresGarajes = Foo.ConexionABd().Fetch<string>("SELECT nombre FROM garajes;");
-            Foo.ConexionABd().CloseSharedConnection();
+            Database conexion = Foo.ConexionABd();
+            List<Garaje> listaNombresGarajes = conexion.Fetch<Garaje>("SELECT id, nombre FROM garajes;");
+            conexion.CloseSharedConnection();
 
             return listaNombresGarajes;
+        }
+
+        public Garaje(int id)
+        {
+            Id = id;
+        }
+
+        public Garaje()
+        {
         }
     }
 }

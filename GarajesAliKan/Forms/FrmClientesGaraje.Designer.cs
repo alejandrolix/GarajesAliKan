@@ -88,7 +88,7 @@
             this.TxtNombre = new System.Windows.Forms.TextBox();
             this.LNombre = new System.Windows.Forms.Label();
             this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dtClientes = new GarajesAliKan.DtClientes();
+            this.dtClientesGarajes = new GarajesAliKan.DtClientesGarajes();
             this.PBuscarPor.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
@@ -96,7 +96,7 @@
             this.panel.SuspendLayout();
             this.PBtnsControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtClientes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtClientesGarajes)).BeginInit();
             this.SuspendLayout();
             // 
             // PBuscarPor
@@ -201,6 +201,7 @@
             this.BindingNavigator.BindingSource = this.clientesBindingSource;
             this.BindingNavigator.CountItem = this.bindingNavigatorCountItem;
             this.BindingNavigator.DeleteItem = null;
+            this.BindingNavigator.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.BindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
@@ -217,15 +218,15 @@
             this.BindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.BindingNavigator.Name = "BindingNavigator";
             this.BindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-            this.BindingNavigator.Size = new System.Drawing.Size(1007, 25);
+            this.BindingNavigator.Size = new System.Drawing.Size(1007, 27);
             this.BindingNavigator.TabIndex = 25;
             this.BindingNavigator.Text = "bindingNavigator1";
             // 
             // bindingNavigatorCountItem
             // 
-            this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(44, 22);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(48, 24);
             this.bindingNavigatorCountItem.Text = "de {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Número total de elementos";
             // 
@@ -235,7 +236,7 @@
             this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveFirstItem.Text = "Mover primero";
             // 
             // bindingNavigatorMovePreviousItem
@@ -244,28 +245,28 @@
             this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMovePreviousItem.Text = "Mover anterior";
             // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 27);
             // 
             // bindingNavigatorPositionItem
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Posición";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 25);
+            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 27);
             this.bindingNavigatorPositionItem.Text = "0";
             this.bindingNavigatorPositionItem.ToolTipText = "Posición actual";
             // 
             // bindingNavigatorSeparator1
             // 
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // bindingNavigatorMoveNextItem
             // 
@@ -273,7 +274,7 @@
             this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveNextItem.Text = "Mover siguiente";
             // 
             // bindingNavigatorMoveLastItem
@@ -282,7 +283,7 @@
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveLastItem.Text = "Mover último";
             // 
             // panel
@@ -372,6 +373,7 @@
             this.BtnModificarCliente.TabIndex = 18;
             this.BtnModificarCliente.Text = "Modificar Cliente";
             this.BtnModificarCliente.UseVisualStyleBackColor = true;
+            this.BtnModificarCliente.Click += new System.EventHandler(this.BtnModificarCliente_Click);
             // 
             // BtnEliminarCliente
             // 
@@ -440,6 +442,7 @@
             this.CbGarajes.Name = "CbGarajes";
             this.CbGarajes.Size = new System.Drawing.Size(178, 24);
             this.CbGarajes.TabIndex = 16;
+            this.CbGarajes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbGarajes_KeyPress);
             // 
             // LGaraje
             // 
@@ -556,6 +559,7 @@
             this.TxtLlave.Name = "TxtLlave";
             this.TxtLlave.Size = new System.Drawing.Size(66, 23);
             this.TxtLlave.TabIndex = 10;
+            this.TxtLlave.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtLlave_KeyPress);
             // 
             // LLave
             // 
@@ -577,6 +581,7 @@
             this.TxtMatricula.Name = "TxtMatricula";
             this.TxtMatricula.Size = new System.Drawing.Size(104, 23);
             this.TxtMatricula.TabIndex = 9;
+            this.TxtMatricula.Leave += new System.EventHandler(this.TxtMatricula_Leave);
             // 
             // LMatricula
             // 
@@ -617,7 +622,7 @@
             this.TxtMarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtMarca.Location = new System.Drawing.Point(453, 13);
             this.TxtMarca.Name = "TxtMarca";
-            this.TxtMarca.Size = new System.Drawing.Size(106, 23);
+            this.TxtMarca.Size = new System.Drawing.Size(133, 23);
             this.TxtMarca.TabIndex = 7;
             // 
             // LMarca
@@ -638,8 +643,9 @@
             this.TxtTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtTelefono.Location = new System.Drawing.Point(132, 173);
             this.TxtTelefono.Name = "TxtTelefono";
-            this.TxtTelefono.Size = new System.Drawing.Size(134, 23);
+            this.TxtTelefono.Size = new System.Drawing.Size(114, 23);
             this.TxtTelefono.TabIndex = 5;
+            this.TxtTelefono.Leave += new System.EventHandler(this.TxtTelefono_Leave);
             // 
             // LTelefono
             // 
@@ -682,6 +688,7 @@
             this.TxtNif.Name = "TxtNif";
             this.TxtNif.Size = new System.Drawing.Size(114, 23);
             this.TxtNif.TabIndex = 3;
+            this.TxtNif.Leave += new System.EventHandler(this.TxtNif_Leave);
             // 
             // LNif
             // 
@@ -737,14 +744,13 @@
             // 
             // clientesBindingSource
             // 
-            this.clientesBindingSource.DataMember = "Clientes";
-            this.clientesBindingSource.DataSource = this.dtClientes;
-            this.clientesBindingSource.PositionChanged += new System.EventHandler(this.ClientesBindingSource_PositionChanged);
+            this.clientesBindingSource.DataMember = "clientes";
+            this.clientesBindingSource.DataSource = this.dtClientesGarajes;
             // 
-            // dtClientes
+            // dtClientesGarajes
             // 
-            this.dtClientes.DataSetName = "DtClientes";
-            this.dtClientes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.dtClientesGarajes.DataSetName = "DtClientesGarajes";
+            this.dtClientesGarajes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // FrmClientesGaraje
             // 
@@ -769,7 +775,7 @@
             this.panel.PerformLayout();
             this.PBtnsControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtClientes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtClientesGarajes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -829,12 +835,12 @@
         private System.Windows.Forms.TextBox TxtApellidos;
         private System.Windows.Forms.Label LApellidos;
         private System.Windows.Forms.TextBox TxtNombre;
-        private System.Windows.Forms.Label LNombre;
-        private System.Windows.Forms.BindingSource clientesBindingSource;
-        private DtClientes dtClientes;
+        private System.Windows.Forms.Label LNombre;        
         private System.Windows.Forms.Panel PBtnsControl;
         private System.Windows.Forms.TextBox TxtBaseImponible;
         private System.Windows.Forms.TextBox TxtTotal;
         private System.Windows.Forms.TextBox TxtIva;
+        private System.Windows.Forms.BindingSource clientesBindingSource;
+        private DtClientesGarajes dtClientesGarajes;
     }
 }

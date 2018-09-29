@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using PetaPoco;
 
 namespace GarajesAliKan.Clases
-{
+{    
     class TipoAlquiler
     {
         public int Id { get; set; }
@@ -11,9 +12,22 @@ namespace GarajesAliKan.Clases
         /// Obtiene todos los conceptos.
         /// </summary>
         /// <returns>Los conceptos.</returns>
-        public static List<string> ObtenerConceptos()
+        public static List<TipoAlquiler> ObtenerConceptos()
         {
-            return Foo.ConexionABd().Fetch<string>("SELECT concepto FROM tiposAlquileres;");
+            Database conexion = Foo.ConexionABd();
+            List<TipoAlquiler> listaTiposAlquileres = conexion.Fetch<TipoAlquiler>("SELECT id, concepto FROM tiposAlquileres;");
+            conexion.CloseSharedConnection();
+
+            return listaTiposAlquileres;
+        }
+
+        public TipoAlquiler(int id)
+        {
+            Id = id;
+        }
+
+        public TipoAlquiler()
+        {
         }
     }
 }
