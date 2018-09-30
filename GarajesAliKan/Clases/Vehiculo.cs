@@ -45,9 +45,5 @@ namespace GarajesAliKan.Clases
             Marca = marca;
             Modelo = modelo;
         }
-
-        //public Vehiculo()
-        //{
-        //}
     }
 }

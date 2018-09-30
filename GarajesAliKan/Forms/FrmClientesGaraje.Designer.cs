@@ -123,6 +123,7 @@
             this.CbNifs.Name = "CbNifs";
             this.CbNifs.Size = new System.Drawing.Size(175, 24);
             this.CbNifs.TabIndex = 24;
+            this.CbNifs.SelectionChangeCommitted += new System.EventHandler(this.CbNifs_SelectionChangeCommitted);
             // 
             // label3
             // 
@@ -165,6 +166,7 @@
             this.CbApellidos.Name = "CbApellidos";
             this.CbApellidos.Size = new System.Drawing.Size(175, 24);
             this.CbApellidos.TabIndex = 23;
+            this.CbApellidos.SelectionChangeCommitted += new System.EventHandler(this.CbApellidos_SelectionChangeCommitted);
             // 
             // label1
             // 
@@ -193,7 +195,7 @@
             this.CbPlazas.Location = new System.Drawing.Point(63, 58);
             this.CbPlazas.Name = "CbPlazas";
             this.CbPlazas.Size = new System.Drawing.Size(103, 24);
-            this.CbPlazas.TabIndex = 22;            
+            this.CbPlazas.TabIndex = 22;
             this.CbPlazas.SelectionChangeCommitted += new System.EventHandler(this.CbPlazas_SelectionChangeCommitted);
             // 
             // BindingNavigator

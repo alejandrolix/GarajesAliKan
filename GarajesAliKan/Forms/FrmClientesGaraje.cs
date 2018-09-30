@@ -32,6 +32,12 @@ namespace GarajesAliKan.Forms
             CbPlazas.DataSource = Plaza.ObtenerPlazas();
             CbPlazas.DisplayMember = "NombrePlaza";
             CbPlazas.ValueMember = "IdCliente";
+            CbApellidos.DataSource = Cliente.ObtenerApellidos();
+            CbApellidos.DisplayMember = "Apellidos";
+            CbApellidos.ValueMember = "Id";
+            CbNifs.DataSource = Cliente.ObtenerNifs();
+            CbNifs.DisplayMember = "Nif";
+            CbNifs.ValueMember = "Id";
         }
 
         /// <summary>
@@ -447,7 +453,21 @@ namespace GarajesAliKan.Forms
         private void CbPlazas_SelectionChangeCommitted(object sender, EventArgs e)
         {            
             Cliente cliente = Cliente.ObtenerClientePorId(((Plaza)CbPlazas.SelectedItem).IdCliente);
+            RellenarDatosCliente(cliente);
+        }
 
+        private void CbApellidos_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Cliente cliente = Cliente.ObtenerClientePorId(((Cliente)CbApellidos.SelectedItem).Id);
+            RellenarDatosCliente(cliente);
+        }
+
+        /// <summary>
+        /// Rellena los datos del cliente buscado a sus TextBoxs;
+        /// </summary>
+        /// <param name="cliente">Los datos del cliente.</param>
+        private void RellenarDatosCliente(Cliente cliente)
+        {
             TxtNombre.Text = cliente.Nombre;
             TxtApellidos.Text = cliente.Apellidos;
             TxtNif.Text = cliente.Nif;
@@ -464,6 +484,12 @@ namespace GarajesAliKan.Forms
             TxtIva.Text = cliente.AlquilerPorCliente.Iva.ToString();
             TxtTotal.Text = cliente.AlquilerPorCliente.Total.ToString();
             CbGarajes.Text = cliente.Garaje.Nombre;
+        }
+
+        private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Cliente cliente = Cliente.ObtenerClientePorId(((Cliente)CbNifs.SelectedItem).Id);
+            RellenarDatosCliente(cliente);
         }
     }
 }

@@ -72,6 +72,8 @@ namespace GarajesAliKan.Clases
 
                 listaClientes.Add(cliente);
             }
+            cursor.Close();
+            conexion.Close();
 
             return listaClientes;
         }
@@ -106,8 +108,36 @@ namespace GarajesAliKan.Clases
                 cliente = new Cliente(cursor.GetInt32("id"), cursor.GetString("nombre"), cursor.GetString("apellidos"), cursor.GetString("nif"), cursor.GetString("direccion"), cursor.GetString("telefono"), cursor.IsDBNull(6) ? null : cursor.GetString("observaciones"),
                     garaje, true, vehiculo, tipoAlquiler, alqPorCliente);                
             }
+            cursor.Close();
+            conexion.Close();
 
             return cliente;
+        }
+
+        /// <summary>
+        /// Obtiene todos los apellidos de los clientes.
+        /// </summary>
+        /// <returns>Los apellidos de los clientes.</returns>
+        public static List<Cliente> ObtenerApellidos()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaApellidos = conexion.Fetch<Cliente>("SELECT id, apellidos FROM clientes ORDER BY apellidos;");
+
+            conexion.CloseSharedConnection();
+            return listaApellidos;
+        }
+
+        /// <summary>
+        /// Obtiene todos los NIFs de los clientes.
+        /// </summary>
+        /// <returns>Los NIFs de los clientes.</returns>
+        public static List<Cliente> ObtenerNifs()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaNifs = conexion.Fetch<Cliente>("SELECT id, nif FROM clientes ORDER BY nif;");
+
+            conexion.CloseSharedConnection();
+            return listaNifs;
         }
 
         /// <summary>
@@ -189,11 +219,12 @@ namespace GarajesAliKan.Clases
 
             return numFila >= 1;
         }
-        
+
         public override bool Equals(object obj)
         {
-            return Id == ((Cliente)obj).Id;
-        }        
+            var cliente = obj as Cliente;
+            return cliente != null && Id == cliente.Id;
+        }
 
         public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, TipoAlquiler tipoAlquiler, AlquilerPorCliente alquilerPorCliente)              // Alquilar una plaza de garaje.  
         {
@@ -255,6 +286,17 @@ namespace GarajesAliKan.Clases
             Telefono = telefono;
             Observaciones = observaciones;
             AlquilerPorCliente = alquilerPorCliente;
+        }
+
+        public Cliente(int id, string apellidos)
+        {
+            Id = id;
+            Apellidos = apellidos;
+        }
+
+        public Cliente()
+        {
+
         }
     }
 }
