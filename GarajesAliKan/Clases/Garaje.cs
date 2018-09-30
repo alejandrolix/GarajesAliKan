@@ -20,15 +20,16 @@ namespace GarajesAliKan.Clases
             conexion.CloseSharedConnection();
 
             return listaNombresGarajes;
-        }
+        }        
 
-        public Garaje(int id)
+        public Garaje(int id, string nombre)
         {
             Id = id;
+            Nombre = nombre;
         }
 
         public Garaje(string nombre)
-        {
+        {            
             Nombre = nombre;
         }
 

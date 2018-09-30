@@ -63,7 +63,7 @@ namespace GarajesAliKan.Clases
             while (cursor.Read())
             {
                 Garaje garaje = new Garaje(cursor.GetString("nombreGaraje"));
-                Vehiculo vehiculo = new Vehiculo(cursor.IsDBNull(8) ? null : cursor.GetString("matricula"), cursor.IsDBNull(9) ? null : cursor.GetString("marca"), cursor.IsDBNull(10) ? null : cursor.GetString("modelo"));
+                Vehiculo vehiculo = new Vehiculo(cursor.IsDBNull(8) ? null : cursor.GetString("matricula"), cursor.IsDBNull(9) ? null : cursor.GetString("marca"), cursor.IsDBNull(10) ? null : cursor.GetString("modelo"));                
                 TipoAlquiler tipoAlquiler = new TipoAlquiler(cursor.GetString("concepto"));
                 AlquilerPorCliente alqPorCliente = new AlquilerPorCliente(cursor.GetDecimal("baseImponible"), cursor.GetDecimal("iva"), cursor.GetDecimal("total"), cursor.GetString("plaza"), cursor.IsDBNull(15) ? 0 : cursor.GetInt32("llave"));                
 
@@ -77,72 +77,123 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene los datos de un cliente a partir de su Id.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los datos del cliente.</returns>
+        public static Cliente ObtenerClientePorId(int idCliente)
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre AS nombreGaraje, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
+                                                      FROM   clientes cli		 
+		                                                     JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
+		                                                     JOIN garajes gaj ON gaj.id = alqPc.idGaraje
+		                                                     LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
+		                                                     JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
+                                                      WHERE  cli.id = @idCliente;", conexion);
+
+            comando.Parameters.AddWithValue("@idCliente", idCliente);
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Cliente cliente = null;
+
+            while (cursor.Read())
+            {
+                Garaje garaje = new Garaje(cursor.GetString("nombreGaraje"));
+                Vehiculo vehiculo = new Vehiculo(cursor.IsDBNull(8) ? null : cursor.GetString("matricula"), cursor.IsDBNull(9) ? null : cursor.GetString("marca"), cursor.IsDBNull(10) ? null : cursor.GetString("modelo"));
+                TipoAlquiler tipoAlquiler = new TipoAlquiler(cursor.GetString("concepto"));
+                AlquilerPorCliente alqPorCliente = new AlquilerPorCliente(cursor.GetDecimal("baseImponible"), cursor.GetDecimal("iva"), cursor.GetDecimal("total"), cursor.GetString("plaza"), cursor.IsDBNull(15) ? 0 : cursor.GetInt32("llave"));
+
+                cliente = new Cliente(cursor.GetInt32("id"), cursor.GetString("nombre"), cursor.GetString("apellidos"), cursor.GetString("nif"), cursor.GetString("direccion"), cursor.GetString("telefono"), cursor.IsDBNull(6) ? null : cursor.GetString("observaciones"),
+                    garaje, true, vehiculo, tipoAlquiler, alqPorCliente);                
+            }
+
+            return cliente;
+        }
+
+        /// <summary>
         /// Inserta un cliente.
         /// </summary>
         /// <returns>El cliente se ha insertado.</returns>
         public bool Insertar()
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"INSERT INTO clientes (nombre, apellidos, nif, direccion, telefono, observaciones, esClienteGaraje, idTipoAlquiler) VALUES (
-                                                      @nombre, @apellidos, @nif, @direccion, @telefono, @observaciones, true, @idTipoAlquiler);", conexion);
+            MySqlCommand comando = new MySqlCommand(@"INSERT INTO clientes (nombre, apellidos, nif, direccion, telefono, observaciones, esClienteGaraje) VALUES (
+                                                      @nombre, @apellidos, @nif, @direccion, @telefono, @observaciones, true);", conexion);
 
             comando.Parameters.AddWithValue("@nombre", Nombre);
             comando.Parameters.AddWithValue("@apellidos", Apellidos);
             comando.Parameters.AddWithValue("@nif", Nif);
             comando.Parameters.AddWithValue("@direccion", Direccion);
-            comando.Parameters.AddWithValue("@telefono", Telefono);            
-            comando.Parameters.AddWithValue("@observaciones", Observaciones);            
-            comando.Parameters.AddWithValue("@idTipoAlquiler", TipoAlquiler.Id);
+            comando.Parameters.AddWithValue("@telefono", Telefono);
+            comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);                        
 
             int numFila = 0;
             try
             {
                 numFila = comando.ExecuteNonQuery();
-
-                if (TipoAlquiler.Id == 1)       // Alquila una plaza de garaje.
-                {
-                    comando.CommandText = "SELECT MAX(id) FROM clientes;";
-                    Id = Convert.ToInt32(comando.ExecuteScalar());
-                }                
-                conexion.Close();
+                comando.CommandText = "SELECT MAX(id) FROM clientes;";
+                Id = Convert.ToInt32(comando.ExecuteScalar());
             }
             catch (Exception)
             { }
+            conexion.Close();
 
             return numFila >= 1;
         }
 
+        /// <summary>
+        /// Modifica los datos de un cliente.
+        /// </summary>
+        /// <returns>Los datos se han modificado.</returns>
         public bool Modificar()
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"INSERT INTO clientes (nombre, apellidos, nif, direccion, telefono, observaciones, esClienteGaraje, idTipoAlquiler) VALUES (
-                                                      @nombre, @apellidos, @nif, @direccion, @telefono, @observaciones, true, @idTipoAlquiler);", conexion);
+            MySqlCommand comando = new MySqlCommand(@"UPDATE clientes SET nombre = @nombre, apellidos = @apellidos, nif = @nif, direccion = @direccion, telefono = @telefono, observaciones = @observaciones
+                                                      WHERE  id = @idCliente;", conexion);
 
             comando.Parameters.AddWithValue("@nombre", Nombre);
             comando.Parameters.AddWithValue("@apellidos", Apellidos);
             comando.Parameters.AddWithValue("@nif", Nif);
             comando.Parameters.AddWithValue("@direccion", Direccion);
             comando.Parameters.AddWithValue("@telefono", Telefono);            
-            comando.Parameters.AddWithValue("@observaciones", Observaciones);            
-            comando.Parameters.AddWithValue("@idTipoAlquiler", TipoAlquiler.Id);
+            comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);
+            comando.Parameters.AddWithValue("@idCliente", Id);
+
+            int numFila = 0;
+            try
+            {
+                numFila = comando.ExecuteNonQuery();               
+            }
+            catch (Exception)
+            { }
+            conexion.Close();
+
+            return numFila >= 1;
+        }
+
+        public bool Eliminar()
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand("DELETE FROM clientes WHERE idCliente = @idCliente;", conexion);
+
+            comando.Parameters.AddWithValue("@idCliente", Id);
 
             int numFila = 0;
             try
             {
                 numFila = comando.ExecuteNonQuery();
-
-                if (TipoAlquiler.Id == 1)       // Alquila una plaza de garaje.
-                {
-                    comando.CommandText = "SELECT MAX(id) FROM clientes;";
-                    Id = Convert.ToInt32(comando.ExecuteScalar());
-                }
-                conexion.Close();
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            { Console.WriteLine(ex.Message); }
+            conexion.Close();
 
             return numFila >= 1;
         }
+        
+        public override bool Equals(object obj)
+        {
+            return Id == ((Cliente)obj).Id;
+        }        
 
         public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, TipoAlquiler tipoAlquiler, AlquilerPorCliente alquilerPorCliente)              // Alquilar una plaza de garaje.  
         {
@@ -152,6 +203,21 @@ namespace GarajesAliKan.Clases
             Nif = nif;
             Direccion = direccion;
             Telefono = telefono;            
+            Observaciones = observaciones;
+            Garaje = garaje;
+            EsClienteGaraje = esClienteGaraje;
+            Vehiculo = vehiculo;
+            TipoAlquiler = tipoAlquiler;
+            AlquilerPorCliente = alquilerPorCliente;
+        }
+
+        public Cliente(string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, TipoAlquiler tipoAlquiler, AlquilerPorCliente alquilerPorCliente)              // Alquilar una plaza de garaje.  
+        {            
+            Nombre = nombre;
+            Apellidos = apellidos;
+            Nif = nif;
+            Direccion = direccion;
+            Telefono = telefono;
             Observaciones = observaciones;
             Garaje = garaje;
             EsClienteGaraje = esClienteGaraje;
@@ -174,8 +240,21 @@ namespace GarajesAliKan.Clases
             TipoAlquiler = tipoAlquiler;
         }
 
-        //public Cliente()
-        //{
-        //}
+        public Cliente(int id)          // Para buscar un cliente por su Id en la lista de clientes.
+        {
+            Id = id;
+        }
+
+        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, AlquilerPorCliente alquilerPorCliente)
+        {
+            Id = id;
+            Nombre = nombre;
+            Apellidos = apellidos;
+            Nif = nif;
+            Direccion = direccion;
+            Telefono = telefono;
+            Observaciones = observaciones;
+            AlquilerPorCliente = alquilerPorCliente;
+        }
     }
 }

@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Clases\AlquilerPorCliente.cs" />
     <Compile Include="Clases\Foo.cs" />
+    <Compile Include="Clases\Plaza.cs" />
     <Compile Include="Clases\TipoAlquiler.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
     <Compile Include="DtClientesGarajes.cs">

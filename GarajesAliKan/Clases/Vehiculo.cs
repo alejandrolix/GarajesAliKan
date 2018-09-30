@@ -9,39 +9,32 @@ namespace GarajesAliKan.Clases
         public string Matricula { get; set; }
         public string Marca { get; set; }
         public string Modelo { get; set; }
-        //public decimal BaseImponible { get; set; }
-        //public decimal Iva { get; set; }
-        //public decimal Total { get; set; }
-        //public string Plaza { get; set; }
 
         /// <summary>
         /// Inserta un vehículo.
-        /// </summary>        
-        /// <param name="idCliente">El Id del nuevo cliente.</param>
+        /// </summary>                
         /// <returns>El vehículo se ha insertado.</returns>
-        public bool Insertar(int idCliente)
+        public bool Insertar()
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"INSERT INTO vehiculos (matricula, marca, modelo, idCliente, baseImponible, iva, total, plaza) VALUES (
-                                                      @matricula, @marca, @modelo, @idCliente, @baseImponible, @iva, @total, @plaza);", conexion);
+            MySqlCommand comando = new MySqlCommand(@"INSERT INTO vehiculos (matricula, marca, modelo) VALUES (
+                                                      @matricula, @marca, @modelo);", conexion);
 
             comando.Parameters.AddWithValue("@matricula", Matricula);
             comando.Parameters.AddWithValue("@marca", Marca);
             comando.Parameters.AddWithValue("@modelo", Modelo);
-            comando.Parameters.AddWithValue("@idCliente", idCliente);
-            //comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
-            //comando.Parameters.AddWithValue("@iva", Iva);
-            //comando.Parameters.AddWithValue("@total", Total);
-            //comando.Parameters.AddWithValue("@plaza", Plaza);
 
             int numFila = 0;
             try
             {
                 numFila = comando.ExecuteNonQuery();
-                conexion.Close();
+
+                comando.CommandText = "SELECT MAX(id) FROM vehiculos;";
+                Id = Convert.ToInt32(comando.ExecuteScalar());                               
             }
             catch (Exception)
             { }
+            conexion.Close();
 
             return numFila >= 1;
         }
@@ -50,7 +43,7 @@ namespace GarajesAliKan.Clases
         {
             Matricula = matricula;
             Marca = marca;
-            Modelo = modelo;            
+            Modelo = modelo;
         }
 
         //public Vehiculo()

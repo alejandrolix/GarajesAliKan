@@ -527,7 +527,7 @@ namespace GarajesAliKan {
                         string direccion, 
                         string telefono, 
                         string nombreGaraje, 
-                        long llave, 
+                        string llave, 
                         string matricula, 
                         string marca, 
                         string modelo, 
@@ -614,7 +614,7 @@ namespace GarajesAliKan {
                 base.Columns.Add(this.columntelefono);
                 this.columnnombreGaraje = new global::System.Data.DataColumn("nombreGaraje", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnombreGaraje);
-                this.columnllave = new global::System.Data.DataColumn("llave", typeof(long), null, global::System.Data.MappingType.Element);
+                this.columnllave = new global::System.Data.DataColumn("llave", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnllave);
                 this.columnmatricula = new global::System.Data.DataColumn("matricula", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnmatricula);
@@ -888,10 +888,10 @@ namespace GarajesAliKan {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public long llave {
+            public string llave {
                 get {
                     try {
-                        return ((long)(this[this.tableclientes.llaveColumn]));
+                        return ((string)(this[this.tableclientes.llaveColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'llave\' de la tabla \'clientes\' es DBNull.", e);

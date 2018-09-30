@@ -40,6 +40,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CbPlazas = new System.Windows.Forms.ComboBox();
             this.BindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+            this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dtClientesGarajes = new GarajesAliKan.DtClientesGarajes();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -87,16 +89,14 @@
             this.LApellidos = new System.Windows.Forms.Label();
             this.TxtNombre = new System.Windows.Forms.TextBox();
             this.LNombre = new System.Windows.Forms.Label();
-            this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dtClientesGarajes = new GarajesAliKan.DtClientesGarajes();
             this.PBuscarPor.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
-            this.panel.SuspendLayout();
-            this.PBtnsControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtClientesGarajes)).BeginInit();
+            this.panel.SuspendLayout();
+            this.PBtnsControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // PBuscarPor
@@ -193,7 +193,8 @@
             this.CbPlazas.Location = new System.Drawing.Point(63, 58);
             this.CbPlazas.Name = "CbPlazas";
             this.CbPlazas.Size = new System.Drawing.Size(103, 24);
-            this.CbPlazas.TabIndex = 22;
+            this.CbPlazas.TabIndex = 22;            
+            this.CbPlazas.SelectionChangeCommitted += new System.EventHandler(this.CbPlazas_SelectionChangeCommitted);
             // 
             // BindingNavigator
             // 
@@ -221,6 +222,17 @@
             this.BindingNavigator.Size = new System.Drawing.Size(1007, 27);
             this.BindingNavigator.TabIndex = 25;
             this.BindingNavigator.Text = "bindingNavigator1";
+            // 
+            // clientesBindingSource
+            // 
+            this.clientesBindingSource.DataMember = "clientes";
+            this.clientesBindingSource.DataSource = this.dtClientesGarajes;
+            this.clientesBindingSource.PositionChanged += new System.EventHandler(this.ClientesBindingSource_PositionChanged);
+            // 
+            // dtClientesGarajes
+            // 
+            this.dtClientesGarajes.DataSetName = "DtClientesGarajes";
+            this.dtClientesGarajes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // bindingNavigatorCountItem
             // 
@@ -384,6 +396,7 @@
             this.BtnEliminarCliente.TabIndex = 19;
             this.BtnEliminarCliente.Text = "Eliminar Cliente";
             this.BtnEliminarCliente.UseVisualStyleBackColor = true;
+            this.BtnEliminarCliente.Click += new System.EventHandler(this.BtnEliminarCliente_Click);
             // 
             // BtnCancelar
             // 
@@ -581,7 +594,6 @@
             this.TxtMatricula.Name = "TxtMatricula";
             this.TxtMatricula.Size = new System.Drawing.Size(104, 23);
             this.TxtMatricula.TabIndex = 9;
-            this.TxtMatricula.Leave += new System.EventHandler(this.TxtMatricula_Leave);
             // 
             // LMatricula
             // 
@@ -742,17 +754,6 @@
             this.LNombre.TabIndex = 2;
             this.LNombre.Text = "Nombre: ";
             // 
-            // clientesBindingSource
-            // 
-            this.clientesBindingSource.DataMember = "clientes";
-            this.clientesBindingSource.DataSource = this.dtClientesGarajes;
-            this.clientesBindingSource.PositionChanged += new System.EventHandler(this.ClientesBindingSource_PositionChanged);
-            // 
-            // dtClientesGarajes
-            // 
-            this.dtClientesGarajes.DataSetName = "DtClientesGarajes";
-            this.dtClientesGarajes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // FrmClientesGaraje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -772,11 +773,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).EndInit();
             this.BindingNavigator.ResumeLayout(false);
             this.BindingNavigator.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtClientesGarajes)).EndInit();
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
             this.PBtnsControl.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtClientesGarajes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
