@@ -39,11 +39,54 @@ namespace GarajesAliKan.Clases
             return numFila >= 1;
         }
 
+        public bool Eliminar(int idVehiculo)
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"DELETE FROM vehiculos WHERE id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idVehiculo);            
+
+            int numFila = 0;
+            try
+            {
+                numFila = comando.ExecuteNonQuery();                
+            }
+            catch (Exception)
+            { }
+            conexion.Close();
+
+            return numFila >= 1;
+        }
+
+        public int ObtenerIdPorIdCliente(int idCliente)
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT idVehiculo FROM alquilerPorCliente WHERE idCliente = @idCliente;", conexion);
+
+            comando.Parameters.AddWithValue("@idCliente", idCliente);            
+
+            int idVehiculo = 0;
+            try
+            {
+                idVehiculo = Convert.ToInt32(comando.ExecuteScalar());
+            }
+            catch (Exception ex)
+            { Console.WriteLine(ex.Message); }
+            conexion.Close();
+
+            return idVehiculo;
+        }
+
         public Vehiculo(string matricula, string marca, string modelo)
         {
             Matricula = matricula;
             Marca = marca;
             Modelo = modelo;
+        }
+
+        public Vehiculo()
+        {
+
         }
     }
 }

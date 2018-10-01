@@ -595,7 +595,7 @@
             this.TxtMatricula.Location = new System.Drawing.Point(453, 93);
             this.TxtMatricula.Name = "TxtMatricula";
             this.TxtMatricula.Size = new System.Drawing.Size(104, 23);
-            this.TxtMatricula.TabIndex = 9;
+            this.TxtMatricula.TabIndex = 9;            
             // 
             // LMatricula
             // 
@@ -658,8 +658,7 @@
             this.TxtTelefono.Location = new System.Drawing.Point(132, 173);
             this.TxtTelefono.Name = "TxtTelefono";
             this.TxtTelefono.Size = new System.Drawing.Size(114, 23);
-            this.TxtTelefono.TabIndex = 5;
-            this.TxtTelefono.Leave += new System.EventHandler(this.TxtTelefono_Leave);
+            this.TxtTelefono.TabIndex = 5;            
             // 
             // LTelefono
             // 
@@ -701,8 +700,7 @@
             this.TxtNif.Location = new System.Drawing.Point(132, 93);
             this.TxtNif.Name = "TxtNif";
             this.TxtNif.Size = new System.Drawing.Size(114, 23);
-            this.TxtNif.TabIndex = 3;
-            this.TxtNif.Leave += new System.EventHandler(this.TxtNif_Leave);
+            this.TxtNif.TabIndex = 3;            
             // 
             // LNif
             // 

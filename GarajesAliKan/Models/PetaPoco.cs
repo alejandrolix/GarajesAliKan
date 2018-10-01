@@ -2140,7 +2140,7 @@ namespace PetaPoco
         /// <param name="sql">The SQL query to be executed</param>
         /// <param name="args">Arguments to any embedded parameters in the SQL</param>
         /// <returns>A collection of POCO's as a List</returns>
-        public List<T1> Fetch<T1, T2>(string sql, params object[] args)
+        public List<T1> Fetch<T1, T2>(string sql, string v, params object[] args)
         {
             return Query<T1, T2>(sql, args).ToList();
         }
@@ -2648,6 +2648,11 @@ namespace PetaPoco
             // Save it
             _lastSql = cmd.CommandText;
             _lastArgs = (from IDataParameter parameter in cmd.Parameters select parameter.Value).ToArray();
+        }
+
+        public List<T1> Fetch<T1, T2>(string sql, params object[] args)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

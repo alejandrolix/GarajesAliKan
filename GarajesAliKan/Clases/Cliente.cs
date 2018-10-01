@@ -12,13 +12,12 @@ namespace GarajesAliKan.Clases
         public string Apellidos { get; set; }
         public string Nif { get; set; }
         public string Direccion { get; set; }
-        public string Telefono { get; set; }
+        public string Telefono { get; set; }           
         public Garaje Garaje { get; set; }
         public string Observaciones { get; set; }        
         public bool EsClienteGaraje { get; set; }
-        public Vehiculo Vehiculo { get; set; }
-        public TipoAlquiler TipoAlquiler { get; set; }  
-        public AlquilerPorCliente AlquilerPorCliente { get; set; }
+        public Vehiculo Vehiculo { get; set; }        
+        public Alquiler Alquiler { get; set; }        
 
         /// <summary>
         /// Comprueba si existen clientes guardados.
@@ -47,33 +46,16 @@ namespace GarajesAliKan.Clases
         /// <returns>Los clientes existentes.</returns>
         public static List<Cliente> ObtenerClientesGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre AS nombreGaraje, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
-                                                      FROM   clientes cli		 
-		                                                     JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
-		                                                     JOIN garajes gaj ON gaj.id = alqPc.idGaraje
-		                                                     LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
-		                                                     JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
-                                                      WHERE  cli.esClienteGaraje IS TRUE
-                                                      ORDER BY cli.apellidos;", conexion);
-
-            MySqlDataReader cursor = comando.ExecuteReader();
-            List<Cliente> listaClientes = new List<Cliente>();
-
-            while (cursor.Read())
-            {
-                Garaje garaje = new Garaje(cursor.GetString("nombreGaraje"));
-                Vehiculo vehiculo = new Vehiculo(cursor.IsDBNull(8) ? null : cursor.GetString("matricula"), cursor.IsDBNull(9) ? null : cursor.GetString("marca"), cursor.IsDBNull(10) ? null : cursor.GetString("modelo"));                
-                TipoAlquiler tipoAlquiler = new TipoAlquiler(cursor.GetString("concepto"));
-                AlquilerPorCliente alqPorCliente = new AlquilerPorCliente(cursor.GetDecimal("baseImponible"), cursor.GetDecimal("iva"), cursor.GetDecimal("total"), cursor.GetString("plaza"), cursor.IsDBNull(15) ? 0 : cursor.GetInt32("llave"));                
-
-                Cliente cliente = new Cliente(cursor.GetInt32("id"), cursor.GetString("nombre"), cursor.GetString("apellidos"), cursor.GetString("nif"), cursor.GetString("direccion"), cursor.GetString("telefono"), cursor.IsDBNull(6) ? null: cursor.GetString("observaciones"),
-                    garaje, true, vehiculo, tipoAlquiler, alqPorCliente);
-
-                listaClientes.Add(cliente);
-            }
-            cursor.Close();
-            conexion.Close();
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaClientes = conexion.Fetch<Cliente, Garaje, Vehiculo, Alquiler>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
+                                                                                                FROM   clientes cli
+                                                                                                       JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
+                                                                                                       JOIN garajes gaj ON gaj.id = alqPc.idGaraje
+                                                                                                       LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
+                                                                                                       JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
+                                                                                                WHERE  cli.esClienteGaraje IS TRUE
+                                                                                                ORDER BY cli.apellidos;");
+            conexion.CloseSharedConnection();
 
             return listaClientes;
         }
@@ -88,10 +70,10 @@ namespace GarajesAliKan.Clases
             MySqlConnection conexion = Foo.ConexionABdMySQL();
             MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre AS nombreGaraje, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
                                                       FROM   clientes cli		 
-		                                                     JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
-		                                                     JOIN garajes gaj ON gaj.id = alqPc.idGaraje
-		                                                     LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
-		                                                     JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
+                                                       JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
+                                                       JOIN garajes gaj ON gaj.id = alqPc.idGaraje
+                                                       LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
+                                                       JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
                                                       WHERE  cli.id = @idCliente;", conexion);
 
             comando.Parameters.AddWithValue("@idCliente", idCliente);
@@ -102,11 +84,11 @@ namespace GarajesAliKan.Clases
             {
                 Garaje garaje = new Garaje(cursor.GetString("nombreGaraje"));
                 Vehiculo vehiculo = new Vehiculo(cursor.IsDBNull(8) ? null : cursor.GetString("matricula"), cursor.IsDBNull(9) ? null : cursor.GetString("marca"), cursor.IsDBNull(10) ? null : cursor.GetString("modelo"));
-                TipoAlquiler tipoAlquiler = new TipoAlquiler(cursor.GetString("concepto"));
-                AlquilerPorCliente alqPorCliente = new AlquilerPorCliente(cursor.GetDecimal("baseImponible"), cursor.GetDecimal("iva"), cursor.GetDecimal("total"), cursor.GetString("plaza"), cursor.IsDBNull(15) ? 0 : cursor.GetInt32("llave"));
+                Alquiler alqPorCliente = new Alquiler(cursor.GetDecimal("baseImponible"), cursor.GetDecimal("iva"), cursor.GetDecimal("total"), cursor.GetString("plaza"), cursor.IsDBNull(15) ? 0 : cursor.GetInt32("llave"),
+                                                      cursor.GetString("concepto"));
 
                 cliente = new Cliente(cursor.GetInt32("id"), cursor.GetString("nombre"), cursor.GetString("apellidos"), cursor.GetString("nif"), cursor.GetString("direccion"), cursor.GetString("telefono"), cursor.IsDBNull(6) ? null : cursor.GetString("observaciones"),
-                    garaje, true, vehiculo, tipoAlquiler, alqPorCliente);                
+                    garaje, true, vehiculo, alqPorCliente);
             }
             cursor.Close();
             conexion.Close();
@@ -204,17 +186,17 @@ namespace GarajesAliKan.Clases
         public bool Eliminar()
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand("DELETE FROM clientes WHERE idCliente = @idCliente;", conexion);
+            MySqlCommand comando = new MySqlCommand("DELETE FROM clientes WHERE id = @id;", conexion);
 
-            comando.Parameters.AddWithValue("@idCliente", Id);
+            comando.Parameters.AddWithValue("@id", Id);
 
             int numFila = 0;
             try
             {
                 numFila = comando.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            { Console.WriteLine(ex.Message); }
+            catch (Exception)
+            { }
             conexion.Close();
 
             return numFila >= 1;
@@ -222,11 +204,11 @@ namespace GarajesAliKan.Clases
 
         public override bool Equals(object obj)
         {
-            var cliente = obj as Cliente;
+            Cliente cliente = obj as Cliente;
             return cliente != null && Id == cliente.Id;
         }
 
-        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, TipoAlquiler tipoAlquiler, AlquilerPorCliente alquilerPorCliente)              // Alquilar una plaza de garaje.  
+        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, Alquiler alquilerPorCliente)              // Alquilar una plaza de garaje.  
         {
             Id = id;
             Nombre = nombre;
@@ -237,12 +219,11 @@ namespace GarajesAliKan.Clases
             Observaciones = observaciones;
             Garaje = garaje;
             EsClienteGaraje = esClienteGaraje;
-            Vehiculo = vehiculo;
-            TipoAlquiler = tipoAlquiler;
-            AlquilerPorCliente = alquilerPorCliente;
+            Vehiculo = vehiculo;            
+            Alquiler = alquilerPorCliente;
         }
 
-        public Cliente(string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, TipoAlquiler tipoAlquiler, AlquilerPorCliente alquilerPorCliente)              // Alquilar una plaza de garaje.  
+        public Cliente(string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, Alquiler alquilerPorCliente)              // Alquilar una plaza de garaje.  
         {            
             Nombre = nombre;
             Apellidos = apellidos;
@@ -252,12 +233,11 @@ namespace GarajesAliKan.Clases
             Observaciones = observaciones;
             Garaje = garaje;
             EsClienteGaraje = esClienteGaraje;
-            Vehiculo = vehiculo;
-            TipoAlquiler = tipoAlquiler;
-            AlquilerPorCliente = alquilerPorCliente;
+            Vehiculo = vehiculo;            
+            Alquiler = alquilerPorCliente;
         }
 
-        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, Garaje garaje, string observaciones, bool esClienteGaraje, TipoAlquiler tipoAlquiler)             // Alquilar una plaza de trastero.
+        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, Garaje garaje, string observaciones, bool esClienteGaraje)             // Alquilar una plaza de trastero.
         {
             Id = id;
             Nombre = nombre;
@@ -267,8 +247,7 @@ namespace GarajesAliKan.Clases
             Telefono = telefono;
             Garaje = garaje;
             Observaciones = observaciones;            
-            EsClienteGaraje = esClienteGaraje;            
-            TipoAlquiler = tipoAlquiler;
+            EsClienteGaraje = esClienteGaraje;                        
         }
 
         public Cliente(int id)          // Para buscar un cliente por su Id en la lista de clientes.
@@ -276,7 +255,7 @@ namespace GarajesAliKan.Clases
             Id = id;
         }
 
-        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, AlquilerPorCliente alquilerPorCliente)
+        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Alquiler alquilerPorCliente)
         {
             Id = id;
             Nombre = nombre;
@@ -285,7 +264,7 @@ namespace GarajesAliKan.Clases
             Direccion = direccion;
             Telefono = telefono;
             Observaciones = observaciones;
-            AlquilerPorCliente = alquilerPorCliente;
+            Alquiler = alquilerPorCliente;
         }
 
         public Cliente(int id, string apellidos)
@@ -296,7 +275,6 @@ namespace GarajesAliKan.Clases
 
         public Cliente()
         {
-
         }
     }
 }

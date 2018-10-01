@@ -98,10 +98,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clases\AlquilerPorCliente.cs" />
+    <Compile Include="Clases\Alquiler.cs" />
     <Compile Include="Clases\Foo.cs" />
     <Compile Include="Clases\Plaza.cs" />
-    <Compile Include="Clases\TipoAlquiler.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
     <Compile Include="DtClientesGarajes.cs">
       <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
