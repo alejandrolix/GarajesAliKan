@@ -341,7 +341,7 @@ namespace GarajesAliKan.Forms
 
             if (numPulsado >= 0 && numPulsado <= 9)
                 e.Handled = false;          // Escribe el número pulsado.                   
-            else if (e.KeyChar == ',')
+            else if (e.KeyChar == ',' || e.KeyChar == '.')
                 e.Handled = false;
             else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
                 e.Handled = false;
@@ -355,7 +355,7 @@ namespace GarajesAliKan.Forms
 
             if (numPulsado >= 0 && numPulsado <= 9)
                 e.Handled = false;          // Escribe el número pulsado.                   
-            else if (e.KeyChar == ',')
+            else if (e.KeyChar == ',' || e.KeyChar == '.')
                 e.Handled = false;
             else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
                 e.Handled = false;
@@ -369,7 +369,7 @@ namespace GarajesAliKan.Forms
 
             if (numPulsado >= 0 && numPulsado <= 9)
                 e.Handled = false;          // Escribe el número pulsado.                   
-            else if (e.KeyChar == ',')
+            else if (e.KeyChar == ',' || e.KeyChar == '.')
                 e.Handled = false;
             else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
                 e.Handled = false;
@@ -499,6 +499,23 @@ namespace GarajesAliKan.Forms
         {
             Cliente cliente = Cliente.ObtenerClientePorId(((Cliente)CbNifs.SelectedItem).Id);
             RellenarDatosCliente(cliente);
+        }
+
+        private void BtnFacturarMes_Click(object sender, EventArgs e)
+        {
+            // Implementar.
+        }
+
+        private void TxtTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int numPulsado = (int)char.GetNumericValue(e.KeyChar);
+
+            if (numPulsado >= 0 && numPulsado <= 9)
+                e.Handled = false;          // Escribe el número pulsado.       
+            else if (char.IsControl(e.KeyChar))
+                e.Handled = false;
+            else
+                e.Handled = true;
         }
     }
 }

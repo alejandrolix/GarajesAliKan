@@ -89,6 +89,7 @@
             this.LApellidos = new System.Windows.Forms.Label();
             this.TxtNombre = new System.Windows.Forms.TextBox();
             this.LNombre = new System.Windows.Forms.Label();
+            this.BtnFacturarMes = new System.Windows.Forms.Button();
             this.PBuscarPor.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
@@ -595,7 +596,7 @@
             this.TxtMatricula.Location = new System.Drawing.Point(453, 93);
             this.TxtMatricula.Name = "TxtMatricula";
             this.TxtMatricula.Size = new System.Drawing.Size(104, 23);
-            this.TxtMatricula.TabIndex = 9;            
+            this.TxtMatricula.TabIndex = 9;
             // 
             // LMatricula
             // 
@@ -658,7 +659,8 @@
             this.TxtTelefono.Location = new System.Drawing.Point(132, 173);
             this.TxtTelefono.Name = "TxtTelefono";
             this.TxtTelefono.Size = new System.Drawing.Size(114, 23);
-            this.TxtTelefono.TabIndex = 5;            
+            this.TxtTelefono.TabIndex = 5;
+            this.TxtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTelefono_KeyPress);
             // 
             // LTelefono
             // 
@@ -700,7 +702,7 @@
             this.TxtNif.Location = new System.Drawing.Point(132, 93);
             this.TxtNif.Name = "TxtNif";
             this.TxtNif.Size = new System.Drawing.Size(114, 23);
-            this.TxtNif.TabIndex = 3;            
+            this.TxtNif.TabIndex = 3;
             // 
             // LNif
             // 
@@ -754,11 +756,24 @@
             this.LNombre.TabIndex = 2;
             this.LNombre.Text = "Nombre: ";
             // 
+            // BtnFacturarMes
+            // 
+            this.BtnFacturarMes.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnFacturarMes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFacturarMes.Location = new System.Drawing.Point(828, 465);
+            this.BtnFacturarMes.Name = "BtnFacturarMes";
+            this.BtnFacturarMes.Size = new System.Drawing.Size(108, 53);
+            this.BtnFacturarMes.TabIndex = 27;
+            this.BtnFacturarMes.Text = "Facturar Mes";
+            this.BtnFacturarMes.UseVisualStyleBackColor = true;
+            this.BtnFacturarMes.Click += new System.EventHandler(this.BtnFacturarMes_Click);
+            // 
             // FrmClientesGaraje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1007, 557);
+            this.Controls.Add(this.BtnFacturarMes);
             this.Controls.Add(this.PBuscarPor);
             this.Controls.Add(this.BindingNavigator);
             this.Controls.Add(this.panel);
@@ -844,5 +859,6 @@
         private System.Windows.Forms.TextBox TxtIva;
         private System.Windows.Forms.BindingSource clientesBindingSource;
         private DtClientesGarajes dtClientesGarajes;
+        private System.Windows.Forms.Button BtnFacturarMes;
     }
 }

@@ -12,11 +12,11 @@ namespace GarajesAliKan.Clases
         public string Apellidos { get; set; }
         public string Nif { get; set; }
         public string Direccion { get; set; }
-        public string Telefono { get; set; }           
+        public string Telefono { get; set; }          
         public Garaje Garaje { get; set; }
         public string Observaciones { get; set; }        
-        public bool EsClienteGaraje { get; set; }
-        public Vehiculo Vehiculo { get; set; }        
+        public bool EsClienteGaraje { get; set; }        
+        public Vehiculo Vehiculo { get; set; }                
         public Alquiler Alquiler { get; set; }        
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@nif", Nif);
             comando.Parameters.AddWithValue("@direccion", Direccion);
             comando.Parameters.AddWithValue("@telefono", Telefono);
-            comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);                        
+            comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);
 
             int numFila = 0;
             try
