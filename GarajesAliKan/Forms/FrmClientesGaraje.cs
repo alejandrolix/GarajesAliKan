@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using GarajesAliKan.DataSets;
 
 namespace GarajesAliKan.Forms
 {
@@ -16,7 +17,7 @@ namespace GarajesAliKan.Forms
         }
 
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
-        {
+        {            
             CbConceptos.DataSource = Alquiler.ObtenerConceptos();
             CbConceptos.DisplayMember = "Concepto";
             CbConceptos.ValueMember = "IdTipoAlquiler";
@@ -36,7 +37,7 @@ namespace GarajesAliKan.Forms
             if (Cliente.HayClientes())
             {
                 ListaClientes = Cliente.ObtenerClientesGarajes();
-                CargarDatosAlDataTable(ListaClientes);
+                CargarDatosAlDataTable(ListaClientes);                
             }            
         }
 

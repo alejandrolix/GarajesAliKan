@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using PetaPoco;
+using NPoco;
 using MySql.Data.MySqlClient;
 
 namespace GarajesAliKan.Clases
@@ -15,13 +15,13 @@ namespace GarajesAliKan.Clases
     class Foo
     {
         /// <summary>
-        /// Realiza una conexión a la base de datos usando el micro ORM PetaPoco.
+        /// Realiza una conexión a la base de datos usando el micro ORM NPoco.
         /// </summary>
         /// <returns>La conexión de la base de datos.</returns>
         public static Database ConexionABd()
         {
             string datosConexion = LeerArchivoConexion();
-            return new Database(datosConexion, "MySql.Data.MySqlClient");
+            return new Database(datosConexion, "MySql.Data.MySqlClient");            
         }
 
         /// <summary>

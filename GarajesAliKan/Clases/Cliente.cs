@@ -1,5 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using PetaPoco;
+using NPoco;
 using System;
 using System.Collections.Generic;
 
@@ -47,14 +47,14 @@ namespace GarajesAliKan.Clases
         public static List<Cliente> ObtenerClientesGarajes()
         {
             Database conexion = Foo.ConexionABd();
-            List<Cliente> listaClientes = conexion.Fetch<Cliente, Garaje, Vehiculo, Alquiler>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
-                                                                                                FROM   clientes cli
-                                                                                                       JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
-                                                                                                       JOIN garajes gaj ON gaj.id = alqPc.idGaraje
-                                                                                                       LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
-                                                                                                       JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
-                                                                                                WHERE  cli.esClienteGaraje IS TRUE
-                                                                                                ORDER BY cli.apellidos;");
+            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
+                                                                    FROM   clientes cli
+                                                                            JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
+                                                                            JOIN garajes gaj ON gaj.id = alqPc.idGaraje
+                                                                            LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
+                                                                            JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
+                                                                    WHERE  cli.esClienteGaraje IS TRUE
+                                                                    ORDER BY cli.apellidos;");
             conexion.CloseSharedConnection();
 
             return listaClientes;
@@ -67,31 +67,15 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos del cliente.</returns>
         public static Cliente ObtenerClientePorId(int idCliente)
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre AS nombreGaraje, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
-                                                      FROM   clientes cli		 
-                                                       JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
-                                                       JOIN garajes gaj ON gaj.id = alqPc.idGaraje
-                                                       LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
-                                                       JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
-                                                      WHERE  cli.id = @idCliente;", conexion);
-
-            comando.Parameters.AddWithValue("@idCliente", idCliente);
-            MySqlDataReader cursor = comando.ExecuteReader();
-            Cliente cliente = null;
-
-            while (cursor.Read())
-            {
-                Garaje garaje = new Garaje(cursor.GetString("nombreGaraje"));
-                Vehiculo vehiculo = new Vehiculo(cursor.IsDBNull(8) ? null : cursor.GetString("matricula"), cursor.IsDBNull(9) ? null : cursor.GetString("marca"), cursor.IsDBNull(10) ? null : cursor.GetString("modelo"));
-                Alquiler alqPorCliente = new Alquiler(cursor.GetDecimal("baseImponible"), cursor.GetDecimal("iva"), cursor.GetDecimal("total"), cursor.GetString("plaza"), cursor.IsDBNull(15) ? 0 : cursor.GetInt32("llave"),
-                                                      cursor.GetString("concepto"));
-
-                cliente = new Cliente(cursor.GetInt32("id"), cursor.GetString("nombre"), cursor.GetString("apellidos"), cursor.GetString("nif"), cursor.GetString("direccion"), cursor.GetString("telefono"), cursor.IsDBNull(6) ? null : cursor.GetString("observaciones"),
-                    garaje, true, vehiculo, alqPorCliente);
-            }
-            cursor.Close();
-            conexion.Close();
+            Database conexion = Foo.ConexionABd();
+            Cliente cliente = conexion.Single<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre AS nombreGaraje, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
+                                                         FROM   clientes cli		 
+                                                                JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
+                                                                JOIN garajes gaj ON gaj.id = alqPc.idGaraje
+                                                                LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
+                                                                JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
+                                                         WHERE  cli.id = @0;", idCliente);
+            conexion.CloseSharedConnection();
 
             return cliente;
         }
@@ -206,7 +190,7 @@ namespace GarajesAliKan.Clases
         {
             Cliente cliente = obj as Cliente;
             return cliente != null && Id == cliente.Id;
-        }
+        }        
 
         public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, Alquiler alquilerPorCliente)              // Alquilar una plaza de garaje.  
         {

@@ -30,6 +30,7 @@
         {
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.ClientesGarajeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ClientesLavaderoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -37,7 +38,8 @@
             // 
             this.MenuStrip.BackColor = System.Drawing.SystemColors.Control;
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ClientesGarajeToolStripMenuItem});
+            this.ClientesGarajeToolStripMenuItem,
+            this.ClientesLavaderoToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Size = new System.Drawing.Size(800, 28);
@@ -52,6 +54,14 @@
             this.ClientesGarajeToolStripMenuItem.Text = "Clientes Garaje";
             this.ClientesGarajeToolStripMenuItem.Click += new System.EventHandler(this.ClientesGarajeToolStripMenuItem_Click);
             // 
+            // ClientesLavaderoToolStripMenuItem
+            // 
+            this.ClientesLavaderoToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.ClientesLavaderoToolStripMenuItem.Name = "ClientesLavaderoToolStripMenuItem";
+            this.ClientesLavaderoToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.ClientesLavaderoToolStripMenuItem.Text = "Clientes Lavadero";
+            this.ClientesLavaderoToolStripMenuItem.Click += new System.EventHandler(this.ClientesLavaderoToolStripMenuItem_Click);
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -64,7 +74,7 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menú Principal";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;            
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -76,6 +86,7 @@
 
         private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem ClientesGarajeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ClientesLavaderoToolStripMenuItem;
     }
 }
 

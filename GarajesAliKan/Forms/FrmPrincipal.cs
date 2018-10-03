@@ -23,5 +23,11 @@ namespace GarajesAliKan
             FrmClientesGaraje frmClientesGaraje = new FrmClientesGaraje();
             frmClientesGaraje.ShowDialog();
         }
+
+        private void ClientesLavaderoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmClientesLavadero frmClientesLavadero = new FrmClientesLavadero();
+            frmClientesLavadero.ShowDialog();
+        }
     }
 }

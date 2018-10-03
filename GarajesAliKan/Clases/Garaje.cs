@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PetaPoco;
+using NPoco;
 
 namespace GarajesAliKan.Clases
 {    
