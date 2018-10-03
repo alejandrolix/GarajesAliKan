@@ -40,8 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CbPlazas = new System.Windows.Forms.ComboBox();
             this.BindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-            this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dtClientesGarajes = new GarajesAliKan.DataSets.DtClientesGarajes();
+            this.BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -94,8 +93,7 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtClientesGarajes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
             this.panel.SuspendLayout();
             this.PBtnsControl.SuspendLayout();
             this.SuspendLayout();
@@ -202,7 +200,7 @@
             // BindingNavigator
             // 
             this.BindingNavigator.AddNewItem = null;
-            this.BindingNavigator.BindingSource = this.clientesBindingSource;
+            this.BindingNavigator.BindingSource = this.BindingSource;
             this.BindingNavigator.CountItem = this.bindingNavigatorCountItem;
             this.BindingNavigator.DeleteItem = null;
             this.BindingNavigator.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -227,17 +225,6 @@
             this.BindingNavigator.TabIndex = 25;
             this.BindingNavigator.Text = "bindingNavigator1";
             // 
-            // clientesBindingSource
-            // 
-            this.clientesBindingSource.DataMember = "clientes";
-            this.clientesBindingSource.DataSource = this.dtClientesGarajes;
-            this.clientesBindingSource.PositionChanged += new System.EventHandler(this.ClientesBindingSource_PositionChanged);
-            // 
-            // dtClientesGarajes
-            // 
-            this.dtClientesGarajes.DataSetName = "DtClientesGarajes";
-            this.dtClientesGarajes.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // bindingNavigatorCountItem
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 11F);
@@ -254,6 +241,7 @@
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveFirstItem.Text = "Mover primero";
+            this.bindingNavigatorMoveFirstItem.Click += new System.EventHandler(this.bindingNavigatorMoveFirstItem_Click);
             // 
             // bindingNavigatorMovePreviousItem
             // 
@@ -263,6 +251,7 @@
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMovePreviousItem.Text = "Mover anterior";
+            this.bindingNavigatorMovePreviousItem.Click += new System.EventHandler(this.bindingNavigatorMovePreviousItem_Click);
             // 
             // bindingNavigatorSeparator
             // 
@@ -292,6 +281,7 @@
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveNextItem.Text = "Mover siguiente";
+            this.bindingNavigatorMoveNextItem.Click += new System.EventHandler(this.bindingNavigatorMoveNextItem_Click);
             // 
             // bindingNavigatorMoveLastItem
             // 
@@ -301,6 +291,7 @@
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveLastItem.Text = "Mover último";
+            this.bindingNavigatorMoveLastItem.Click += new System.EventHandler(this.bindingNavigatorMoveLastItem_Click);
             // 
             // panel
             // 
@@ -350,7 +341,6 @@
             // 
             // TxtBaseImponible
             // 
-            this.TxtBaseImponible.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "baseImponible", true));
             this.TxtBaseImponible.Enabled = false;
             this.TxtBaseImponible.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtBaseImponible.Location = new System.Drawing.Point(759, 53);
@@ -418,7 +408,6 @@
             // TxtObservaciones
             // 
             this.TxtObservaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtObservaciones.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "observaciones", true));
             this.TxtObservaciones.Enabled = false;
             this.TxtObservaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtObservaciones.Location = new System.Drawing.Point(165, 219);
@@ -451,7 +440,6 @@
             // 
             // CbGarajes
             // 
-            this.CbGarajes.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "nombreGaraje", true));
             this.CbGarajes.Enabled = false;
             this.CbGarajes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CbGarajes.FormattingEnabled = true;
@@ -473,7 +461,6 @@
             // 
             // TxtTotal
             // 
-            this.TxtTotal.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "total", true));
             this.TxtTotal.Enabled = false;
             this.TxtTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtTotal.Location = new System.Drawing.Point(759, 131);
@@ -494,7 +481,6 @@
             // 
             // TxtIva
             // 
-            this.TxtIva.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "iva", true));
             this.TxtIva.Enabled = false;
             this.TxtIva.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtIva.Location = new System.Drawing.Point(759, 92);
@@ -525,7 +511,6 @@
             // 
             // CbConceptos
             // 
-            this.CbConceptos.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "concepto", true));
             this.CbConceptos.Enabled = false;
             this.CbConceptos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CbConceptos.FormattingEnabled = true;
@@ -548,7 +533,6 @@
             // TxtPlaza
             // 
             this.TxtPlaza.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtPlaza.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "plaza", true));
             this.TxtPlaza.Enabled = false;
             this.TxtPlaza.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPlaza.Location = new System.Drawing.Point(453, 173);
@@ -569,7 +553,6 @@
             // TxtLlave
             // 
             this.TxtLlave.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtLlave.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "llave", true));
             this.TxtLlave.Enabled = false;
             this.TxtLlave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtLlave.Location = new System.Drawing.Point(453, 133);
@@ -591,7 +574,6 @@
             // TxtMatricula
             // 
             this.TxtMatricula.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtMatricula.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "matricula", true));
             this.TxtMatricula.Enabled = false;
             this.TxtMatricula.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtMatricula.Location = new System.Drawing.Point(453, 93);
@@ -612,7 +594,6 @@
             // TxtModelo
             // 
             this.TxtModelo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtModelo.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "modelo", true));
             this.TxtModelo.Enabled = false;
             this.TxtModelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtModelo.Location = new System.Drawing.Point(453, 53);
@@ -633,7 +614,6 @@
             // TxtMarca
             // 
             this.TxtMarca.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtMarca.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "marca", true));
             this.TxtMarca.Enabled = false;
             this.TxtMarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtMarca.Location = new System.Drawing.Point(453, 13);
@@ -654,7 +634,6 @@
             // TxtTelefono
             // 
             this.TxtTelefono.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtTelefono.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "telefono", true));
             this.TxtTelefono.Enabled = false;
             this.TxtTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtTelefono.Location = new System.Drawing.Point(132, 173);
@@ -676,7 +655,6 @@
             // TxtDireccion
             // 
             this.TxtDireccion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtDireccion.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "direccion", true));
             this.TxtDireccion.Enabled = false;
             this.TxtDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtDireccion.Location = new System.Drawing.Point(132, 133);
@@ -697,7 +675,6 @@
             // TxtNif
             // 
             this.TxtNif.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtNif.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "nif", true));
             this.TxtNif.Enabled = false;
             this.TxtNif.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtNif.Location = new System.Drawing.Point(132, 93);
@@ -718,7 +695,6 @@
             // TxtApellidos
             // 
             this.TxtApellidos.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtApellidos.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "apellidos", true));
             this.TxtApellidos.Enabled = false;
             this.TxtApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtApellidos.Location = new System.Drawing.Point(132, 53);
@@ -739,7 +715,6 @@
             // TxtNombre
             // 
             this.TxtNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtNombre.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientesBindingSource, "nombre", true));
             this.TxtNombre.Enabled = false;
             this.TxtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtNombre.Location = new System.Drawing.Point(132, 13);
@@ -792,8 +767,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).EndInit();
             this.BindingNavigator.ResumeLayout(false);
             this.BindingNavigator.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtClientesGarajes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).EndInit();
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
             this.PBtnsControl.ResumeLayout(false);
@@ -861,8 +835,7 @@
         private System.Windows.Forms.TextBox TxtBaseImponible;
         private System.Windows.Forms.TextBox TxtTotal;
         private System.Windows.Forms.TextBox TxtIva;
-        private System.Windows.Forms.BindingSource clientesBindingSource;
-        private GarajesAliKan.DataSets.DtClientesGarajes dtClientesGarajes;
         private System.Windows.Forms.Button BtnFacturarMes;
+        private System.Windows.Forms.BindingSource BindingSource;
     }
 }

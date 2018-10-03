@@ -15,8 +15,8 @@ namespace GarajesAliKan.Clases
         public string Telefono { get; set; }          
         public Garaje Garaje { get; set; }
         public string Observaciones { get; set; }        
-        public bool EsClienteGaraje { get; set; }        
-        public Vehiculo Vehiculo { get; set; }                
+        public bool EsClienteGaraje { get; set; }                
+        public Vehiculo Vehiculo { get; set; }                        
         public Alquiler Alquiler { get; set; }        
 
         /// <summary>
@@ -31,19 +31,19 @@ namespace GarajesAliKan.Clases
             int numClientes = 0;
             try
             {
-                numClientes = Convert.ToInt32(comando.ExecuteScalar());
-                conexion.Close();
+                numClientes = Convert.ToInt32(comando.ExecuteScalar());                
             }
             catch (Exception)
             { }
+            conexion.Close();
 
             return numClientes >= 1;
         }
 
         /// <summary>
-        /// Obtiene todos los clientes.
+        /// Obtiene todos los clientes de los garajes.
         /// </summary>
-        /// <returns>Los clientes existentes.</returns>
+        /// <returns>Los clientes existentes de los garajes.</returns>
         public static List<Cliente> ObtenerClientesGarajes()
         {
             Database conexion = Foo.ConexionABd();
@@ -68,7 +68,7 @@ namespace GarajesAliKan.Clases
         public static Cliente ObtenerClientePorId(int idCliente)
         {
             Database conexion = Foo.ConexionABd();
-            Cliente cliente = conexion.Single<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre AS nombreGaraje, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
+            Cliente cliente = conexion.Single<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
                                                          FROM   clientes cli		 
                                                                 JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
                                                                 JOIN garajes gaj ON gaj.id = alqPc.idGaraje
@@ -107,6 +107,19 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene el último Id insertado.
+        /// </summary>
+        /// <param name="conexion">La conexión con la base de datos. Opcional.</param>
+        /// <returns>El último Id insertado.</returns>
+        public static int ObtenerUltimoId(Database conexion = null)
+        {
+            int ultimoId = conexion.ExecuteScalar<int>("SELECT MAX(id) FROM clientes;");
+            conexion.CloseSharedConnection();
+
+            return ultimoId;
+        }
+
+        /// <summary>
         /// Inserta un cliente.
         /// </summary>
         /// <returns>El cliente se ha insertado.</returns>
@@ -127,8 +140,7 @@ namespace GarajesAliKan.Clases
             try
             {
                 numFila = comando.ExecuteNonQuery();
-                comando.CommandText = "SELECT MAX(id) FROM clientes;";
-                Id = Convert.ToInt32(comando.ExecuteScalar());
+                Id = ObtenerUltimoId(Foo.ConexionABd());
             }
             catch (Exception)
             { }
