@@ -9,7 +9,7 @@ namespace GarajesAliKan.Forms
 {
     public partial class FrmClientesGaraje : Form
     {
-        private List<Cliente> ListaClientes;          
+        private List<Cliente> ListaClientes;
 
         public FrmClientesGaraje()
         {
@@ -17,7 +17,7 @@ namespace GarajesAliKan.Forms
         }
 
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
-        {            
+        {
             CargarDatosComboBox();
             if (Cliente.HayClientesGarajes())
             {
@@ -82,7 +82,7 @@ namespace GarajesAliKan.Forms
                     cliente.Garaje.Nombre, cliente.Alquiler.Llave, cliente.Vehiculo.Matricula, cliente.Vehiculo.Marca, cliente.Vehiculo.Modelo, cliente.Alquiler.Plaza,
                     cliente.Alquiler.Concepto, cliente.Alquiler.BaseImponible.ToString(), cliente.Alquiler.Iva.ToString(), cliente.Alquiler.Total.ToString(), cliente.Observaciones);
             }
-            BindingSource.DataSource = dtClientes;            
+            BindingSource.DataSource = dtClientes;
         }
 
         private void BtnAddCliente_Click(object sender, EventArgs e)
@@ -90,7 +90,10 @@ namespace GarajesAliKan.Forms
             BtnAddCliente.Tag = 1;
             HabilitarControles(true);
             TxtNombre.Focus();
-            LimpiarCampos();
+
+            if (ListaClientes != null)
+                if (ListaClientes[0].Id != 0)
+                    LimpiarCampos();
         }
 
         /// <summary>
@@ -153,35 +156,54 @@ namespace GarajesAliKan.Forms
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if (ComprobarDatosIntroducidos())
-            {
-                Garaje garaje = new Garaje(((Garaje)CbGarajes.SelectedItem).Id, ((Garaje)CbGarajes.SelectedItem).Nombre);
-                Alquiler alquiler = null;
-                Vehiculo vehiculo = null;
-                Cliente cliente = null;
+            if (ListaClientes != null)
+                if (ComprobarDatosIntroducidos())
+                {
+                    Garaje garaje = new Garaje(((Garaje)CbGarajes.SelectedItem).Id, ((Garaje)CbGarajes.SelectedItem).Nombre);
+                    Alquiler alquiler = null;
+                    Vehiculo vehiculo = null;
+                    Cliente cliente = null;
 
-                if (TxtMarca.Text.Length == 0 && TxtModelo.Text.Length == 0 && TxtMatricula.Text.Length == 0 && TxtLlave.Text.Length == 0)      // Si no hay datos del vehículo, alquila un trastero.                       
-                {
-                    alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
-                    cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, null, alquiler);
-                }
-                else
-                {
-                    alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
-                    vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text);
-                    cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, vehiculo, alquiler);
-                }
-
-                if (Convert.ToInt32(BtnAddCliente.Tag) == 1)        // Insertamos el cliente.
-                {
-                    if (cliente.Insertar())
+                    if (TxtMarca.Text.Length == 0 && TxtModelo.Text.Length == 0 && TxtMatricula.Text.Length == 0 && TxtLlave.Text.Length == 0)      // Si no hay datos del vehículo, alquila un trastero.                       
                     {
-                        if (alquiler.IdTipoAlquiler == 1)           // Vamos a alquilar una plaza de garaje.
+                        alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
+                        cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, null, alquiler);
+                    }
+                    else
+                    {
+                        alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
+                        vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text);
+                        cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, vehiculo, alquiler);
+                    }
+
+                    if (Convert.ToInt32(BtnAddCliente.Tag) == 1)        // Insertamos el cliente.
+                    {
+                        if (cliente.Insertar())
                         {
-                            if (vehiculo.Insertar())
+                            if (alquiler.IdTipoAlquiler == 1)           // Vamos a alquilar una plaza de garaje.
+                            {
+                                if (vehiculo.Insertar())
+                                {
+                                    alquiler.IdCliente = cliente.Id;
+                                    alquiler.IdVehiculo = vehiculo.Id;
+
+                                    if (alquiler.Insertar(garaje.Id))
+                                    {
+                                        MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        ListaClientes = Cliente.ObtenerClientesGarajes();
+                                        HabilitarControles(false);
+                                        CargarClientesAlDataTable(ListaClientes);
+
+                                        int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
+                                        BindingSource.Position = pos;
+                                    }
+                                }
+                                else
+                                    MessageBox.Show("Ha habido un problema al insertar el vehículo", "Vehículo no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
                             {
                                 alquiler.IdCliente = cliente.Id;
-                                alquiler.IdVehiculo = vehiculo.Id;
 
                                 if (alquiler.Insertar(garaje.Id))
                                 {
@@ -190,48 +212,30 @@ namespace GarajesAliKan.Forms
                                     HabilitarControles(false);
                                     CargarClientesAlDataTable(ListaClientes);
 
-                                    int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
+                                    int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));
                                     BindingSource.Position = pos;
                                 }
                             }
-                            else
-                                MessageBox.Show("Ha habido un problema al insertar el vehículo", "Vehículo no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
-                        {
-                            alquiler.IdCliente = cliente.Id;
-
-                            if (alquiler.Insertar(garaje.Id))
-                            {
-                                MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                ListaClientes = Cliente.ObtenerClientesGarajes();
-                                HabilitarControles(false);
-                                CargarClientesAlDataTable(ListaClientes);
-
-                                int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));
-                                BindingSource.Position = pos;
-                            }
-                        }
+                            MessageBox.Show("Ha habido un problema al insertar el cliente", "Cliente no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else
-                        MessageBox.Show("Ha habido un problema al insertar el cliente", "Cliente no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else       // Modificamos los datos del cliente.       
-                {
-                    alquiler = new Alquiler(decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text));
-                    cliente = new Cliente(ListaClientes[BindingSource.Position].Id, TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, alquiler);                    
-
-                    if (cliente.Modificar())
+                    else       // Modificamos los datos del cliente.       
                     {
-                        if (alquiler.Modificar(cliente.Id))
-                            MessageBox.Show("Datos del cliente modificados", "Datos Modificados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        alquiler = new Alquiler(decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text));
+                        cliente = new Cliente(ListaClientes[BindingSource.Position].Id, TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, alquiler);
+
+                        if (cliente.Modificar())
+                        {
+                            if (alquiler.Modificar(cliente.Id))
+                                MessageBox.Show("Datos del cliente modificados", "Datos Modificados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            else
+                                MessageBox.Show("Ha habido un problema al modificar los datos del alquiler del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         else
-                            MessageBox.Show("Ha habido un problema al modificar los datos del alquiler del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Ha habido un problema al modificar los datos del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else
-                        MessageBox.Show("Ha habido un problema al modificar los datos del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
         }
 
         /// <summary>
@@ -263,6 +267,7 @@ namespace GarajesAliKan.Forms
             bool hayTotal = false;
             Regex exprRegTelefono = new Regex("^[0-9]{9}$");
             Regex exprRegNif = new Regex("^[0-9]{8}[A-Z]$");
+            Regex exprRegMatricula = new Regex("^[0-9]{4} [A-Z]{3}$");
 
             if (TxtNombre.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir un nombre", "Nombre Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -307,9 +312,7 @@ namespace GarajesAliKan.Forms
             }
             else if (TxtMarca.Text.Length == 0 && TxtModelo.Text.Length == 0 && TxtMatricula.Text.Length != 0 && ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler == 1 && Convert.ToInt32(BtnAddCliente.Tag) == 1)
             {
-                Regex exprReg = new Regex("^[0-9]{4} [A-Z]{3}$");
-
-                if (!exprReg.IsMatch(TxtMatricula.Text))
+                if (!exprRegMatricula.IsMatch(TxtMatricula.Text))
                 {
                     MessageBox.Show("Formato de matrícula incorrecto", "Formato Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     TxtMatricula.Clear();
@@ -350,11 +353,9 @@ namespace GarajesAliKan.Forms
         {
             int numPulsado = (int)char.GetNumericValue(e.KeyChar);
 
-            if (numPulsado >= 0 && numPulsado <= 9)
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
                 e.Handled = false;          // Escribe el número pulsado.                   
             else if (e.KeyChar == ',' || e.KeyChar == '.')
-                e.Handled = false;
-            else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
                 e.Handled = false;
             else
                 e.Handled = true;
@@ -364,11 +365,9 @@ namespace GarajesAliKan.Forms
         {
             int numPulsado = (int)char.GetNumericValue(e.KeyChar);
 
-            if (numPulsado >= 0 && numPulsado <= 9)
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
                 e.Handled = false;          // Escribe el número pulsado.                   
             else if (e.KeyChar == ',' || e.KeyChar == '.')
-                e.Handled = false;
-            else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
                 e.Handled = false;
             else
                 e.Handled = true;
@@ -378,11 +377,9 @@ namespace GarajesAliKan.Forms
         {
             int numPulsado = (int)char.GetNumericValue(e.KeyChar);
 
-            if (numPulsado >= 0 && numPulsado <= 9)
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
                 e.Handled = false;          // Escribe el número pulsado.                   
             else if (e.KeyChar == ',' || e.KeyChar == '.')
-                e.Handled = false;
-            else if (char.IsControl(e.KeyChar))         // Por ejemplo, la tecla de borrar.
                 e.Handled = false;
             else
                 e.Handled = true;
@@ -392,11 +389,12 @@ namespace GarajesAliKan.Forms
         {
             HabilitarControles(false);
 
-            if (Convert.ToInt32(BtnModificarCliente.Tag) != 1)          // No se ha pulsado al botón "Modificar Cliente".
-            {
-                LimpiarCampos();
-                RellenarDatosCliente(ListaClientes[BindingSource.Position]);
-            }
+            if (ListaClientes != null)
+                if (Convert.ToInt32(BtnModificarCliente.Tag) != 1)          // No se ha pulsado al botón "Modificar Cliente".
+                {
+                    LimpiarCampos();
+                    RellenarDatosCliente(ListaClientes[BindingSource.Position]);
+                }
             RestaurarTagsBotones();
         }
 
@@ -404,10 +402,8 @@ namespace GarajesAliKan.Forms
         {
             int numPulsado = (int)char.GetNumericValue(e.KeyChar);
 
-            if (numPulsado >= 0 && numPulsado <= 9)
-                e.Handled = false;          // Escribe el número pulsado.       
-            else if (char.IsControl(e.KeyChar))
-                e.Handled = false;
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
+                e.Handled = false;          // Escribe el número pulsado.                   
             else
                 e.Handled = true;
         }
@@ -425,14 +421,34 @@ namespace GarajesAliKan.Forms
 
         private void BtnEliminarCliente_Click(object sender, EventArgs e)
         {
-            Cliente cliente = ListaClientes[BindingSource.Position];
-
-            if (CbConceptos.SelectedIndex == 0)         // Eliminamos la plaza de garaje.
+            if (ListaClientes != null)
             {
-                int idVehiculoCliente = cliente.Vehiculo.ObtenerIdPorIdCliente(cliente.Id);
+                Cliente cliente = ListaClientes[BindingSource.Position];
 
-                if (cliente.Alquiler.EliminarPlzGarajePorIdCliente(cliente.Id))
-                    if (cliente.Vehiculo.Eliminar(cliente.Vehiculo.Id))
+                if (CbConceptos.SelectedIndex == 0)         // Eliminamos la plaza de garaje.
+                {
+                    int idVehiculoCliente = cliente.Vehiculo.ObtenerIdPorIdCliente(cliente.Id);
+
+                    if (cliente.Alquiler.EliminarPlzGarajePorIdCliente(cliente.Id))
+                        if (cliente.Vehiculo.Eliminar(cliente.Vehiculo.Id))
+                            if (cliente.Eliminar())
+                            {
+                                MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                ListaClientes = Cliente.ObtenerClientesGarajes();
+                                HabilitarControles(false);
+                                CargarClientesAlDataTable(ListaClientes);
+                                BindingSource.Position = ListaClientes.Count - 1;
+                            }
+                            else
+                                MessageBox.Show("Ha habido un problema al eliminar el cliente", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        else
+                            MessageBox.Show("Ha habido un problema el vehículo del cliente", "Vehículo no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else
+                        MessageBox.Show("Ha habido un problema la plaza de garaje del cliente", "Plaza Garaje no Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else      // Eliminamos la plaza de trastero.
+                {
+                    if (cliente.Alquiler.EliminarPlzTrasteroPorIdCliente(cliente.Id))
                         if (cliente.Eliminar())
                         {
                             MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -442,27 +458,10 @@ namespace GarajesAliKan.Forms
                             BindingSource.Position = ListaClientes.Count - 1;
                         }
                         else
-                            MessageBox.Show("Ha habido un problema al eliminar el cliente", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Ha habido un problema al eliminar el cliente.", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
-                        MessageBox.Show("Ha habido un problema el vehículo del cliente", "Vehículo no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else
-                    MessageBox.Show("Ha habido un problema la plaza de garaje del cliente", "Plaza Garaje no Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else      // Eliminamos la plaza de trastero.
-            {
-                if (cliente.Alquiler.EliminarPlzTrasteroPorIdCliente(cliente.Id))
-                    if (cliente.Eliminar())
-                    {
-                        MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ListaClientes = Cliente.ObtenerClientesGarajes();
-                        HabilitarControles(false);
-                        CargarClientesAlDataTable(ListaClientes);
-                        BindingSource.Position = ListaClientes.Count - 1;
-                    }
-                    else
-                        MessageBox.Show("Ha habido un problema al eliminar el cliente.", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else
-                    MessageBox.Show("Ha habido un problema la plaza de trastero del cliente", "Plaza Trastero no Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Ha habido un problema la plaza de trastero del cliente", "Plaza Trastero no Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -517,10 +516,8 @@ namespace GarajesAliKan.Forms
         {
             int numPulsado = (int)char.GetNumericValue(e.KeyChar);
 
-            if (numPulsado >= 0 && numPulsado <= 9)
-                e.Handled = false;          // Escribe el número pulsado.       
-            else if (char.IsControl(e.KeyChar))
-                e.Handled = false;
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
+                e.Handled = false;          // Escribe el número pulsado.                   
             else
                 e.Handled = true;
         }
@@ -543,6 +540,22 @@ namespace GarajesAliKan.Forms
         private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
             RellenarDatosCliente(ListaClientes[BindingSource.Position]);
+        }
+
+        private void TxtNif_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsControl(e.KeyChar))
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void TxtMatricula_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || char.IsControl(e.KeyChar))
+                e.Handled = false;
+            else
+                e.Handled = true;
         }
     }
 }

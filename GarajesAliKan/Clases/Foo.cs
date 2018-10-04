@@ -21,7 +21,7 @@ namespace GarajesAliKan.Clases
         public static Database ConexionABd()
         {
             string datosConexion = LeerArchivoConexion();
-            return new Database(datosConexion, "MySql.Data.MySqlClient");            
+            return new Database(datosConexion, "MySql.Data.MySqlClient");             
         }
 
         /// <summary>

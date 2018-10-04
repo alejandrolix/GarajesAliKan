@@ -61,12 +61,16 @@
             this.LBuscarPor = new System.Windows.Forms.Label();
             this.CbApellidos = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.BtnGuardar = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.BtnCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             this.PBuscarPor.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // BindingNavigator
@@ -92,7 +96,7 @@
             this.BindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.BindingNavigator.Name = "BindingNavigator";
             this.BindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-            this.BindingNavigator.Size = new System.Drawing.Size(790, 27);
+            this.BindingNavigator.Size = new System.Drawing.Size(821, 27);
             this.BindingNavigator.TabIndex = 0;
             this.BindingNavigator.Text = "bindingNavigator1";
             // 
@@ -167,9 +171,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.BtnEliminarCliente);
-            this.panel1.Controls.Add(this.BtnModificarCliente);
-            this.panel1.Controls.Add(this.BtnAddCliente);
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.TxtTelefono);
             this.panel1.Controls.Add(this.TxtNif);
             this.panel1.Controls.Add(this.TxtDireccion);
@@ -182,15 +184,15 @@
             this.panel1.Controls.Add(this.LNombre);
             this.panel1.Location = new System.Drawing.Point(6, 44);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(772, 211);
+            this.panel1.Size = new System.Drawing.Size(803, 232);
             this.panel1.TabIndex = 1;
             // 
             // BtnEliminarCliente
             // 
             this.BtnEliminarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnEliminarCliente.Location = new System.Drawing.Point(547, 156);
+            this.BtnEliminarCliente.Location = new System.Drawing.Point(30, 100);
             this.BtnEliminarCliente.Name = "BtnEliminarCliente";
-            this.BtnEliminarCliente.Size = new System.Drawing.Size(134, 32);
+            this.BtnEliminarCliente.Size = new System.Drawing.Size(124, 32);
             this.BtnEliminarCliente.TabIndex = 10;
             this.BtnEliminarCliente.Text = "Eliminar Cliente";
             this.BtnEliminarCliente.UseVisualStyleBackColor = true;
@@ -198,7 +200,7 @@
             // BtnModificarCliente
             // 
             this.BtnModificarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnModificarCliente.Location = new System.Drawing.Point(547, 92);
+            this.BtnModificarCliente.Location = new System.Drawing.Point(25, 56);
             this.BtnModificarCliente.Name = "BtnModificarCliente";
             this.BtnModificarCliente.Size = new System.Drawing.Size(134, 32);
             this.BtnModificarCliente.TabIndex = 9;
@@ -208,12 +210,13 @@
             // BtnAddCliente
             // 
             this.BtnAddCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnAddCliente.Location = new System.Drawing.Point(547, 28);
+            this.BtnAddCliente.Location = new System.Drawing.Point(36, 12);
             this.BtnAddCliente.Name = "BtnAddCliente";
-            this.BtnAddCliente.Size = new System.Drawing.Size(134, 32);
+            this.BtnAddCliente.Size = new System.Drawing.Size(113, 32);
             this.BtnAddCliente.TabIndex = 8;
             this.BtnAddCliente.Text = "Añadir Cliente";
             this.BtnAddCliente.UseVisualStyleBackColor = true;
+            this.BtnAddCliente.Click += new System.EventHandler(this.BtnAddCliente_Click);
             // 
             // TxtTelefono
             // 
@@ -224,6 +227,7 @@
             this.TxtTelefono.Name = "TxtTelefono";
             this.TxtTelefono.Size = new System.Drawing.Size(114, 24);
             this.TxtTelefono.TabIndex = 5;
+            this.TxtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTelefono_KeyPress);
             // 
             // TxtNif
             // 
@@ -234,6 +238,7 @@
             this.TxtNif.Name = "TxtNif";
             this.TxtNif.Size = new System.Drawing.Size(114, 24);
             this.TxtNif.TabIndex = 4;
+            this.TxtNif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtNif_KeyPress);
             // 
             // TxtDireccion
             // 
@@ -324,7 +329,7 @@
             this.PBuscarPor.Controls.Add(this.panel2);
             this.PBuscarPor.Controls.Add(this.CbApellidos);
             this.PBuscarPor.Controls.Add(this.label2);
-            this.PBuscarPor.Location = new System.Drawing.Point(152, 311);
+            this.PBuscarPor.Location = new System.Drawing.Point(167, 308);
             this.PBuscarPor.Name = "PBuscarPor";
             this.PBuscarPor.Size = new System.Drawing.Size(487, 100);
             this.PBuscarPor.TabIndex = 27;
@@ -391,11 +396,45 @@
             this.label2.TabIndex = 22;
             this.label2.Text = "Apellidos: ";
             // 
+            // BtnGuardar
+            // 
+            this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.BtnGuardar.Location = new System.Drawing.Point(7, 162);
+            this.BtnGuardar.Name = "BtnGuardar";
+            this.BtnGuardar.Size = new System.Drawing.Size(75, 26);
+            this.BtnGuardar.TabIndex = 11;
+            this.BtnGuardar.Text = "Guardar";
+            this.BtnGuardar.UseVisualStyleBackColor = true;
+            this.BtnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.BtnCancelar);
+            this.panel3.Controls.Add(this.BtnModificarCliente);
+            this.panel3.Controls.Add(this.BtnGuardar);
+            this.panel3.Controls.Add(this.BtnAddCliente);
+            this.panel3.Controls.Add(this.BtnEliminarCliente);
+            this.panel3.Location = new System.Drawing.Point(598, 15);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(187, 201);
+            this.panel3.TabIndex = 12;
+            // 
+            // BtnCancelar
+            // 
+            this.BtnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.BtnCancelar.Location = new System.Drawing.Point(103, 162);
+            this.BtnCancelar.Name = "BtnCancelar";
+            this.BtnCancelar.Size = new System.Drawing.Size(75, 26);
+            this.BtnCancelar.TabIndex = 12;
+            this.BtnCancelar.Text = "Cancelar";
+            this.BtnCancelar.UseVisualStyleBackColor = true;
+            // 
             // FrmClientesLavadero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 436);
+            this.ClientSize = new System.Drawing.Size(821, 431);
             this.Controls.Add(this.PBuscarPor);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BindingNavigator);
@@ -416,6 +455,7 @@
             this.PBuscarPor.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,5 +494,8 @@
         private System.Windows.Forms.Button BtnEliminarCliente;
         private System.Windows.Forms.Button BtnModificarCliente;
         private System.Windows.Forms.BindingSource BindingSource;
+        private System.Windows.Forms.Button BtnGuardar;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button BtnCancelar;
     }
 }

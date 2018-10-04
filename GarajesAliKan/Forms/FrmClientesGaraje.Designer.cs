@@ -118,9 +118,9 @@
             // 
             this.CbNifs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CbNifs.FormattingEnabled = true;
-            this.CbNifs.Location = new System.Drawing.Point(535, 58);
+            this.CbNifs.Location = new System.Drawing.Point(545, 58);
             this.CbNifs.Name = "CbNifs";
-            this.CbNifs.Size = new System.Drawing.Size(147, 24);
+            this.CbNifs.Size = new System.Drawing.Size(127, 24);
             this.CbNifs.TabIndex = 24;
             this.CbNifs.SelectionChangeCommitted += new System.EventHandler(this.CbNifs_SelectionChangeCommitted);
             // 
@@ -128,7 +128,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(480, 61);
+            this.label3.Location = new System.Drawing.Point(490, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 17);
             this.label3.TabIndex = 24;
@@ -161,7 +161,7 @@
             // 
             this.CbApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CbApellidos.FormattingEnabled = true;
-            this.CbApellidos.Location = new System.Drawing.Point(280, 58);
+            this.CbApellidos.Location = new System.Drawing.Point(290, 58);
             this.CbApellidos.Name = "CbApellidos";
             this.CbApellidos.Size = new System.Drawing.Size(175, 24);
             this.CbApellidos.TabIndex = 23;
@@ -171,7 +171,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(24, 61);
+            this.label1.Location = new System.Drawing.Point(34, 61);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 17);
             this.label1.TabIndex = 20;
@@ -181,7 +181,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(201, 61);
+            this.label2.Location = new System.Drawing.Point(211, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 17);
             this.label2.TabIndex = 22;
@@ -191,7 +191,7 @@
             // 
             this.CbPlazas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CbPlazas.FormattingEnabled = true;
-            this.CbPlazas.Location = new System.Drawing.Point(81, 58);
+            this.CbPlazas.Location = new System.Drawing.Point(91, 58);
             this.CbPlazas.Name = "CbPlazas";
             this.CbPlazas.Size = new System.Drawing.Size(103, 24);
             this.CbPlazas.TabIndex = 22;
@@ -580,6 +580,7 @@
             this.TxtMatricula.Name = "TxtMatricula";
             this.TxtMatricula.Size = new System.Drawing.Size(104, 23);
             this.TxtMatricula.TabIndex = 9;
+            this.TxtMatricula.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtMatricula_KeyPress);
             // 
             // LMatricula
             // 
@@ -681,6 +682,7 @@
             this.TxtNif.Name = "TxtNif";
             this.TxtNif.Size = new System.Drawing.Size(114, 23);
             this.TxtNif.TabIndex = 3;
+            this.TxtNif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtNif_KeyPress);
             // 
             // LNif
             // 
@@ -748,7 +750,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1007, 557);
+            this.ClientSize = new System.Drawing.Size(1007, 558);
             this.Controls.Add(this.BtnFacturarMes);
             this.Controls.Add(this.PBuscarPor);
             this.Controls.Add(this.BindingNavigator);
