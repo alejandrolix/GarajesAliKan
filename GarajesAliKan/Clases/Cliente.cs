@@ -20,22 +20,29 @@ namespace GarajesAliKan.Clases
         public Alquiler Alquiler { get; set; }        
 
         /// <summary>
-        /// Comprueba si existen clientes guardados.
+        /// Comprueba si existen clientes de los garajes guardados.
         /// </summary>
         /// <returns>El número de clientes.</returns>
-        public static bool HayClientes()
+        public static bool HayClientesGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand("SELECT COUNT(id) FROM clientes;", conexion);
+            Database conexion = Foo.ConexionABd();
+            int numClientes = conexion.ExecuteScalar<int>("SELECT COUNT(id) FROM clientes WHERE esClienteGaraje IS TRUE;");
 
-            int numClientes = 0;
-            try
-            {
-                numClientes = Convert.ToInt32(comando.ExecuteScalar());                
-            }
-            catch (Exception)
-            { }
-            conexion.Close();
+            conexion.CloseSharedConnection();
+
+            return numClientes >= 1;
+        }
+
+        /// <summary>
+        /// Comprueba si existen clientes del lavadero guardados.
+        /// </summary>
+        /// <returns>El número de clientes.</returns>
+        public static bool HayClientesLavadero()
+        {
+            Database conexion = Foo.ConexionABd();
+            int numClientes = conexion.ExecuteScalar<int>("SELECT COUNT(id) FROM clientes WHERE esClienteGaraje IS FALSE;");
+
+            conexion.CloseSharedConnection();
 
             return numClientes >= 1;
         }
@@ -54,6 +61,22 @@ namespace GarajesAliKan.Clases
                                                                             LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
                                                                             JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
                                                                     WHERE  cli.esClienteGaraje IS TRUE
+                                                                    ORDER BY cli.apellidos;");
+            conexion.CloseSharedConnection();
+
+            return listaClientes;
+        }
+
+        /// <summary>
+        /// Obtiene todos los clientes del lavedero.
+        /// </summary>
+        /// <returns>Los clientes existentes del lavadero.</returns>
+        public static List<Cliente> ObtenerClientesLavadero()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono
+                                                                    FROM   clientes cli                                                                            
+                                                                    WHERE  cli.esClienteGaraje IS FALSE
                                                                     ORDER BY cli.apellidos;");
             conexion.CloseSharedConnection();
 

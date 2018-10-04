@@ -241,7 +241,7 @@
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveFirstItem.Text = "Mover primero";
-            this.bindingNavigatorMoveFirstItem.Click += new System.EventHandler(this.bindingNavigatorMoveFirstItem_Click);
+            this.bindingNavigatorMoveFirstItem.Click += new System.EventHandler(this.BindingNavigatorMoveFirstItem_Click);
             // 
             // bindingNavigatorMovePreviousItem
             // 
@@ -251,7 +251,7 @@
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMovePreviousItem.Text = "Mover anterior";
-            this.bindingNavigatorMovePreviousItem.Click += new System.EventHandler(this.bindingNavigatorMovePreviousItem_Click);
+            this.bindingNavigatorMovePreviousItem.Click += new System.EventHandler(this.BindingNavigatorMovePreviousItem_Click);
             // 
             // bindingNavigatorSeparator
             // 
@@ -281,7 +281,7 @@
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveNextItem.Text = "Mover siguiente";
-            this.bindingNavigatorMoveNextItem.Click += new System.EventHandler(this.bindingNavigatorMoveNextItem_Click);
+            this.bindingNavigatorMoveNextItem.Click += new System.EventHandler(this.BindingNavigatorMoveNextItem_Click);
             // 
             // bindingNavigatorMoveLastItem
             // 
@@ -291,7 +291,7 @@
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveLastItem.Text = "Mover último";
-            this.bindingNavigatorMoveLastItem.Click += new System.EventHandler(this.bindingNavigatorMoveLastItem_Click);
+            this.bindingNavigatorMoveLastItem.Click += new System.EventHandler(this.BindingNavigatorMoveLastItem_Click);
             // 
             // panel
             // 
@@ -362,9 +362,9 @@
             // BtnAddCliente
             // 
             this.BtnAddCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAddCliente.Location = new System.Drawing.Point(25, 9);
+            this.BtnAddCliente.Location = new System.Drawing.Point(27, 9);
             this.BtnAddCliente.Name = "BtnAddCliente";
-            this.BtnAddCliente.Size = new System.Drawing.Size(136, 31);
+            this.BtnAddCliente.Size = new System.Drawing.Size(114, 31);
             this.BtnAddCliente.TabIndex = 17;
             this.BtnAddCliente.Text = "Añadir Cliente";
             this.BtnAddCliente.UseVisualStyleBackColor = true;
@@ -373,9 +373,9 @@
             // BtnModificarCliente
             // 
             this.BtnModificarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnModificarCliente.Location = new System.Drawing.Point(186, 9);
+            this.BtnModificarCliente.Location = new System.Drawing.Point(181, 9);
             this.BtnModificarCliente.Name = "BtnModificarCliente";
-            this.BtnModificarCliente.Size = new System.Drawing.Size(136, 31);
+            this.BtnModificarCliente.Size = new System.Drawing.Size(127, 31);
             this.BtnModificarCliente.TabIndex = 18;
             this.BtnModificarCliente.Text = "Modificar Cliente";
             this.BtnModificarCliente.UseVisualStyleBackColor = true;
@@ -384,9 +384,9 @@
             // BtnEliminarCliente
             // 
             this.BtnEliminarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnEliminarCliente.Location = new System.Drawing.Point(347, 9);
+            this.BtnEliminarCliente.Location = new System.Drawing.Point(348, 9);
             this.BtnEliminarCliente.Name = "BtnEliminarCliente";
-            this.BtnEliminarCliente.Size = new System.Drawing.Size(130, 31);
+            this.BtnEliminarCliente.Size = new System.Drawing.Size(118, 31);
             this.BtnEliminarCliente.TabIndex = 19;
             this.BtnEliminarCliente.Text = "Eliminar Cliente";
             this.BtnEliminarCliente.UseVisualStyleBackColor = true;
@@ -739,7 +739,7 @@
             this.BtnFacturarMes.Location = new System.Drawing.Point(825, 465);
             this.BtnFacturarMes.Name = "BtnFacturarMes";
             this.BtnFacturarMes.Size = new System.Drawing.Size(108, 53);
-            this.BtnFacturarMes.TabIndex = 27;
+            this.BtnFacturarMes.TabIndex = 25;
             this.BtnFacturarMes.Text = "Facturar Mes";
             this.BtnFacturarMes.UseVisualStyleBackColor = true;
             this.BtnFacturarMes.Click += new System.EventHandler(this.BtnFacturarMes_Click);

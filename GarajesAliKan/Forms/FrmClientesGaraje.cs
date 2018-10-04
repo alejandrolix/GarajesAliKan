@@ -19,12 +19,14 @@ namespace GarajesAliKan.Forms
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
         {            
             CargarDatosComboBox();
-            if (Cliente.HayClientes())
+            if (Cliente.HayClientesGarajes())
             {
-                ListaClientes = Cliente.ObtenerClientesGarajes();                
+                ListaClientes = Cliente.ObtenerClientesGarajes();
                 CargarClientesAlDataTable(ListaClientes);
                 RellenarDatosCliente(ListaClientes[0]);
             }
+            else
+                MessageBox.Show("No hay clientes para mostrar. Introduzca uno.", "No hay Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -56,14 +58,14 @@ namespace GarajesAliKan.Forms
         private void CargarClientesAlDataTable(List<Cliente> listaClientes)
         {
             DataTable dtClientes = new DataTable("clientes");
-            dtClientes.Columns.Add("id", typeof(string));
+            dtClientes.Columns.Add("id", typeof(int));
             dtClientes.Columns.Add("nombre", typeof(string));
             dtClientes.Columns.Add("apellidos", typeof(string));
             dtClientes.Columns.Add("nif", typeof(string));
             dtClientes.Columns.Add("direccion", typeof(string));
             dtClientes.Columns.Add("telefono", typeof(string));
             dtClientes.Columns.Add("nombreGaraje", typeof(string));
-            dtClientes.Columns.Add("llave", typeof(string));
+            dtClientes.Columns.Add("llave", typeof(int));
             dtClientes.Columns.Add("matricula", typeof(string));
             dtClientes.Columns.Add("marca", typeof(string));
             dtClientes.Columns.Add("modelo", typeof(string));
@@ -78,7 +80,7 @@ namespace GarajesAliKan.Forms
             {
                 dtClientes.Rows.Add(cliente.Id, cliente.Nombre, cliente.Apellidos, cliente.Nif, cliente.Direccion, cliente.Telefono,
                     cliente.Garaje.Nombre, cliente.Alquiler.Llave, cliente.Vehiculo.Matricula, cliente.Vehiculo.Marca, cliente.Vehiculo.Modelo, cliente.Alquiler.Plaza,
-                    cliente.Alquiler.Concepto, cliente.Alquiler.BaseImponible, cliente.Alquiler.Iva, cliente.Alquiler.Total, cliente.Observaciones);
+                    cliente.Alquiler.Concepto, cliente.Alquiler.BaseImponible.ToString(), cliente.Alquiler.Iva.ToString(), cliente.Alquiler.Total.ToString(), cliente.Observaciones);
             }
             BindingSource.DataSource = dtClientes;            
         }
@@ -523,22 +525,22 @@ namespace GarajesAliKan.Forms
                 e.Handled = true;
         }
 
-        private void bindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
+        private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
             RellenarDatosCliente(ListaClientes[BindingSource.Position]);
         }
 
-        private void bindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
+        private void BindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
         {
             RellenarDatosCliente(ListaClientes[BindingSource.Position]);
         }
 
-        private void bindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
+        private void BindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
         {
             RellenarDatosCliente(ListaClientes[BindingSource.Position]);
         }
 
-        private void bindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
+        private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
             RellenarDatosCliente(ListaClientes[BindingSource.Position]);
         }
