@@ -31,7 +31,11 @@ namespace GarajesAliKan.Forms
                 RellenarDatosCliente(ListaClientes[0]);
             }
             else
+            {
                 MessageBox.Show("No hay clientes para mostrar. Introduzca uno.", "No hay Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BtnModificarCliente.Enabled = false;
+                BtnEliminarCliente.Enabled = false;
+            }
         }
 
         /// <summary>
@@ -39,10 +43,10 @@ namespace GarajesAliKan.Forms
         /// </summary>
         private void CargarDatosComboBox()
         {
-            CbApellidos.DataSource = Cliente.ObtenerApellidos();
+            CbApellidos.DataSource = Cliente.ObtenerApellidosClientesLavadero();
             CbApellidos.DisplayMember = "Apellidos";
             CbApellidos.ValueMember = "Id";
-            CbNifs.DataSource = Cliente.ObtenerNifs();
+            CbNifs.DataSource = Cliente.ObtenerNifsClientesLavadero();
             CbNifs.DisplayMember = "Nif";
             CbNifs.ValueMember = "Id";
         }
@@ -122,6 +126,7 @@ namespace GarajesAliKan.Forms
         {
             BtnAddCliente.Tag = 1;
             HabilitarControles(true);
+            TxtNombre.Focus();
 
             if (ListaClientes != null)
                 if (ListaClientes[0].Id != 0)
@@ -157,38 +162,42 @@ namespace GarajesAliKan.Forms
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if (ListaClientes != null)
+            if (ComprobarDatosIntroducidos())
             {
-                if (ComprobarDatosIntroducidos())
+                Cliente cliente = null;
+                HabilitarControles(false);
+
+                if (Convert.ToInt32(BtnAddCliente.Tag) == 1)            // Guardamos el cliente.
                 {
-                    Cliente cliente = null;
-                    HabilitarControles(false);
-
-                    if (Convert.ToInt32(BtnAddCliente.Tag) == 1)            // Guardamos el cliente.
+                    cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtDireccion.Text, TxtNif.Text, TxtTelefono.Text, false);
+                    if (cliente.Insertar())
                     {
-                        cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtDireccion.Text, TxtNif.Text, TxtTelefono.Text);
-                        if (cliente.Insertar(false))
+                        MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ListaClientes = Cliente.ObtenerClientesLavadero();
+                        CargarClientesAlDataTable();
+
+                        int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
+                        BindingSource.Position = pos;
+
+                        if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
                         {
-                            ListaClientes = Cliente.ObtenerClientesLavadero();
-                            CargarClientesAlDataTable();
-
-                            int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
-                            BindingSource.Position = pos;
+                            BtnModificarCliente.Enabled = true;
+                            BtnEliminarCliente.Enabled = true;
                         }
-                        else
-                            MessageBox.Show("Ha habido un problema al insertar el cliente", "Cliente no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else if (Convert.ToInt32(BtnModificarCliente.Tag) == 1)             // Modificamos sus datos.
-                    {
-                        cliente = new Cliente(ListaClientes[BindingSource.Position].Id, TxtNombre.Text, TxtApellidos.Text, TxtDireccion.Text, TxtNif.Text, TxtTelefono.Text);
-                        if (cliente.Modificar())
-                            MessageBox.Show("Datos del cliente modificados", "Datos Modificados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        else
-                            MessageBox.Show("Ha habido un problema al modificar los datos del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    else
+                        MessageBox.Show("Ha habido un problema al insertar el cliente", "Cliente no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                RestaurarTagsBotones();
+                else if (Convert.ToInt32(BtnModificarCliente.Tag) == 1)             // Modificamos sus datos.
+                {
+                    cliente = new Cliente(ListaClientes[BindingSource.Position].Id, TxtNombre.Text, TxtApellidos.Text, TxtDireccion.Text, TxtNif.Text, TxtTelefono.Text);
+                    if (cliente.Modificar())
+                        MessageBox.Show("Datos del cliente modificados", "Datos Modificados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                        MessageBox.Show("Ha habido un problema al modificar los datos del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            RestaurarTagsBotones();
         }
 
         /// <summary>
@@ -227,6 +236,11 @@ namespace GarajesAliKan.Forms
             else
                 hayApellidos = true;
 
+            if (TxtDireccion.Text.Length == 0)
+                MessageBox.Show("Tiene que introducir una dirección", "Dirección Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                hayDireccion = true;
+
             if (TxtNif.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir un N.I.F.", "N.I.F. Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (!exprRegNif.IsMatch(TxtNif.Text))
@@ -236,12 +250,7 @@ namespace GarajesAliKan.Forms
                 TxtNif.Focus();
             }
             else
-                hayNif = true;
-
-            if (TxtDireccion.Text.Length == 0)
-                MessageBox.Show("Tiene que introducir una dirección", "Dirección Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
-                hayDireccion = true;
+                hayNif = true;            
 
             if (TxtTelefono.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir un teléfono", "Teléfono Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -265,22 +274,19 @@ namespace GarajesAliKan.Forms
 
         private void BtnEliminarCliente_Click(object sender, EventArgs e)
         {
-            if (ListaClientes != null)
+            if (MessageBox.Show("¿Está seguro de que desea eliminar el cliente?", "¿Eliminar Cliente?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (MessageBox.Show("¿Está seguro de que desea eliminar el cliente?", "¿Eliminar Cliente?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                Cliente cliente = ListaClientes[BindingSource.Position];
+                if (cliente.Eliminar())
                 {
-                    Cliente cliente = ListaClientes[BindingSource.Position];
-                    if (cliente.Eliminar())
-                    {
-                        MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ListaClientes = Cliente.ObtenerClientesLavadero();
-                        HabilitarControles(false);
-                        CargarClientesAlDataTable();
-                        BindingSource.Position = ListaClientes.Count - 1;
-                    }
-                    else
-                        MessageBox.Show("Ha habido un problema al eliminar el cliente", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ListaClientes = Cliente.ObtenerClientesLavadero();
+                    HabilitarControles(false);
+                    CargarClientesAlDataTable();
+                    BindingSource.Position = ListaClientes.Count - 1;
                 }
+                else
+                    MessageBox.Show("Ha habido un problema al eliminar el cliente", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

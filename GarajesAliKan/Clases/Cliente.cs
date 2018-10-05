@@ -114,27 +114,61 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
-        /// Obtiene todos los apellidos de los clientes.
+        /// Obtiene todos los apellidos de los clientes de los garajes.
         /// </summary>
-        /// <returns>Los apellidos de los clientes.</returns>
-        public static List<Cliente> ObtenerApellidos()
+        /// <returns>Los apellidos de los clientes de los garajes.</returns>
+        public static List<Cliente> ObtenerApellidosClientesGarajes()
         {
             Database conexion = Foo.ConexionABd();
-            List<Cliente> listaApellidos = conexion.Fetch<Cliente>("SELECT id, apellidos FROM clientes ORDER BY apellidos;");
-
+            List<Cliente> listaApellidos = conexion.Fetch<Cliente>(@"SELECT id, apellidos
+                                                                     FROM   clientes
+                                                                     WHERE esClienteGaraje IS TRUE
+                                                                     ORDER BY apellidos;");
             conexion.CloseSharedConnection();
             return listaApellidos;
         }
 
         /// <summary>
-        /// Obtiene todos los NIFs de los clientes.
+        /// Obtiene todos los apellidos de los clientes del lavadero.
         /// </summary>
-        /// <returns>Los NIFs de los clientes.</returns>
-        public static List<Cliente> ObtenerNifs()
+        /// <returns>Los apellidos de los clientes del lavadero.</returns>
+        public static List<Cliente> ObtenerApellidosClientesLavadero()
         {
             Database conexion = Foo.ConexionABd();
-            List<Cliente> listaNifs = conexion.Fetch<Cliente>("SELECT id, nif FROM clientes ORDER BY nif;");
+            List<Cliente> listaApellidos = conexion.Fetch<Cliente>(@"SELECT id, apellidos
+                                                                     FROM   clientes
+                                                                     WHERE esClienteGaraje IS FALSE
+                                                                     ORDER BY apellidos;");
+            conexion.CloseSharedConnection();
+            return listaApellidos;
+        }
 
+        /// <summary>
+        /// Obtiene todos los NIFs de los clientes de los garajes.
+        /// </summary>
+        /// <returns>Los NIFs de los clientes de los garajes.</returns>
+        public static List<Cliente> ObtenerNifsClientesGarajes()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaNifs = conexion.Fetch<Cliente>(@"SELECT id, nif
+                                                                FROM   clientes
+                                                                WHERE  esClienteGaraje IS TRUE
+                                                                ORDER BY nif;");
+            conexion.CloseSharedConnection();
+            return listaNifs;
+        }
+
+        /// <summary>
+        /// Obtiene todos los NIFs de los clientes del lavadero.
+        /// </summary>
+        /// <returns>Los NIFs de los clientes del lavadero.</returns>
+        public static List<Cliente> ObtenerNifsClientesLavadero()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaNifs = conexion.Fetch<Cliente>(@"SELECT id, nif
+                                                                FROM   clientes
+                                                                WHERE  esClienteGaraje IS FALSE
+                                                                ORDER BY nif;");
             conexion.CloseSharedConnection();
             return listaNifs;
         }
@@ -154,10 +188,9 @@ namespace GarajesAliKan.Clases
 
         /// <summary>
         /// Inserta un cliente.
-        /// </summary>
-        /// <param name="esClienteGaraje">Indica si el cliente que se va a guardar pertenece a un garaje.</param>
+        /// </summary>        
         /// <returns>El cliente se ha insertado.</returns>
-        public bool Insertar(bool esClienteGaraje)
+        public bool Insertar()
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
             MySqlCommand comando = new MySqlCommand(@"INSERT INTO clientes (nombre, apellidos, nif, direccion, telefono, observaciones, esClienteGaraje) VALUES (
@@ -169,13 +202,16 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@direccion", Direccion);
             comando.Parameters.AddWithValue("@telefono", Telefono);
             comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);
-            comando.Parameters.AddWithValue("@esClienteGaraje", esClienteGaraje);
+            comando.Parameters.AddWithValue("@esClienteGaraje", EsClienteGaraje);
 
             int numFila = 0;
             try
             {
                 numFila = comando.ExecuteNonQuery();
-                Id = ObtenerUltimoId(Foo.ConexionABd());
+                if (EsClienteGaraje)
+                {
+                    Id = ObtenerUltimoId(Foo.ConexionABd());
+                }                
             }
             catch (Exception)
             { }
@@ -309,13 +345,14 @@ namespace GarajesAliKan.Clases
             Telefono = telefono;
         }
 
-        public Cliente(string nombre, string apellidos, string direccion, string nif, string telefono)              // Para crear un cliente del lavadero
+        public Cliente(string nombre, string apellidos, string direccion, string nif, string telefono, bool esClienteGaraje)              // Para crear un cliente del lavadero.
         {
             Nombre = nombre;
             Apellidos = apellidos;
             Direccion = direccion;
             Nif = nif;
             Telefono = telefono;
+            EsClienteGaraje = esClienteGaraje;
         }
 
         public Cliente()

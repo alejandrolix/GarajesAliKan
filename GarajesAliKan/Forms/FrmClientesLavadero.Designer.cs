@@ -366,7 +366,7 @@
             this.PBuscarPor.Controls.Add(this.panel2);
             this.PBuscarPor.Controls.Add(this.CbApellidos);
             this.PBuscarPor.Controls.Add(this.label2);
-            this.PBuscarPor.Location = new System.Drawing.Point(167, 308);
+            this.PBuscarPor.Location = new System.Drawing.Point(167, 319);
             this.PBuscarPor.Name = "PBuscarPor";
             this.PBuscarPor.Size = new System.Drawing.Size(487, 100);
             this.PBuscarPor.TabIndex = 27;
