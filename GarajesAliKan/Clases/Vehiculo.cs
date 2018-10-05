@@ -39,6 +39,11 @@ namespace GarajesAliKan.Clases
             return numFila >= 1;
         }
 
+        /// <summary>
+        /// Elimina un vehículo.
+        /// </summary>
+        /// <param name="idVehiculo">El Id de un vehículo.</param>
+        /// <returns>Se ha eliminado el vehículo.</returns>
         public bool Eliminar(int idVehiculo)
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
@@ -58,6 +63,11 @@ namespace GarajesAliKan.Clases
             return numFila >= 1;
         }
 
+        /// <summary>
+        /// Obtiene el Id de un vehículo a partir del Id de un cliente.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>El Id del vehículo del cliente.</returns>
         public int ObtenerIdPorIdCliente(int idCliente)
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
@@ -70,14 +80,14 @@ namespace GarajesAliKan.Clases
             {
                 idVehiculo = Convert.ToInt32(comando.ExecuteScalar());
             }
-            catch (Exception ex)
-            { Console.WriteLine(ex.Message); }
+            catch (Exception)
+            { }
             conexion.Close();
 
             return idVehiculo;
         }
 
-        public Vehiculo(string matricula, string marca, string modelo)
+        public Vehiculo(string matricula, string marca, string modelo)                  // Para crear un vehículo a la hora de crear un cliente.
         {
             Matricula = matricula;
             Marca = marca;

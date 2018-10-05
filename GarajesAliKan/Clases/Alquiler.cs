@@ -73,7 +73,6 @@ namespace GarajesAliKan.Clases
             catch (Exception)
             { }
             conexion.Close();
-
             return numFila >= 1;
         }                
 
@@ -101,7 +100,6 @@ namespace GarajesAliKan.Clases
             catch (Exception)
             { }
             conexion.Close();
-
             return numFila >= 1;
         }
 
@@ -125,7 +123,6 @@ namespace GarajesAliKan.Clases
             catch (Exception)
             { }
             conexion.Close();
-
             return numFila >= 1;
         }
 
@@ -141,48 +138,20 @@ namespace GarajesAliKan.Clases
             {
                 numFila = comando.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            { Console.WriteLine(ex.Message); }
+            catch (Exception)
+            { }
             conexion.Close();
-
             return numFila >= 1;
         }
 
-        public Alquiler(int idTipoAlquiler, decimal baseImponible, decimal iva, decimal total, string plaza, int llave, string concepto)
-        {            
-            IdTipoAlquiler = idTipoAlquiler;
-            BaseImponible = baseImponible;
-            Iva = iva;
-            Total = total;
-            Plaza = plaza;
-            Llave = llave;
-            Concepto = concepto;
-        }
-
-        public Alquiler(decimal baseImponible, decimal iva, decimal total, string plaza, int llave, string concepto)
-        {            
-            BaseImponible = baseImponible;
-            Iva = iva;
-            Total = total;
-            Plaza = plaza;
-            Llave = llave;
-            Concepto = concepto;
-        }
-
-        public Alquiler(decimal baseImponible, decimal iva, decimal total)
+        public Alquiler(decimal baseImponible, decimal iva, decimal total)              // Para crear un alquiler a la hora de modificar los datos de un cliente.
         {            
             BaseImponible = baseImponible;
             Iva = iva;
             Total = total;
         }                
 
-        public Alquiler(int id, string concepto)
-        {
-            IdTipoAlquiler = id;
-            Concepto = concepto;
-        }
-
-        public Alquiler(int idTipoAlquiler, decimal baseImponible, decimal iva, decimal total, string plaza, int llave)
+        public Alquiler(int idTipoAlquiler, decimal baseImponible, decimal iva, decimal total, string plaza, int llave)             // Para crear un alquiler a la hora de crear un cliente.
         {
             IdTipoAlquiler = idTipoAlquiler;
             BaseImponible = baseImponible;

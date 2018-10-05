@@ -22,14 +22,9 @@ namespace GarajesAliKan.Clases
             return listaNombresGarajes;
         }        
 
-        public Garaje(int id, string nombre)
+        public Garaje(int id, string nombre)            // Para establecer el garaje al que pertenece el cliente a la hora de crear el alquiler.
         {
             Id = id;
-            Nombre = nombre;
-        }
-
-        public Garaje(string nombre)
-        {            
             Nombre = nombre;
         }
 

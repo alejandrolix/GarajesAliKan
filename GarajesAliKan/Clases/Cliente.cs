@@ -12,10 +12,10 @@ namespace GarajesAliKan.Clases
         public string Apellidos { get; set; }
         public string Nif { get; set; }
         public string Direccion { get; set; }
-        public string Telefono { get; set; }          
+        public string Telefono { get; set; }           
         public Garaje Garaje { get; set; }
         public string Observaciones { get; set; }        
-        public bool EsClienteGaraje { get; set; }                
+        public bool EsClienteGaraje { get; set; }                        
         public Vehiculo Vehiculo { get; set; }                        
         public Alquiler Alquiler { get; set; }        
 
@@ -29,7 +29,6 @@ namespace GarajesAliKan.Clases
             int numClientes = conexion.ExecuteScalar<int>("SELECT COUNT(id) FROM clientes WHERE esClienteGaraje IS TRUE;");
 
             conexion.CloseSharedConnection();
-
             return numClientes >= 1;
         }
 
@@ -43,7 +42,6 @@ namespace GarajesAliKan.Clases
             int numClientes = conexion.ExecuteScalar<int>("SELECT COUNT(id) FROM clientes WHERE esClienteGaraje IS FALSE;");
 
             conexion.CloseSharedConnection();
-
             return numClientes >= 1;
         }
 
@@ -63,7 +61,6 @@ namespace GarajesAliKan.Clases
                                                                     WHERE  cli.esClienteGaraje IS TRUE
                                                                     ORDER BY cli.apellidos;");
             conexion.CloseSharedConnection();
-
             return listaClientes;
         }
 
@@ -79,16 +76,15 @@ namespace GarajesAliKan.Clases
                                                                     WHERE  cli.esClienteGaraje IS FALSE
                                                                     ORDER BY cli.apellidos;");
             conexion.CloseSharedConnection();
-
             return listaClientes;
         }
 
         /// <summary>
-        /// Obtiene los datos de un cliente a partir de su Id.
+        /// Obtiene los datos de un cliente de un garaje a partir de su Id.
         /// </summary>
         /// <param name="idCliente">El Id de un cliente.</param>
-        /// <returns>Los datos del cliente.</returns>
-        public static Cliente ObtenerClientePorId(int idCliente)
+        /// <returns>Los datos del cliente del garaje.</returns>
+        public static Cliente ObtenerClienteGarajePorId(int idCliente)
         {
             Database conexion = Foo.ConexionABd();
             Cliente cliente = conexion.Single<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
@@ -99,7 +95,21 @@ namespace GarajesAliKan.Clases
                                                                 JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
                                                          WHERE  cli.id = @0;", idCliente);
             conexion.CloseSharedConnection();
+            return cliente;
+        }
 
+        /// <summary>
+        /// Obtiene los datos de un cliente del lavadero a partir de su Id.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los datos del cliente del lavadero.</returns>
+        public static Cliente ObtenerClienteLavaderoPorId(int idCliente)
+        {
+            Database conexion = Foo.ConexionABd();
+            Cliente cliente = conexion.Single<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono
+                                                         FROM   clientes cli		                                                                 
+                                                         WHERE  cli.id = @0;", idCliente);
+            conexion.CloseSharedConnection();
             return cliente;
         }
 
@@ -145,12 +155,13 @@ namespace GarajesAliKan.Clases
         /// <summary>
         /// Inserta un cliente.
         /// </summary>
+        /// <param name="esClienteGaraje">Indica si el cliente que se va a guardar pertenece a un garaje.</param>
         /// <returns>El cliente se ha insertado.</returns>
-        public bool Insertar()
+        public bool Insertar(bool esClienteGaraje)
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
             MySqlCommand comando = new MySqlCommand(@"INSERT INTO clientes (nombre, apellidos, nif, direccion, telefono, observaciones, esClienteGaraje) VALUES (
-                                                      @nombre, @apellidos, @nif, @direccion, @telefono, @observaciones, true);", conexion);
+                                                      @nombre, @apellidos, @nif, @direccion, @telefono, @observaciones, @esClienteGaraje);", conexion);
 
             comando.Parameters.AddWithValue("@nombre", Nombre);
             comando.Parameters.AddWithValue("@apellidos", Apellidos);
@@ -158,6 +169,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@direccion", Direccion);
             comando.Parameters.AddWithValue("@telefono", Telefono);
             comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);
+            comando.Parameters.AddWithValue("@esClienteGaraje", esClienteGaraje);
 
             int numFila = 0;
             try
@@ -168,7 +180,6 @@ namespace GarajesAliKan.Clases
             catch (Exception)
             { }
             conexion.Close();
-
             return numFila >= 1;
         }
 
@@ -198,10 +209,13 @@ namespace GarajesAliKan.Clases
             catch (Exception)
             { }
             conexion.Close();
-
             return numFila >= 1;
         }
 
+        /// <summary>
+        /// Elimina un cliente.
+        /// </summary>
+        /// <returns>Se ha eliminado el cliente.</returns>
         public bool Eliminar()
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
@@ -217,7 +231,6 @@ namespace GarajesAliKan.Clases
             catch (Exception)
             { }
             conexion.Close();
-
             return numFila >= 1;
         }
 
@@ -274,7 +287,7 @@ namespace GarajesAliKan.Clases
             Id = id;
         }
 
-        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Alquiler alquilerPorCliente)
+        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Alquiler alquilerPorCliente)           // Para modificar los datos de un cliente del garaje.
         {
             Id = id;
             Nombre = nombre;
@@ -286,10 +299,23 @@ namespace GarajesAliKan.Clases
             Alquiler = alquilerPorCliente;
         }
 
-        public Cliente(int id, string apellidos)
+        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono)           // Para modificar los datos de un cliente del lavadero.
         {
             Id = id;
+            Nombre = nombre;
             Apellidos = apellidos;
+            Nif = nif;
+            Direccion = direccion;
+            Telefono = telefono;
+        }
+
+        public Cliente(string nombre, string apellidos, string direccion, string nif, string telefono)              // Para crear un cliente del lavadero
+        {
+            Nombre = nombre;
+            Apellidos = apellidos;
+            Direccion = direccion;
+            Nif = nif;
+            Telefono = telefono;
         }
 
         public Cliente()
