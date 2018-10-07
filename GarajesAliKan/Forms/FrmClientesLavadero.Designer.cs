@@ -380,6 +380,7 @@
             this.CbNifs.Size = new System.Drawing.Size(124, 24);
             this.CbNifs.TabIndex = 7;
             this.CbNifs.SelectionChangeCommitted += new System.EventHandler(this.CbNifs_SelectionChangeCommitted);
+            this.CbNifs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbNifs_KeyPress);
             // 
             // label3
             // 
@@ -424,6 +425,7 @@
             this.CbApellidos.Size = new System.Drawing.Size(175, 24);
             this.CbApellidos.TabIndex = 6;
             this.CbApellidos.SelectionChangeCommitted += new System.EventHandler(this.CbApellidos_SelectionChangeCommitted);
+            this.CbApellidos.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbApellidos_KeyPress);
             // 
             // label2
             // 

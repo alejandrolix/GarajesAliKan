@@ -309,5 +309,15 @@ namespace GarajesAliKan.Forms
             Cliente cliente = Cliente.ObtenerClienteLavaderoPorId(((Cliente)CbNifs.SelectedItem).Id);
             RellenarDatosCliente(cliente);
         }
+
+        private void CbApellidos_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void CbNifs_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

@@ -44,7 +44,7 @@
             this.DtFecha = new System.Windows.Forms.DateTimePicker();
             this.BtnCancelar = new System.Windows.Forms.Button();
             this.BtnGuardar = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.PBotonesControl = new System.Windows.Forms.Panel();
             this.BtnEliminarFactura = new System.Windows.Forms.Button();
             this.BtnModificarFactura = new System.Windows.Forms.Button();
             this.BtnAddFactura = new System.Windows.Forms.Button();
@@ -84,7 +84,7 @@
             this.BindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.PBotonesControl.SuspendLayout();
             this.PBuscarPor.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -188,7 +188,7 @@
             this.panel1.Controls.Add(this.DtFecha);
             this.panel1.Controls.Add(this.BtnCancelar);
             this.panel1.Controls.Add(this.BtnGuardar);
-            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.PBotonesControl);
             this.panel1.Controls.Add(this.CkBoxPagada);
             this.panel1.Controls.Add(this.TxtTotalFactura);
             this.panel1.Controls.Add(this.LTotalFactura);
@@ -250,15 +250,15 @@
             this.BtnGuardar.Text = "Guardar";
             this.BtnGuardar.UseVisualStyleBackColor = true;
             // 
-            // panel2
+            // PBotonesControl
             // 
-            this.panel2.Controls.Add(this.BtnEliminarFactura);
-            this.panel2.Controls.Add(this.BtnModificarFactura);
-            this.panel2.Controls.Add(this.BtnAddFactura);
-            this.panel2.Location = new System.Drawing.Point(21, 286);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(517, 61);
-            this.panel2.TabIndex = 25;
+            this.PBotonesControl.Controls.Add(this.BtnEliminarFactura);
+            this.PBotonesControl.Controls.Add(this.BtnModificarFactura);
+            this.PBotonesControl.Controls.Add(this.BtnAddFactura);
+            this.PBotonesControl.Location = new System.Drawing.Point(21, 286);
+            this.PBotonesControl.Name = "PBotonesControl";
+            this.PBotonesControl.Size = new System.Drawing.Size(517, 61);
+            this.PBotonesControl.TabIndex = 25;
             // 
             // BtnEliminarFactura
             // 
@@ -289,6 +289,7 @@
             this.BtnAddFactura.TabIndex = 13;
             this.BtnAddFactura.Text = "Añadir Factura";
             this.BtnAddFactura.UseVisualStyleBackColor = true;
+            this.BtnAddFactura.Click += new System.EventHandler(this.BtnAddFactura_Click);
             // 
             // CkBoxPagada
             // 
@@ -534,6 +535,7 @@
             this.CbFechas.Name = "CbFechas";
             this.CbFechas.Size = new System.Drawing.Size(127, 24);
             this.CbFechas.TabIndex = 20;
+            this.CbFechas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbFechas_KeyPress);
             // 
             // label3
             // 
@@ -576,6 +578,7 @@
             this.CbNifs.Name = "CbNifs";
             this.CbNifs.Size = new System.Drawing.Size(144, 24);
             this.CbNifs.TabIndex = 19;
+            this.CbNifs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbNifs_KeyPress);
             // 
             // label1
             // 
@@ -605,11 +608,12 @@
             this.CbNumsFacturas.Name = "CbNumsFacturas";
             this.CbNumsFacturas.Size = new System.Drawing.Size(103, 24);
             this.CbNumsFacturas.TabIndex = 18;
+            this.CbNumsFacturas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbNumsFacturas_KeyPress);
             // 
             // BtnImprimirFactura
             // 
             this.BtnImprimirFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnImprimirFactura.Location = new System.Drawing.Point(766, 482);
+            this.BtnImprimirFactura.Location = new System.Drawing.Point(766, 485);
             this.BtnImprimirFactura.Name = "BtnImprimirFactura";
             this.BtnImprimirFactura.Size = new System.Drawing.Size(93, 60);
             this.BtnImprimirFactura.TabIndex = 21;
@@ -638,7 +642,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
+            this.PBotonesControl.ResumeLayout(false);
             this.PBuscarPor.ResumeLayout(false);
             this.PBuscarPor.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -683,7 +687,7 @@
         private System.Windows.Forms.TextBox TxtTotalFactura;
         private System.Windows.Forms.Label LTotalFactura;
         private System.Windows.Forms.CheckBox CkBoxPagada;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel PBotonesControl;
         private System.Windows.Forms.Button BtnEliminarFactura;
         private System.Windows.Forms.Button BtnModificarFactura;
         private System.Windows.Forms.Button BtnAddFactura;

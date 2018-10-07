@@ -581,5 +581,20 @@ namespace GarajesAliKan.Forms
             else
                 e.Handled = true;
         }
+
+        private void CbPlazas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void CbApellidos_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void CbNifs_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

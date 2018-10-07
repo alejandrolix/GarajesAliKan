@@ -129,5 +129,81 @@ namespace GarajesAliKan.Forms
         {
             // Implementar.
         }
+
+        private void BtnAddFactura_Click(object sender, EventArgs e)
+        {
+            BtnAddFactura.Tag = 1;
+            HabilitarControles(true);
+            TxtNombre.Focus();
+
+            if (ListaFacturas != null)
+                if (ListaFacturas[0].Id != 0)
+                    LimpiarCampos();
+        }
+
+        /// <summary>
+        /// Habilita o deshabilita varios controles.
+        /// </summary>
+        /// <param name="habilitar">Indica si habilita o deshabilita varios controles.</param>
+        private void HabilitarControles(bool habilitar)
+        {
+            BindingNavigator.Enabled = !habilitar;
+            TxtNumFactura.Enabled = habilitar;
+            DtFecha.Enabled = habilitar;
+            TxtNombre.Enabled = habilitar;
+            TxtApellidos.Enabled = habilitar;
+            TxtNif.Enabled = habilitar;
+
+            if (BtnModificarFactura.Tag is null)
+            {
+                TxtPlaza.Enabled = habilitar;
+                CbConceptos.Enabled = habilitar;
+                CbGarajes.Enabled = habilitar;
+            }
+
+            TxtBaseImponible.Enabled = habilitar;
+            TxtIva.Enabled = habilitar;
+            CkBoxPagada.Enabled = habilitar;
+            TxtTotalFactura.Enabled = habilitar;
+            BtnImprimirFactura.Enabled = !habilitar;
+
+            PBotonesControl.Enabled = !habilitar;
+            BtnGuardar.Enabled = habilitar;
+            BtnCancelar.Enabled = habilitar;
+            PBuscarPor.Enabled = !habilitar;
+        }
+
+        /// <summary>
+        /// Limpia los campos dónde se van a introducir datos.
+        /// </summary>
+        private void LimpiarCampos()
+        {
+            TxtNumFactura.Clear();
+            DtFecha.Value = DateTime.Now;
+            TxtNombre.Clear();
+            TxtApellidos.Clear();
+            TxtNif.Clear();
+
+            CkBoxPagada.Checked = false;
+            TxtPlaza.Clear();
+            TxtBaseImponible.Clear();
+            TxtIva.Clear();
+            TxtTotalFactura.Clear();
+        }
+
+        private void CbNumsFacturas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void CbNifs_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void CbFechas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
