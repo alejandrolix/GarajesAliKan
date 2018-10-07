@@ -6,7 +6,7 @@ namespace GarajesAliKan.Clases
     class Garaje
     {        
         public int Id { get; set; }
-        public string SubId { get; set; }
+        public string SubId { get; set; }        
         public string Nombre { get; set; }        
 
         /// <summary>

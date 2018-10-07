@@ -20,7 +20,7 @@ namespace GarajesAliKan.Clases
         public static List<Plaza> ObtenerPlazas()
         {
             Database conexion = Foo.ConexionABd();
-            List<Plaza> listaPlazas = conexion.Fetch<Plaza>("SELECT idCliente, plaza FROM alquilerPorCliente ORDER BY plaza;");
+            List<Plaza> listaPlazas = conexion.Fetch<Plaza>("SELECT idCliente, plaza FROM plazaCliente ORDER BY plaza;");
 
             conexion.CloseSharedConnection();
             return listaPlazas;

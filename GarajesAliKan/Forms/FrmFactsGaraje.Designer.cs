@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmFactsGaraje));
             this.BindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+            this.BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -39,7 +40,6 @@
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.DtFecha = new System.Windows.Forms.DateTimePicker();
             this.BtnCancelar = new System.Windows.Forms.Button();
@@ -71,14 +71,14 @@
             this.LFecha = new System.Windows.Forms.Label();
             this.LNumFactura = new System.Windows.Forms.Label();
             this.PBuscarPor = new System.Windows.Forms.Panel();
-            this.CbNifs = new System.Windows.Forms.ComboBox();
+            this.CbFechas = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.LBuscarPor = new System.Windows.Forms.Label();
-            this.CbApellidos = new System.Windows.Forms.ComboBox();
+            this.CbNifs = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.CbPlazas = new System.Windows.Forms.ComboBox();
+            this.CbNumsFacturas = new System.Windows.Forms.ComboBox();
             this.BtnImprimirFactura = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
@@ -92,6 +92,7 @@
             // BindingNavigator
             // 
             this.BindingNavigator.AddNewItem = null;
+            this.BindingNavigator.BindingSource = this.BindingSource;
             this.BindingNavigator.CountItem = this.bindingNavigatorCountItem;
             this.BindingNavigator.DeleteItem = null;
             this.BindingNavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -329,6 +330,7 @@
             this.CbGarajes.Name = "CbGarajes";
             this.CbGarajes.Size = new System.Drawing.Size(178, 26);
             this.CbGarajes.TabIndex = 8;
+            this.CbGarajes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbGarajes_KeyPress);
             // 
             // CbConceptos
             // 
@@ -339,6 +341,7 @@
             this.CbConceptos.Name = "CbConceptos";
             this.CbConceptos.Size = new System.Drawing.Size(193, 26);
             this.CbConceptos.TabIndex = 7;
+            this.CbConceptos.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbConceptos_KeyPress);
             // 
             // TxtIva
             // 
@@ -511,26 +514,26 @@
             // 
             this.PBuscarPor.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PBuscarPor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PBuscarPor.Controls.Add(this.CbNifs);
+            this.PBuscarPor.Controls.Add(this.CbFechas);
             this.PBuscarPor.Controls.Add(this.label3);
             this.PBuscarPor.Controls.Add(this.panel3);
-            this.PBuscarPor.Controls.Add(this.CbApellidos);
+            this.PBuscarPor.Controls.Add(this.CbNifs);
             this.PBuscarPor.Controls.Add(this.label1);
             this.PBuscarPor.Controls.Add(this.label2);
-            this.PBuscarPor.Controls.Add(this.CbPlazas);
+            this.PBuscarPor.Controls.Add(this.CbNumsFacturas);
             this.PBuscarPor.Location = new System.Drawing.Point(12, 463);
             this.PBuscarPor.Name = "PBuscarPor";
             this.PBuscarPor.Size = new System.Drawing.Size(688, 100);
             this.PBuscarPor.TabIndex = 27;
             // 
-            // CbNifs
+            // CbFechas
             // 
-            this.CbNifs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CbNifs.FormattingEnabled = true;
-            this.CbNifs.Location = new System.Drawing.Point(548, 58);
-            this.CbNifs.Name = "CbNifs";
-            this.CbNifs.Size = new System.Drawing.Size(127, 24);
-            this.CbNifs.TabIndex = 20;
+            this.CbFechas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CbFechas.FormattingEnabled = true;
+            this.CbFechas.Location = new System.Drawing.Point(548, 58);
+            this.CbFechas.Name = "CbFechas";
+            this.CbFechas.Size = new System.Drawing.Size(127, 24);
+            this.CbFechas.TabIndex = 20;
             // 
             // label3
             // 
@@ -565,14 +568,14 @@
             this.LBuscarPor.TabIndex = 2;
             this.LBuscarPor.Text = "BUSCAR POR:";
             // 
-            // CbApellidos
+            // CbNifs
             // 
-            this.CbApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CbApellidos.FormattingEnabled = true;
-            this.CbApellidos.Location = new System.Drawing.Point(304, 58);
-            this.CbApellidos.Name = "CbApellidos";
-            this.CbApellidos.Size = new System.Drawing.Size(144, 24);
-            this.CbApellidos.TabIndex = 19;
+            this.CbNifs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CbNifs.FormattingEnabled = true;
+            this.CbNifs.Location = new System.Drawing.Point(304, 58);
+            this.CbNifs.Name = "CbNifs";
+            this.CbNifs.Size = new System.Drawing.Size(144, 24);
+            this.CbNifs.TabIndex = 19;
             // 
             // label1
             // 
@@ -594,14 +597,14 @@
             this.label2.TabIndex = 22;
             this.label2.Text = "N.I.F.: ";
             // 
-            // CbPlazas
+            // CbNumsFacturas
             // 
-            this.CbPlazas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CbPlazas.FormattingEnabled = true;
-            this.CbPlazas.Location = new System.Drawing.Point(100, 58);
-            this.CbPlazas.Name = "CbPlazas";
-            this.CbPlazas.Size = new System.Drawing.Size(103, 24);
-            this.CbPlazas.TabIndex = 18;
+            this.CbNumsFacturas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CbNumsFacturas.FormattingEnabled = true;
+            this.CbNumsFacturas.Location = new System.Drawing.Point(100, 58);
+            this.CbNumsFacturas.Name = "CbNumsFacturas";
+            this.CbNumsFacturas.Size = new System.Drawing.Size(103, 24);
+            this.CbNumsFacturas.TabIndex = 18;
             // 
             // BtnImprimirFactura
             // 
@@ -612,6 +615,7 @@
             this.BtnImprimirFactura.TabIndex = 21;
             this.BtnImprimirFactura.Text = "Imprimir Factura";
             this.BtnImprimirFactura.UseVisualStyleBackColor = true;
+            this.BtnImprimirFactura.Click += new System.EventHandler(this.BtnImprimirFactura_Click);
             // 
             // FrmFactsGaraje
             // 
@@ -686,14 +690,14 @@
         private System.Windows.Forms.Button BtnGuardar;
         private System.Windows.Forms.Button BtnCancelar;
         private System.Windows.Forms.Panel PBuscarPor;
-        private System.Windows.Forms.ComboBox CbNifs;
+        private System.Windows.Forms.ComboBox CbFechas;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label LBuscarPor;
-        private System.Windows.Forms.ComboBox CbApellidos;
+        private System.Windows.Forms.ComboBox CbNifs;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox CbPlazas;
+        private System.Windows.Forms.ComboBox CbNumsFacturas;
         private System.Windows.Forms.Button BtnImprimirFactura;
         private System.Windows.Forms.DateTimePicker DtFecha;
     }
