@@ -52,12 +52,13 @@ namespace GarajesAliKan.Clases
         public static List<Cliente> ObtenerClientesGarajes()
         {
             Database conexion = Foo.ConexionABd();
-            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
+            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, 
+                                                                           alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
                                                                     FROM   clientes cli
-                                                                            JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
-                                                                            JOIN garajes gaj ON gaj.id = alqPc.idGaraje
-                                                                            LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
-                                                                            JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
+                                                                           JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
+                                                                           JOIN garajes gaj ON gaj.id = alqPc.idGaraje
+                                                                           LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
+                                                                           JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
                                                                     WHERE  cli.esClienteGaraje IS TRUE
                                                                     ORDER BY cli.apellidos;");
             conexion.CloseSharedConnection();

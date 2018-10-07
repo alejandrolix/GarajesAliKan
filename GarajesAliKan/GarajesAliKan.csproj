@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Alquiler.cs" />
+    <Compile Include="Clases\Factura.cs" />
     <Compile Include="Clases\Foo.cs" />
     <Compile Include="Clases\Plaza.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
@@ -119,6 +120,12 @@
     </Compile>
     <Compile Include="Forms\FrmClientesLavadero.Designer.cs">
       <DependentUpon>FrmClientesLavadero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmFactsGaraje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmFactsGaraje.Designer.cs">
+      <DependentUpon>FrmFactsGaraje.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmPrincipal.cs">
       <SubType>Form</SubType>
@@ -135,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmClientesLavadero.resx">
       <DependentUpon>FrmClientesLavadero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmFactsGaraje.resx">
+      <DependentUpon>FrmFactsGaraje.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>

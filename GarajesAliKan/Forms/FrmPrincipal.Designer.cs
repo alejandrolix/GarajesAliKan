@@ -31,6 +31,10 @@
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.ClientesGarajeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ClientesLavaderoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facturasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facturasGarajeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facturasLavaderoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facturasRecibidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -39,7 +43,8 @@
             this.MenuStrip.BackColor = System.Drawing.SystemColors.Control;
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ClientesGarajeToolStripMenuItem,
-            this.ClientesLavaderoToolStripMenuItem});
+            this.ClientesLavaderoToolStripMenuItem,
+            this.facturasToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Size = new System.Drawing.Size(800, 28);
@@ -61,6 +66,36 @@
             this.ClientesLavaderoToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.ClientesLavaderoToolStripMenuItem.Text = "Clientes Lavadero";
             this.ClientesLavaderoToolStripMenuItem.Click += new System.EventHandler(this.ClientesLavaderoToolStripMenuItem_Click);
+            // 
+            // facturasToolStripMenuItem
+            // 
+            this.facturasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.facturasGarajeToolStripMenuItem,
+            this.facturasLavaderoToolStripMenuItem,
+            this.facturasRecibidasToolStripMenuItem});
+            this.facturasToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.facturasToolStripMenuItem.Name = "facturasToolStripMenuItem";
+            this.facturasToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.facturasToolStripMenuItem.Text = "Facturas";
+            // 
+            // facturasGarajeToolStripMenuItem
+            // 
+            this.facturasGarajeToolStripMenuItem.Name = "facturasGarajeToolStripMenuItem";
+            this.facturasGarajeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasGarajeToolStripMenuItem.Text = "Garaje";
+            this.facturasGarajeToolStripMenuItem.Click += new System.EventHandler(this.FacturasGarajeToolStripMenuItem_Click);
+            // 
+            // facturasLavaderoToolStripMenuItem
+            // 
+            this.facturasLavaderoToolStripMenuItem.Name = "facturasLavaderoToolStripMenuItem";
+            this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasLavaderoToolStripMenuItem.Text = "Lavadero";
+            // 
+            // facturasRecibidasToolStripMenuItem
+            // 
+            this.facturasRecibidasToolStripMenuItem.Name = "facturasRecibidasToolStripMenuItem";
+            this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasRecibidasToolStripMenuItem.Text = "Recibidas";
             // 
             // FrmPrincipal
             // 
@@ -87,6 +122,10 @@
         private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem ClientesGarajeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ClientesLavaderoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facturasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facturasGarajeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facturasLavaderoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facturasRecibidasToolStripMenuItem;
     }
 }
 
