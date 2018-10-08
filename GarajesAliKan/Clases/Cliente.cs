@@ -189,6 +189,20 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todos los nombres y apellidos de los clientes de los garajes.
+        /// </summary>
+        /// <returns>La lista con los nombres y apellidos de los clientes de los garajes.</returns>
+        public static List<Cliente> ObtenerNombresYApellidosGarajes()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT id, CONCAT(nombre, ' ', apellidos) AS nombre
+                                                                    FROM   clientes
+                                                                    WHERE  esClienteGaraje IS TRUE;");
+            conexion.CloseSharedConnection();
+            return listaClientes;
+        }
+
+        /// <summary>
         /// Inserta un cliente.
         /// </summary>        
         /// <returns>El cliente se ha insertado.</returns>

@@ -61,13 +61,7 @@
             this.LPlaza = new System.Windows.Forms.Label();
             this.LGaraje = new System.Windows.Forms.Label();
             this.LConcepto = new System.Windows.Forms.Label();
-            this.TxtApellidos = new System.Windows.Forms.TextBox();
-            this.TxtNombre = new System.Windows.Forms.TextBox();
-            this.TxtNif = new System.Windows.Forms.TextBox();
             this.TxtNumFactura = new System.Windows.Forms.TextBox();
-            this.LApellidos = new System.Windows.Forms.Label();
-            this.LNombre = new System.Windows.Forms.Label();
-            this.LNif = new System.Windows.Forms.Label();
             this.LFecha = new System.Windows.Forms.Label();
             this.LNumFactura = new System.Windows.Forms.Label();
             this.PBuscarPor = new System.Windows.Forms.Panel();
@@ -80,6 +74,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CbNumsFacturas = new System.Windows.Forms.ComboBox();
             this.BtnImprimirFactura = new System.Windows.Forms.Button();
+            this.LCliente = new System.Windows.Forms.Label();
+            this.CbClientes = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
@@ -185,6 +181,8 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.CbClientes);
+            this.panel1.Controls.Add(this.LCliente);
             this.panel1.Controls.Add(this.DtFecha);
             this.panel1.Controls.Add(this.BtnCancelar);
             this.panel1.Controls.Add(this.BtnGuardar);
@@ -202,13 +200,7 @@
             this.panel1.Controls.Add(this.LPlaza);
             this.panel1.Controls.Add(this.LGaraje);
             this.panel1.Controls.Add(this.LConcepto);
-            this.panel1.Controls.Add(this.TxtApellidos);
-            this.panel1.Controls.Add(this.TxtNombre);
-            this.panel1.Controls.Add(this.TxtNif);
             this.panel1.Controls.Add(this.TxtNumFactura);
-            this.panel1.Controls.Add(this.LApellidos);
-            this.panel1.Controls.Add(this.LNombre);
-            this.panel1.Controls.Add(this.LNif);
             this.panel1.Controls.Add(this.LFecha);
             this.panel1.Controls.Add(this.LNumFactura);
             this.panel1.Location = new System.Drawing.Point(12, 43);
@@ -223,15 +215,16 @@
             this.DtFecha.Enabled = false;
             this.DtFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.DtFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DtFecha.Location = new System.Drawing.Point(187, 51);
+            this.DtFecha.Location = new System.Drawing.Point(183, 52);
             this.DtFecha.Name = "DtFecha";
-            this.DtFecha.Size = new System.Drawing.Size(131, 24);
+            this.DtFecha.Size = new System.Drawing.Size(122, 24);
             this.DtFecha.TabIndex = 26;
             this.DtFecha.Value = new System.DateTime(2018, 10, 5, 0, 0, 0, 0);
             this.DtFecha.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DtFecha_KeyPress);
             // 
             // BtnCancelar
             // 
+            this.BtnCancelar.Enabled = false;
             this.BtnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.BtnCancelar.Location = new System.Drawing.Point(768, 305);
             this.BtnCancelar.Name = "BtnCancelar";
@@ -239,9 +232,11 @@
             this.BtnCancelar.TabIndex = 17;
             this.BtnCancelar.Text = "Cancelar";
             this.BtnCancelar.UseVisualStyleBackColor = true;
+            this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // BtnGuardar
             // 
+            this.BtnGuardar.Enabled = false;
             this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.BtnGuardar.Location = new System.Drawing.Point(630, 305);
             this.BtnGuardar.Name = "BtnGuardar";
@@ -249,6 +244,7 @@
             this.BtnGuardar.TabIndex = 16;
             this.BtnGuardar.Text = "Guardar";
             this.BtnGuardar.UseVisualStyleBackColor = true;
+            this.BtnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
             // 
             // PBotonesControl
             // 
@@ -269,6 +265,7 @@
             this.BtnEliminarFactura.TabIndex = 15;
             this.BtnEliminarFactura.Text = "Eliminar Factura";
             this.BtnEliminarFactura.UseVisualStyleBackColor = true;
+            this.BtnEliminarFactura.Click += new System.EventHandler(this.BtnEliminarFactura_Click);
             // 
             // BtnModificarFactura
             // 
@@ -279,6 +276,7 @@
             this.BtnModificarFactura.TabIndex = 14;
             this.BtnModificarFactura.Text = "Modificar Factura";
             this.BtnModificarFactura.UseVisualStyleBackColor = true;
+            this.BtnModificarFactura.Click += new System.EventHandler(this.BtnModificarFactura_Click);
             // 
             // BtnAddFactura
             // 
@@ -295,10 +293,10 @@
             // 
             this.CkBoxPagada.AutoSize = true;
             this.CkBoxPagada.Enabled = false;
-            this.CkBoxPagada.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.CkBoxPagada.Location = new System.Drawing.Point(187, 220);
+            this.CkBoxPagada.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.CkBoxPagada.Location = new System.Drawing.Point(183, 165);
             this.CkBoxPagada.Name = "CkBoxPagada";
-            this.CkBoxPagada.Size = new System.Drawing.Size(77, 22);
+            this.CkBoxPagada.Size = new System.Drawing.Size(83, 24);
             this.CkBoxPagada.TabIndex = 6;
             this.CkBoxPagada.Text = "Pagada";
             this.CkBoxPagada.UseVisualStyleBackColor = true;
@@ -307,7 +305,7 @@
             // 
             this.TxtTotalFactura.Enabled = false;
             this.TxtTotalFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtTotalFactura.Location = new System.Drawing.Point(616, 205);
+            this.TxtTotalFactura.Location = new System.Drawing.Point(641, 205);
             this.TxtTotalFactura.Name = "TxtTotalFactura";
             this.TxtTotalFactura.Size = new System.Drawing.Size(95, 24);
             this.TxtTotalFactura.TabIndex = 12;
@@ -316,7 +314,7 @@
             // 
             this.LTotalFactura.AutoSize = true;
             this.LTotalFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LTotalFactura.Location = new System.Drawing.Point(471, 208);
+            this.LTotalFactura.Location = new System.Drawing.Point(496, 208);
             this.LTotalFactura.Name = "LTotalFactura";
             this.LTotalFactura.Size = new System.Drawing.Size(103, 18);
             this.LTotalFactura.TabIndex = 22;
@@ -327,7 +325,7 @@
             this.CbGarajes.Enabled = false;
             this.CbGarajes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.CbGarajes.FormattingEnabled = true;
-            this.CbGarajes.Location = new System.Drawing.Point(616, 53);
+            this.CbGarajes.Location = new System.Drawing.Point(641, 53);
             this.CbGarajes.Name = "CbGarajes";
             this.CbGarajes.Size = new System.Drawing.Size(178, 26);
             this.CbGarajes.TabIndex = 8;
@@ -338,7 +336,7 @@
             this.CbConceptos.Enabled = false;
             this.CbConceptos.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.CbConceptos.FormattingEnabled = true;
-            this.CbConceptos.Location = new System.Drawing.Point(616, 16);
+            this.CbConceptos.Location = new System.Drawing.Point(641, 16);
             this.CbConceptos.Name = "CbConceptos";
             this.CbConceptos.Size = new System.Drawing.Size(193, 26);
             this.CbConceptos.TabIndex = 7;
@@ -348,7 +346,7 @@
             // 
             this.TxtIva.Enabled = false;
             this.TxtIva.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtIva.Location = new System.Drawing.Point(616, 164);
+            this.TxtIva.Location = new System.Drawing.Point(641, 164);
             this.TxtIva.Name = "TxtIva";
             this.TxtIva.Size = new System.Drawing.Size(95, 24);
             this.TxtIva.TabIndex = 11;
@@ -357,7 +355,7 @@
             // 
             this.TxtBaseImponible.Enabled = false;
             this.TxtBaseImponible.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtBaseImponible.Location = new System.Drawing.Point(616, 127);
+            this.TxtBaseImponible.Location = new System.Drawing.Point(641, 127);
             this.TxtBaseImponible.Name = "TxtBaseImponible";
             this.TxtBaseImponible.Size = new System.Drawing.Size(95, 24);
             this.TxtBaseImponible.TabIndex = 10;
@@ -367,7 +365,7 @@
             this.TxtPlaza.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtPlaza.Enabled = false;
             this.TxtPlaza.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtPlaza.Location = new System.Drawing.Point(616, 90);
+            this.TxtPlaza.Location = new System.Drawing.Point(641, 90);
             this.TxtPlaza.Name = "TxtPlaza";
             this.TxtPlaza.Size = new System.Drawing.Size(92, 24);
             this.TxtPlaza.TabIndex = 9;
@@ -376,7 +374,7 @@
             // 
             this.LIva.AutoSize = true;
             this.LIva.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LIva.Location = new System.Drawing.Point(471, 167);
+            this.LIva.Location = new System.Drawing.Point(496, 167);
             this.LIva.Name = "LIva";
             this.LIva.Size = new System.Drawing.Size(49, 18);
             this.LIva.TabIndex = 15;
@@ -386,7 +384,7 @@
             // 
             this.LBaseImponible.AutoSize = true;
             this.LBaseImponible.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LBaseImponible.Location = new System.Drawing.Point(471, 130);
+            this.LBaseImponible.Location = new System.Drawing.Point(496, 130);
             this.LBaseImponible.Name = "LBaseImponible";
             this.LBaseImponible.Size = new System.Drawing.Size(117, 18);
             this.LBaseImponible.TabIndex = 14;
@@ -396,7 +394,7 @@
             // 
             this.LPlaza.AutoSize = true;
             this.LPlaza.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LPlaza.Location = new System.Drawing.Point(471, 93);
+            this.LPlaza.Location = new System.Drawing.Point(496, 93);
             this.LPlaza.Name = "LPlaza";
             this.LPlaza.Size = new System.Drawing.Size(53, 18);
             this.LPlaza.TabIndex = 13;
@@ -406,7 +404,7 @@
             // 
             this.LGaraje.AutoSize = true;
             this.LGaraje.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LGaraje.Location = new System.Drawing.Point(471, 56);
+            this.LGaraje.Location = new System.Drawing.Point(496, 56);
             this.LGaraje.Name = "LGaraje";
             this.LGaraje.Size = new System.Drawing.Size(60, 18);
             this.LGaraje.TabIndex = 12;
@@ -416,86 +414,26 @@
             // 
             this.LConcepto.AutoSize = true;
             this.LConcepto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LConcepto.Location = new System.Drawing.Point(471, 19);
+            this.LConcepto.Location = new System.Drawing.Point(496, 19);
             this.LConcepto.Name = "LConcepto";
             this.LConcepto.Size = new System.Drawing.Size(81, 18);
             this.LConcepto.TabIndex = 11;
             this.LConcepto.Text = "Concepto: ";
             // 
-            // TxtApellidos
-            // 
-            this.TxtApellidos.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtApellidos.Enabled = false;
-            this.TxtApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtApellidos.Location = new System.Drawing.Point(187, 164);
-            this.TxtApellidos.Name = "TxtApellidos";
-            this.TxtApellidos.Size = new System.Drawing.Size(179, 24);
-            this.TxtApellidos.TabIndex = 5;
-            // 
-            // TxtNombre
-            // 
-            this.TxtNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtNombre.Enabled = false;
-            this.TxtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtNombre.Location = new System.Drawing.Point(187, 127);
-            this.TxtNombre.Name = "TxtNombre";
-            this.TxtNombre.Size = new System.Drawing.Size(164, 24);
-            this.TxtNombre.TabIndex = 4;
-            // 
-            // TxtNif
-            // 
-            this.TxtNif.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtNif.Enabled = false;
-            this.TxtNif.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtNif.Location = new System.Drawing.Point(187, 90);
-            this.TxtNif.Name = "TxtNif";
-            this.TxtNif.Size = new System.Drawing.Size(114, 24);
-            this.TxtNif.TabIndex = 3;
-            // 
             // TxtNumFactura
             // 
             this.TxtNumFactura.Enabled = false;
             this.TxtNumFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtNumFactura.Location = new System.Drawing.Point(187, 16);
+            this.TxtNumFactura.Location = new System.Drawing.Point(183, 16);
             this.TxtNumFactura.Name = "TxtNumFactura";
-            this.TxtNumFactura.Size = new System.Drawing.Size(61, 24);
+            this.TxtNumFactura.Size = new System.Drawing.Size(51, 24);
             this.TxtNumFactura.TabIndex = 1;
-            // 
-            // LApellidos
-            // 
-            this.LApellidos.AutoSize = true;
-            this.LApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LApellidos.Location = new System.Drawing.Point(73, 167);
-            this.LApellidos.Name = "LApellidos";
-            this.LApellidos.Size = new System.Drawing.Size(75, 18);
-            this.LApellidos.TabIndex = 4;
-            this.LApellidos.Text = "Apellidos: ";
-            // 
-            // LNombre
-            // 
-            this.LNombre.AutoSize = true;
-            this.LNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LNombre.Location = new System.Drawing.Point(73, 130);
-            this.LNombre.Name = "LNombre";
-            this.LNombre.Size = new System.Drawing.Size(70, 18);
-            this.LNombre.TabIndex = 3;
-            this.LNombre.Text = "Nombre: ";
-            // 
-            // LNif
-            // 
-            this.LNif.AutoSize = true;
-            this.LNif.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LNif.Location = new System.Drawing.Point(73, 93);
-            this.LNif.Name = "LNif";
-            this.LNif.Size = new System.Drawing.Size(51, 18);
-            this.LNif.TabIndex = 2;
-            this.LNif.Text = "N.I.F.: ";
             // 
             // LFecha
             // 
             this.LFecha.AutoSize = true;
             this.LFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LFecha.Location = new System.Drawing.Point(73, 56);
+            this.LFecha.Location = new System.Drawing.Point(69, 57);
             this.LFecha.Name = "LFecha";
             this.LFecha.Size = new System.Drawing.Size(57, 18);
             this.LFecha.TabIndex = 1;
@@ -505,7 +443,7 @@
             // 
             this.LNumFactura.AutoSize = true;
             this.LNumFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LNumFactura.Location = new System.Drawing.Point(73, 19);
+            this.LNumFactura.Location = new System.Drawing.Point(69, 19);
             this.LNumFactura.Name = "LNumFactura";
             this.LNumFactura.Size = new System.Drawing.Size(86, 18);
             this.LNumFactura.TabIndex = 0;
@@ -621,6 +559,27 @@
             this.BtnImprimirFactura.UseVisualStyleBackColor = true;
             this.BtnImprimirFactura.Click += new System.EventHandler(this.BtnImprimirFactura_Click);
             // 
+            // LCliente
+            // 
+            this.LCliente.AutoSize = true;
+            this.LCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.LCliente.Location = new System.Drawing.Point(69, 93);
+            this.LCliente.Name = "LCliente";
+            this.LCliente.Size = new System.Drawing.Size(61, 18);
+            this.LCliente.TabIndex = 27;
+            this.LCliente.Text = "Cliente: ";
+            // 
+            // CbClientes
+            // 
+            this.CbClientes.Enabled = false;
+            this.CbClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.CbClientes.FormattingEnabled = true;
+            this.CbClientes.Location = new System.Drawing.Point(183, 90);
+            this.CbClientes.Name = "CbClientes";
+            this.CbClientes.Size = new System.Drawing.Size(240, 26);
+            this.CbClientes.TabIndex = 28;
+            this.CbClientes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbClientes_KeyPress);
+            // 
             // FrmFactsGaraje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -666,13 +625,7 @@
         private System.Windows.Forms.BindingSource BindingSource;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label LNumFactura;
-        private System.Windows.Forms.Label LApellidos;
-        private System.Windows.Forms.Label LNombre;
-        private System.Windows.Forms.Label LNif;
         private System.Windows.Forms.Label LFecha;
-        private System.Windows.Forms.TextBox TxtApellidos;
-        private System.Windows.Forms.TextBox TxtNombre;
-        private System.Windows.Forms.TextBox TxtNif;
         private System.Windows.Forms.TextBox TxtNumFactura;
         private System.Windows.Forms.Label LIva;
         private System.Windows.Forms.Label LBaseImponible;
@@ -704,5 +657,7 @@
         private System.Windows.Forms.ComboBox CbNumsFacturas;
         private System.Windows.Forms.Button BtnImprimirFactura;
         private System.Windows.Forms.DateTimePicker DtFecha;
+        private System.Windows.Forms.ComboBox CbClientes;
+        private System.Windows.Forms.Label LCliente;
     }
 }
