@@ -596,5 +596,13 @@ namespace GarajesAliKan.Forms
         {
             e.Handled = true;
         }
+
+        private void TxtPlaza_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || e.KeyChar == ' ' || char.IsControl(e.KeyChar))            
+                e.Handled = false;            
+            else
+                e.Handled = true;
+        }        
     }
 }

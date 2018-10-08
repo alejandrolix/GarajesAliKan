@@ -41,6 +41,8 @@
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CbClientes = new System.Windows.Forms.ComboBox();
+            this.LCliente = new System.Windows.Forms.Label();
             this.DtFecha = new System.Windows.Forms.DateTimePicker();
             this.BtnCancelar = new System.Windows.Forms.Button();
             this.BtnGuardar = new System.Windows.Forms.Button();
@@ -74,8 +76,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CbNumsFacturas = new System.Windows.Forms.ComboBox();
             this.BtnImprimirFactura = new System.Windows.Forms.Button();
-            this.LCliente = new System.Windows.Forms.Label();
-            this.CbClientes = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
@@ -128,6 +128,7 @@
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveFirstItem.Text = "Mover primero";
+            this.bindingNavigatorMoveFirstItem.Click += new System.EventHandler(this.BindingNavigatorMoveFirstItem_Click);
             // 
             // bindingNavigatorMovePreviousItem
             // 
@@ -137,6 +138,7 @@
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMovePreviousItem.Text = "Mover anterior";
+            this.bindingNavigatorMovePreviousItem.Click += new System.EventHandler(this.BindingNavigatorMovePreviousItem_Click);
             // 
             // bindingNavigatorSeparator
             // 
@@ -166,6 +168,7 @@
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveNextItem.Text = "Mover siguiente";
+            this.bindingNavigatorMoveNextItem.Click += new System.EventHandler(this.BindingNavigatorMoveNextItem_Click);
             // 
             // bindingNavigatorMoveLastItem
             // 
@@ -175,6 +178,7 @@
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 24);
             this.bindingNavigatorMoveLastItem.Text = "Mover último";
+            this.bindingNavigatorMoveLastItem.Click += new System.EventHandler(this.BindingNavigatorMoveLastItem_Click);
             // 
             // panel1
             // 
@@ -205,8 +209,29 @@
             this.panel1.Controls.Add(this.LNumFactura);
             this.panel1.Location = new System.Drawing.Point(12, 43);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(884, 374);
+            this.panel1.Size = new System.Drawing.Size(884, 351);
             this.panel1.TabIndex = 1;
+            // 
+            // CbClientes
+            // 
+            this.CbClientes.Enabled = false;
+            this.CbClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.CbClientes.FormattingEnabled = true;
+            this.CbClientes.Location = new System.Drawing.Point(183, 90);
+            this.CbClientes.Name = "CbClientes";
+            this.CbClientes.Size = new System.Drawing.Size(240, 26);
+            this.CbClientes.TabIndex = 28;
+            this.CbClientes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbClientes_KeyPress);
+            // 
+            // LCliente
+            // 
+            this.LCliente.AutoSize = true;
+            this.LCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.LCliente.Location = new System.Drawing.Point(69, 93);
+            this.LCliente.Name = "LCliente";
+            this.LCliente.Size = new System.Drawing.Size(61, 18);
+            this.LCliente.TabIndex = 27;
+            this.LCliente.Text = "Cliente: ";
             // 
             // DtFecha
             // 
@@ -226,7 +251,7 @@
             // 
             this.BtnCancelar.Enabled = false;
             this.BtnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnCancelar.Location = new System.Drawing.Point(768, 305);
+            this.BtnCancelar.Location = new System.Drawing.Point(764, 295);
             this.BtnCancelar.Name = "BtnCancelar";
             this.BtnCancelar.Size = new System.Drawing.Size(93, 35);
             this.BtnCancelar.TabIndex = 17;
@@ -238,7 +263,7 @@
             // 
             this.BtnGuardar.Enabled = false;
             this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnGuardar.Location = new System.Drawing.Point(630, 305);
+            this.BtnGuardar.Location = new System.Drawing.Point(626, 295);
             this.BtnGuardar.Name = "BtnGuardar";
             this.BtnGuardar.Size = new System.Drawing.Size(86, 35);
             this.BtnGuardar.TabIndex = 16;
@@ -251,7 +276,7 @@
             this.PBotonesControl.Controls.Add(this.BtnEliminarFactura);
             this.PBotonesControl.Controls.Add(this.BtnModificarFactura);
             this.PBotonesControl.Controls.Add(this.BtnAddFactura);
-            this.PBotonesControl.Location = new System.Drawing.Point(21, 286);
+            this.PBotonesControl.Location = new System.Drawing.Point(25, 276);
             this.PBotonesControl.Name = "PBotonesControl";
             this.PBotonesControl.Size = new System.Drawing.Size(517, 61);
             this.PBotonesControl.TabIndex = 25;
@@ -309,6 +334,7 @@
             this.TxtTotalFactura.Name = "TxtTotalFactura";
             this.TxtTotalFactura.Size = new System.Drawing.Size(95, 24);
             this.TxtTotalFactura.TabIndex = 12;
+            this.TxtTotalFactura.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTotalFactura_KeyPress);
             // 
             // LTotalFactura
             // 
@@ -350,6 +376,7 @@
             this.TxtIva.Name = "TxtIva";
             this.TxtIva.Size = new System.Drawing.Size(95, 24);
             this.TxtIva.TabIndex = 11;
+            this.TxtIva.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtIva_KeyPress);
             // 
             // TxtBaseImponible
             // 
@@ -359,6 +386,7 @@
             this.TxtBaseImponible.Name = "TxtBaseImponible";
             this.TxtBaseImponible.Size = new System.Drawing.Size(95, 24);
             this.TxtBaseImponible.TabIndex = 10;
+            this.TxtBaseImponible.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBaseImponible_KeyPress);
             // 
             // TxtPlaza
             // 
@@ -369,6 +397,7 @@
             this.TxtPlaza.Name = "TxtPlaza";
             this.TxtPlaza.Size = new System.Drawing.Size(92, 24);
             this.TxtPlaza.TabIndex = 9;
+            this.TxtPlaza.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPlaza_KeyPress);
             // 
             // LIva
             // 
@@ -460,7 +489,7 @@
             this.PBuscarPor.Controls.Add(this.label1);
             this.PBuscarPor.Controls.Add(this.label2);
             this.PBuscarPor.Controls.Add(this.CbNumsFacturas);
-            this.PBuscarPor.Location = new System.Drawing.Point(12, 463);
+            this.PBuscarPor.Location = new System.Drawing.Point(12, 437);
             this.PBuscarPor.Name = "PBuscarPor";
             this.PBuscarPor.Size = new System.Drawing.Size(688, 100);
             this.PBuscarPor.TabIndex = 27;
@@ -473,6 +502,7 @@
             this.CbFechas.Name = "CbFechas";
             this.CbFechas.Size = new System.Drawing.Size(127, 24);
             this.CbFechas.TabIndex = 20;
+            this.CbFechas.SelectionChangeCommitted += new System.EventHandler(this.CbFechas_SelectionChangeCommitted);
             this.CbFechas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbFechas_KeyPress);
             // 
             // label3
@@ -516,6 +546,7 @@
             this.CbNifs.Name = "CbNifs";
             this.CbNifs.Size = new System.Drawing.Size(144, 24);
             this.CbNifs.TabIndex = 19;
+            this.CbNifs.SelectionChangeCommitted += new System.EventHandler(this.CbNifs_SelectionChangeCommitted);
             this.CbNifs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbNifs_KeyPress);
             // 
             // label1
@@ -546,12 +577,13 @@
             this.CbNumsFacturas.Name = "CbNumsFacturas";
             this.CbNumsFacturas.Size = new System.Drawing.Size(103, 24);
             this.CbNumsFacturas.TabIndex = 18;
+            this.CbNumsFacturas.SelectionChangeCommitted += new System.EventHandler(this.CbNumsFacturas_SelectionChangeCommitted);
             this.CbNumsFacturas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbNumsFacturas_KeyPress);
             // 
             // BtnImprimirFactura
             // 
             this.BtnImprimirFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnImprimirFactura.Location = new System.Drawing.Point(766, 485);
+            this.BtnImprimirFactura.Location = new System.Drawing.Point(766, 464);
             this.BtnImprimirFactura.Name = "BtnImprimirFactura";
             this.BtnImprimirFactura.Size = new System.Drawing.Size(93, 60);
             this.BtnImprimirFactura.TabIndex = 21;
@@ -559,32 +591,11 @@
             this.BtnImprimirFactura.UseVisualStyleBackColor = true;
             this.BtnImprimirFactura.Click += new System.EventHandler(this.BtnImprimirFactura_Click);
             // 
-            // LCliente
-            // 
-            this.LCliente.AutoSize = true;
-            this.LCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LCliente.Location = new System.Drawing.Point(69, 93);
-            this.LCliente.Name = "LCliente";
-            this.LCliente.Size = new System.Drawing.Size(61, 18);
-            this.LCliente.TabIndex = 27;
-            this.LCliente.Text = "Cliente: ";
-            // 
-            // CbClientes
-            // 
-            this.CbClientes.Enabled = false;
-            this.CbClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.CbClientes.FormattingEnabled = true;
-            this.CbClientes.Location = new System.Drawing.Point(183, 90);
-            this.CbClientes.Name = "CbClientes";
-            this.CbClientes.Size = new System.Drawing.Size(240, 26);
-            this.CbClientes.TabIndex = 28;
-            this.CbClientes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbClientes_KeyPress);
-            // 
             // FrmFactsGaraje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(908, 575);
+            this.ClientSize = new System.Drawing.Size(908, 559);
             this.Controls.Add(this.BtnImprimirFactura);
             this.Controls.Add(this.PBuscarPor);
             this.Controls.Add(this.panel1);
@@ -592,6 +603,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FrmFactsGaraje";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facturas Garajes";
             this.Load += new System.EventHandler(this.FrmFactsGaraje_Load);

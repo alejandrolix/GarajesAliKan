@@ -71,34 +71,33 @@ namespace GarajesAliKan.Clases
         /// Obtiene las fechas de todas las facturas.
         /// </summary>
         /// <returns>Las fechas de todas las facturas.</returns>
-        public static List<Factura> ObtenerFechas()
+        public static List<DateTime> ObtenerFechas()
         {
             Database conexion = Foo.ConexionABd();
-            List<Factura> listaFechas = conexion.Fetch<Factura>("SELECT id, fecha FROM facturas ORDER BY fecha;");
+            List<DateTime> listaFechas = conexion.Fetch<DateTime>("SELECT fecha FROM facturas ORDER BY fecha;");
 
             conexion.CloseSharedConnection();
             return listaFechas;
         }
 
         /// <summary>
-        /// Elimina una factura a partir de su Íd.
-        /// </summary>
-        /// <param name="id">El Id de una factura.</param>
+        /// Elimina una factura.
+        /// </summary>        
         /// <returns>La factura se ha eliminado.</returns>
-        public static bool EliminarPorId(int id)
+        public bool Eliminar()
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
             MySqlCommand comando = new MySqlCommand("DELETE FROM facturas WHERE id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", Id);
 
             int numFila = 0;
             try
             {
                 numFila = comando.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            catch (Exception)
+            { }
 
             conexion.Close();
             return numFila >= 1;
@@ -117,7 +116,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@fecha", Fecha);
             comando.Parameters.AddWithValue("@idCliente", Cliente.Id);
             comando.Parameters.AddWithValue("@idTipoAlquiler", Cliente.Alquiler.IdTipoAlquiler);
-            comando.Parameters.AddWithValue("@idGaraje", Cliente.Garaje.Id);
+            comando.Parameters.AddWithValue("@idGaraje", Garaje.Id);
             comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
             comando.Parameters.AddWithValue("@iva", Iva);
             comando.Parameters.AddWithValue("@total", Total);
@@ -128,18 +127,115 @@ namespace GarajesAliKan.Clases
             {
                 numFila = comando.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            catch (Exception)
+            { }
 
             conexion.Close();
             return numFila >= 1;
         }
 
+        /// <summary>
+        /// Modifica los datos de una factura.
+        /// </summary>
+        /// <returns>Se han modificado los datos de la factura.</returns>
+        public bool Modificar()
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"UPDATE facturas SET fecha = @fecha, estaPagada = @estaPagada, baseImponible = @baseImponible, iva = @iva,
+                                                                          total = @total
+                                                      WHERE  id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", Id);
+            comando.Parameters.AddWithValue("@fecha", Fecha);
+            comando.Parameters.AddWithValue("@estaPagada", EstaPagada);
+            comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
+            comando.Parameters.AddWithValue("@iva", Iva);
+            comando.Parameters.AddWithValue("@total", Total);            
+
+            int numFila = 0;
+            try
+            {
+                numFila = comando.ExecuteNonQuery();
+            }
+            catch (Exception)
+            { }
+
+            conexion.Close();
+            return numFila >= 1;
+        }
+
+        /// <summary>
+        /// Obtiene una factura a partir de su Id.
+        /// </summary>
+        /// <param name="idFactura">El Id de una factura-</param>
+        /// <returns>Los datos de la factura.</returns>
+        public static Factura ObtenerFacturaPorId(int idFactura)
+        {
+            Database conexion = Foo.ConexionABd();
+            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
+    	                                                        plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                         FROM   facturas fact
+                                                                JOIN clientes cli ON fact.idCliente = cli.id
+                                                                JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                                JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                         WHERE  fact.id = @0;", idFactura);
+            conexion.CloseSharedConnection();
+            return factura;
+        }
+
+        /// <summary>
+        /// Obtiene una factura a partir de un Id de un cliente.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los datos de la factura.</returns>
+        public static Factura ObtenerFacturaPorIdCliente(int idCliente)
+        {
+            Database conexion = Foo.ConexionABd();
+            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
+    	                                                        plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                         FROM   facturas fact
+                                                                JOIN clientes cli ON fact.idCliente = cli.id
+                                                                JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                                JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                         WHERE  cli.id = @0;", idCliente);
+            conexion.CloseSharedConnection();
+            return factura;
+        }
+
+        /// <summary>
+        /// Obtiene una factura a partir de una fecha.
+        /// </summary>
+        /// <param name="fecha">La fecha.</param>
+        /// <returns>Los datos de la factura.</returns>
+        public static Factura ObtenerFacturaPorFecha(DateTime fecha)
+        {
+            Database conexion = Foo.ConexionABd();
+            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
+    	                                                        plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                         FROM   facturas fact
+                                                                JOIN clientes cli ON fact.idCliente = cli.id
+                                                                JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                                JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                         WHERE  fact.fecha = @0;", fecha);
+            conexion.CloseSharedConnection();
+            return factura;
+        }
+
+        public Factura(bool crearFactura)
+        {
+            if (crearFactura)
+            {
+                Cliente = new Cliente();
+                Cliente.Alquiler = new Alquiler();
+                Garaje = new Garaje();
+            }            
+        }
+
         public Factura()
         {
-
         }
     }
 }

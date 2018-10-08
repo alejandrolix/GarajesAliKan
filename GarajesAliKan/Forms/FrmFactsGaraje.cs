@@ -13,9 +13,7 @@ using GarajesAliKan.Clases;
 namespace GarajesAliKan.Forms
 {
     public partial class FrmFactsGaraje : Form
-    {
-        private List<Factura> ListaFacturas;
-
+    {        
         public FrmFactsGaraje()
         {
             InitializeComponent();
@@ -26,9 +24,8 @@ namespace GarajesAliKan.Forms
             CargarDatosComboBox(true, true, true);
             if (Factura.HayFacturasGarajes())
             {
-                ListaFacturas = Factura.ObtenerFacturasGarajes();
-                CargarFacturasAlDataTable();
-                RellenarDatosFactura(ListaFacturas[0]);
+                BindingSource.DataSource = Factura.ObtenerFacturasGarajes();                
+                RellenarDatosFactura((Factura)BindingSource.Current);
             }
             else
             {
@@ -56,7 +53,7 @@ namespace GarajesAliKan.Forms
                 CbClientes.DataSource = Cliente.ObtenerNombresYApellidosGarajes();
                 CbClientes.DisplayMember = "Nombre";
                 CbClientes.ValueMember = "Id";
-            }            
+            }
 
             if (cargarConceptos)
             {
@@ -78,33 +75,8 @@ namespace GarajesAliKan.Forms
             CbNifs.ValueMember = "Id";
 
             CbFechas.DataSource = Factura.ObtenerFechas();
-            CbFechas.DisplayMember = "Fecha";
-            CbFechas.ValueMember = "Id";
-        }
-
-        /// <summary>
-        /// Carga los datos de las facturas en un DataTable.
-        /// </summary>        
-        private void CargarFacturasAlDataTable()
-        {
-            DataTable dtFacturas = new DataTable("facturas");
-            dtFacturas.Columns.Add("id", typeof(int));
-            dtFacturas.Columns.Add("fecha", typeof(DateTime));            
-            dtFacturas.Columns.Add("nombre", typeof(string));            
-            dtFacturas.Columns.Add("concepto", typeof(string));
-            dtFacturas.Columns.Add("garaje", typeof(string));
-            dtFacturas.Columns.Add("plaza", typeof(string));
-            dtFacturas.Columns.Add("baseImponible", typeof(string));
-            dtFacturas.Columns.Add("iva", typeof(string));
-            dtFacturas.Columns.Add("totalFactura", typeof(string));
-            dtFacturas.Columns.Add("estaPagada", typeof(bool));
-
-            foreach (Factura factura in ListaFacturas)
-            {
-                dtFacturas.Rows.Add(factura.Id, factura.Fecha, factura.Cliente.Nombre, factura.Cliente.Alquiler.Concepto, factura.Garaje.Nombre, factura.Plaza, factura.BaseImponible.ToString(), 
-                                    factura.Iva.ToString(), factura.Total.ToString(), factura.EstaPagada);
-            }
-            BindingSource.DataSource = dtFacturas;
+            //CbFechas.DisplayMember = "Fecha";
+            //CbFechas.ValueMember = "Id";
         }
 
         /// <summary>
@@ -146,9 +118,10 @@ namespace GarajesAliKan.Forms
             BtnAddFactura.Tag = 1;
             HabilitarControles(true);
             TxtNumFactura.Focus();
+            Factura factura = (Factura)BindingSource.Current;
 
-            if (ListaFacturas != null)
-                if (ListaFacturas[0].Id != 0)
+            if (factura != null)
+                if (factura.Id != 0)
                     LimpiarCampos();
         }
 
@@ -159,19 +132,13 @@ namespace GarajesAliKan.Forms
         private void HabilitarControles(bool habilitar)
         {
             BindingNavigator.Enabled = !habilitar;
-            TxtNumFactura.Enabled = habilitar;
+            TxtNumFactura.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
             DtFecha.Enabled = habilitar;
-            CbClientes.Enabled = habilitar;
-            //TxtNombre.Enabled = habilitar;
-            //TxtApellidos.Enabled = habilitar;
-            //TxtNif.Enabled = habilitar;
+            CbClientes.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
 
-            if (BtnModificarFactura.Tag is null)
-            {
-                TxtPlaza.Enabled = habilitar;
-                CbConceptos.Enabled = habilitar;
-                CbGarajes.Enabled = habilitar;
-            }
+            TxtPlaza.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
+            CbConceptos.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
+            CbGarajes.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
 
             TxtBaseImponible.Enabled = habilitar;
             TxtIva.Enabled = habilitar;
@@ -191,7 +158,7 @@ namespace GarajesAliKan.Forms
         private void LimpiarCampos()
         {
             TxtNumFactura.Clear();
-            DtFecha.Value = DateTime.Now;            
+            DtFecha.Value = DateTime.Now;
 
             CkBoxPagada.Checked = false;
             TxtPlaza.Clear();
@@ -223,10 +190,9 @@ namespace GarajesAliKan.Forms
 
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
-            HabilitarControles(false);
-            LimpiarCampos();
-            RellenarDatosFactura(ListaFacturas[BindingSource.Position]);
             RestaurarTagsBotones();
+            HabilitarControles(false);
+            RellenarDatosFactura((Factura)BindingSource.Current);
         }
 
         /// <summary>
@@ -245,14 +211,15 @@ namespace GarajesAliKan.Forms
         {
             if (MessageBox.Show("¿Está seguro de que desea eliminar la factura?", "¿Eliminar Factura?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (Factura.EliminarPorId(int.Parse(TxtNumFactura.Text)))
+                Factura factura = (Factura)BindingSource.Current;
+
+                if (factura.Eliminar())
                 {
                     MessageBox.Show("Factura eliminada", "Factura Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ListaFacturas = Factura.ObtenerFacturasGarajes();
-                    HabilitarControles(false);
-                    CargarFacturasAlDataTable();
+                    BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+                    HabilitarControles(false);                    
                     CargarDatosComboBox(false, false, false);
-                    BindingSource.Position = ListaFacturas.Count - 1;
+                    BindingSource.Position = BindingSource.Count - 1;
                 }
                 else
                     MessageBox.Show("Ha habido un problema al eliminar la factura", "Factura no Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -263,115 +230,53 @@ namespace GarajesAliKan.Forms
         {
             if (ComprobarDatosIntroducidos())
             {
-                Factura factura = new Factura();
-                factura.Id = int.Parse(TxtNumFactura.Text);
-                factura.Fecha = DtFecha.Value;
-                factura.Cliente.Id = ((Cliente)CbClientes.SelectedItem).Id;
-                factura.EstaPagada = CkBoxPagada.Checked;
-                factura.Cliente.Alquiler.IdTipoAlquiler = ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler;
-                factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;
-                factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
-                factura.Iva = decimal.Parse(TxtIva.Text);
-                factura.Total = decimal.Parse(TxtTotalFactura.Text);
-
-                if (factura.Insertar())
+                Factura factura = null;
+                if (Convert.ToInt32(BtnAddFactura.Tag) == 1)                // Insertamos la nueva factura.
                 {
+                    factura = new Factura(true);
+                    factura.Id = int.Parse(TxtNumFactura.Text);
+                    factura.Fecha = DtFecha.Value;
+                    factura.Cliente.Id = ((Cliente)CbClientes.SelectedItem).Id;
+                    factura.EstaPagada = CkBoxPagada.Checked;
+                    factura.Cliente.Alquiler.IdTipoAlquiler = ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler;
+                    factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;
+                    factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
+                    factura.Iva = decimal.Parse(TxtIva.Text);
+                    factura.Total = decimal.Parse(TxtTotalFactura.Text);
 
+                    if (factura.Insertar())
+                    {
+                        MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+                        HabilitarControles(false);                        
+                        CargarDatosComboBox(false, false, false);
+                        BindingSource.Position = BindingSource.Count - 1;
+                    }
+                    else
+                        MessageBox.Show("Ha habido un problema al guardar la factura", "Factura no Guardada", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                else if (Convert.ToInt32(BtnModificarFactura.Tag) == 1)             // Modificamos los datos de la factura.
+                {
+                    factura = new Factura(false);
+                    factura.Id = int.Parse(TxtNumFactura.Text);
+                    factura.Fecha = DtFecha.Value;
+                    factura.EstaPagada = CkBoxPagada.Checked;
+                    factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
+                    factura.Iva = decimal.Parse(TxtIva.Text);
+                    factura.Total = decimal.Parse(TxtTotalFactura.Text);
 
-
-                //Garaje garaje = new Garaje(((Garaje)CbGarajes.SelectedItem).Id, ((Garaje)CbGarajes.SelectedItem).Nombre);
-                //Alquiler alquiler = null;
-                //Vehiculo vehiculo = null;
-                //Cliente cliente = null;
-
-                //if (TxtMarca.Text.Length == 0 && TxtModelo.Text.Length == 0 && TxtMatricula.Text.Length == 0 && TxtLlave.Text.Length == 0)      // Si no hay datos del vehículo, alquila un trastero.                       
-                //{
-                //    alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
-                //    cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, null, alquiler);
-                //}
-                //else
-                //{
-                //    alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
-                //    vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text);
-                //    cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, vehiculo, alquiler);
-                //}
-                //HabilitarControles(false);
-
-                //if (Convert.ToInt32(BtnAddCliente.Tag) == 1)        // Insertamos el cliente.
-                //{
-                //    if (cliente.Insertar())
-                //    {
-                //        if (alquiler.IdTipoAlquiler == 1)           // Vamos a alquilar una plaza de garaje.
-                //        {
-                //            if (vehiculo.Insertar())
-                //            {
-                //                alquiler.IdCliente = cliente.Id;
-                //                alquiler.IdVehiculo = vehiculo.Id;
-
-                //                if (alquiler.Insertar(garaje.Id))
-                //                {
-                //                    MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //                    ListaClientes = Cliente.ObtenerClientesGarajes();
-                //                    CargarClientesAlDataTable();
-                //                    CargarDatosComboBox(false, true);
-
-                //                    int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
-                //                    BindingSource.Position = pos;
-
-                //                    if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
-                //                    {
-                //                        BtnModificarCliente.Enabled = true;
-                //                        BtnEliminarCliente.Enabled = true;
-                //                    }
-                //                }
-                //            }
-                //            else
-                //                MessageBox.Show("Ha habido un problema al insertar el vehículo", "Vehículo no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //        }
-                //        else
-                //        {
-                //            alquiler.IdCliente = cliente.Id;
-
-                //            if (alquiler.Insertar(garaje.Id))
-                //            {
-                //                MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //                ListaClientes = Cliente.ObtenerClientesGarajes();
-                //                CargarClientesAlDataTable();
-                //                CargarDatosComboBox(false, true);
-
-                //                int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));
-                //                BindingSource.Position = pos;
-
-                //                if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
-                //                {
-                //                    BtnModificarCliente.Enabled = true;
-                //                    BtnEliminarCliente.Enabled = true;
-                //                }
-                //            }
-                //        }
-                //    }
-                //    else
-                //        MessageBox.Show("Ha habido un problema al insertar el cliente", "Cliente no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //}
-                //else       // Modificamos los datos del cliente.       
-                //{
-                //    alquiler = new Alquiler(decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text));
-                //    cliente = new Cliente(ListaClientes[BindingSource.Position].Id, TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, alquiler);
-
-                //    if (cliente.Modificar())
-                //    {
-                //        if (alquiler.Modificar(cliente.Id))
-                //        {
-                //            MessageBox.Show("Datos del cliente modificados", "Datos Modificados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //            CargarDatosComboBox(false, false);
-                //        }
-                //        else
-                //            MessageBox.Show("Ha habido un problema al modificar los datos del alquiler del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    }
-                //    else
-                //        MessageBox.Show("Ha habido un problema al modificar los datos del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //}
+                    if (factura.Modificar())
+                    {
+                        MessageBox.Show("Factura modificada", "Factura Modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+                        HabilitarControles(false);                        
+                        CargarDatosComboBox(false, false, false);
+                        BindingSource.Position = BindingSource.Count - 1;
+                    }
+                    else
+                        MessageBox.Show("Ha habido un problema al modificar la factura", "Factura no Modificada", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                RestaurarTagsBotones();
             }
         }
 
@@ -381,7 +286,7 @@ namespace GarajesAliKan.Forms
         /// <returns>Indica si los datos introducidos son correctos.</returns>        
         private bool ComprobarDatosIntroducidos()
         {
-            bool hayNumFactura = false;                                    
+            bool hayNumFactura = false;
             bool hayPlaza = false;
             bool hayBaseImponible = false;
             bool hayIva = false;
@@ -391,7 +296,7 @@ namespace GarajesAliKan.Forms
             if (TxtNumFactura.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir un número de factura", "Nº de Factura Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
-                hayNumFactura = true;            
+                hayNumFactura = true;
 
             if (TxtPlaza.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir una plaza", "Plaza Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -419,6 +324,88 @@ namespace GarajesAliKan.Forms
         private void CbClientes_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void TxtBaseImponible_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int numPulsado = (int)char.GetNumericValue(e.KeyChar);
+
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
+                e.Handled = false;          // Escribe el número pulsado.                   
+            else if (e.KeyChar == ',' || e.KeyChar == '.')
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void TxtIva_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int numPulsado = (int)char.GetNumericValue(e.KeyChar);
+
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
+                e.Handled = false;          // Escribe el número pulsado.                   
+            else if (e.KeyChar == ',' || e.KeyChar == '.')
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void TxtTotalFactura_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int numPulsado = (int)char.GetNumericValue(e.KeyChar);
+
+            if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
+                e.Handled = false;          // Escribe el número pulsado.                   
+            else if (e.KeyChar == ',' || e.KeyChar == '.')
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void TxtPlaza_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetterOrDigit(e.KeyChar) || e.KeyChar == ' ' || char.IsControl(e.KeyChar))
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
+        {
+            RellenarDatosFactura((Factura)BindingSource.Current);
+        }
+
+        private void BindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
+        {
+            RellenarDatosFactura((Factura)BindingSource.Current);
+        }
+
+        private void BindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
+        {
+            RellenarDatosFactura((Factura)BindingSource.Current);
+        }
+
+        private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
+        {
+            RellenarDatosFactura((Factura)BindingSource.Current);
+        }
+
+        private void CbNumsFacturas_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Factura factura = Factura.ObtenerFacturaPorId((int)CbNumsFacturas.SelectedItem);
+            RellenarDatosFactura(factura);
+        }
+
+        private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Factura factura = Factura.ObtenerFacturaPorIdCliente(((Cliente)CbNifs.SelectedItem).Id);
+            RellenarDatosFactura(factura);
+        }
+
+        private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Factura factura = Factura.ObtenerFacturaPorFecha((DateTime)CbFechas.SelectedItem);
+            RellenarDatosFactura(factura);
         }
     }
 }

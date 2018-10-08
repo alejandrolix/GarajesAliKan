@@ -43,7 +43,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de conexión.</returns>
         private static string LeerArchivoConexion()
         {
-            StreamReader leer = new StreamReader(@"..\..\DatosConexion.txt", Encoding.UTF8);
+            StreamReader leer = new StreamReader(@"..\..\..\DatosConexion.txt", Encoding.UTF8);
             string datosConexion = leer.ReadLine();
             leer.Close();
 

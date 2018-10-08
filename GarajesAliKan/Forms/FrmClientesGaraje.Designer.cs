@@ -541,7 +541,8 @@
             this.TxtPlaza.Location = new System.Drawing.Point(453, 173);
             this.TxtPlaza.Name = "TxtPlaza";
             this.TxtPlaza.Size = new System.Drawing.Size(92, 23);
-            this.TxtPlaza.TabIndex = 11;
+            this.TxtPlaza.TabIndex = 11;            
+            this.TxtPlaza.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPlaza_KeyPress);
             // 
             // LPlaza
             // 
