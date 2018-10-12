@@ -90,6 +90,7 @@
             this.facturasLavaderoToolStripMenuItem.Name = "facturasLavaderoToolStripMenuItem";
             this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.facturasLavaderoToolStripMenuItem.Text = "Lavadero";
+            this.facturasLavaderoToolStripMenuItem.Click += new System.EventHandler(this.FacturasLavaderoToolStripMenuItem_Click);
             // 
             // facturasRecibidasToolStripMenuItem
             // 

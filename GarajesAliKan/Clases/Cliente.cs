@@ -12,12 +12,12 @@ namespace GarajesAliKan.Clases
         public string Apellidos { get; set; }
         public string Nif { get; set; }
         public string Direccion { get; set; }
-        public string Telefono { get; set; }           
+        public string Telefono { get; set; }
         public Garaje Garaje { get; set; }
-        public string Observaciones { get; set; }        
-        public bool EsClienteGaraje { get; set; }                        
-        public Vehiculo Vehiculo { get; set; }                        
-        public Alquiler Alquiler { get; set; }        
+        public string Observaciones { get; set; }
+        public bool EsClienteGaraje { get; set; }
+        public Vehiculo Vehiculo { get; set; }
+        public Alquiler Alquiler { get; set; }
 
         /// <summary>
         /// Comprueba si existen clientes de los garajes guardados.
@@ -203,6 +203,20 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todos los nombres y apellidos de los clientes del lavadero.
+        /// </summary>
+        /// <returns>La lista con los nombres y apellidos de los clientes del lavadero.</returns>
+        public static List<Cliente> ObtenerNombresYApellidosLavadero()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT id, CONCAT(nombre, ' ', apellidos) AS nombre
+                                                                    FROM   clientes
+                                                                    WHERE  esClienteGaraje IS FALSE;");
+            conexion.CloseSharedConnection();
+            return listaClientes;
+        }
+
+        /// <summary>
         /// Inserta un cliente.
         /// </summary>        
         /// <returns>El cliente se ha insertado.</returns>
@@ -227,7 +241,7 @@ namespace GarajesAliKan.Clases
                 if (EsClienteGaraje)
                 {
                     Id = ObtenerUltimoId(Foo.ConexionABd());
-                }                
+                }
             }
             catch (Exception)
             { }
@@ -249,14 +263,14 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@apellidos", Apellidos);
             comando.Parameters.AddWithValue("@nif", Nif);
             comando.Parameters.AddWithValue("@direccion", Direccion);
-            comando.Parameters.AddWithValue("@telefono", Telefono);            
+            comando.Parameters.AddWithValue("@telefono", Telefono);
             comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);
             comando.Parameters.AddWithValue("@idCliente", Id);
 
             int numFila = 0;
             try
             {
-                numFila = comando.ExecuteNonQuery();               
+                numFila = comando.ExecuteNonQuery();
             }
             catch (Exception)
             { }
@@ -290,7 +304,7 @@ namespace GarajesAliKan.Clases
         {
             Cliente cliente = obj as Cliente;
             return cliente != null && Id == cliente.Id;
-        }        
+        }
 
         public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, Alquiler alquilerPorCliente)              // Alquilar una plaza de garaje.  
         {
@@ -299,16 +313,16 @@ namespace GarajesAliKan.Clases
             Apellidos = apellidos;
             Nif = nif;
             Direccion = direccion;
-            Telefono = telefono;            
+            Telefono = telefono;
             Observaciones = observaciones;
             Garaje = garaje;
             EsClienteGaraje = esClienteGaraje;
-            Vehiculo = vehiculo;            
+            Vehiculo = vehiculo;
             Alquiler = alquilerPorCliente;
         }
 
         public Cliente(string nombre, string apellidos, string nif, string direccion, string telefono, string observaciones, Garaje garaje, bool esClienteGaraje, Vehiculo vehiculo, Alquiler alquilerPorCliente)              // Alquilar una plaza de garaje.  
-        {            
+        {
             Nombre = nombre;
             Apellidos = apellidos;
             Nif = nif;
@@ -317,7 +331,7 @@ namespace GarajesAliKan.Clases
             Observaciones = observaciones;
             Garaje = garaje;
             EsClienteGaraje = esClienteGaraje;
-            Vehiculo = vehiculo;            
+            Vehiculo = vehiculo;
             Alquiler = alquilerPorCliente;
         }
 
@@ -330,8 +344,8 @@ namespace GarajesAliKan.Clases
             Direccion = direccion;
             Telefono = telefono;
             Garaje = garaje;
-            Observaciones = observaciones;            
-            EsClienteGaraje = esClienteGaraje;                        
+            Observaciones = observaciones;
+            EsClienteGaraje = esClienteGaraje;
         }
 
         public Cliente(int id)          // Para buscar un cliente por su Id en la lista de clientes.

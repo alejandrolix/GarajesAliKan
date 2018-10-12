@@ -414,6 +414,7 @@
             this.TxtObservaciones.Enabled = false;
             this.TxtObservaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtObservaciones.Location = new System.Drawing.Point(165, 219);
+            this.TxtObservaciones.MaxLength = 60;
             this.TxtObservaciones.Name = "TxtObservaciones";
             this.TxtObservaciones.Size = new System.Drawing.Size(483, 23);
             this.TxtObservaciones.TabIndex = 6;
@@ -541,7 +542,7 @@
             this.TxtPlaza.Location = new System.Drawing.Point(453, 173);
             this.TxtPlaza.Name = "TxtPlaza";
             this.TxtPlaza.Size = new System.Drawing.Size(92, 23);
-            this.TxtPlaza.TabIndex = 11;            
+            this.TxtPlaza.TabIndex = 11;
             this.TxtPlaza.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPlaza_KeyPress);
             // 
             // LPlaza

@@ -130,6 +130,12 @@
     <Compile Include="Forms\FrmFactsGaraje.Designer.cs">
       <DependentUpon>FrmFactsGaraje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmFactsLavadero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmFactsLavadero.Designer.cs">
+      <DependentUpon>FrmFactsLavadero.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmFactsGaraje.resx">
       <DependentUpon>FrmFactsGaraje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmFactsLavadero.resx">
+      <DependentUpon>FrmFactsLavadero.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
