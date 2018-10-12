@@ -19,7 +19,7 @@ namespace GarajesAliKan.Forms
         }
 
         private void FrmFactsLavadero_Load(object sender, EventArgs e)
-        {
+        {            
             CargarDatosComboBox(true, true, true);
             if (Factura.HayFacturasLavadero())
             {

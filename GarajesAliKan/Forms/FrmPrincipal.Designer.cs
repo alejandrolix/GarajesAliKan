@@ -97,6 +97,7 @@
             this.facturasRecibidasToolStripMenuItem.Name = "facturasRecibidasToolStripMenuItem";
             this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.facturasRecibidasToolStripMenuItem.Text = "Recibidas";
+            this.facturasRecibidasToolStripMenuItem.Click += new System.EventHandler(this.FacturasRecibidasToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 

@@ -41,5 +41,11 @@ namespace GarajesAliKan
             FrmFactsLavadero frmFactsLavadero = new FrmFactsLavadero();
             frmFactsLavadero.ShowDialog();
         }
+
+        private void FacturasRecibidasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmFactsRecibida frmFactsRecibida = new FrmFactsRecibida();
+            frmFactsRecibida.ShowDialog();
+        }
     }
 }
