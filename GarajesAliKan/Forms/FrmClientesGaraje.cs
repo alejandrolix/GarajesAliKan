@@ -264,6 +264,7 @@ namespace GarajesAliKan.Forms
                         MessageBox.Show("Ha habido un problema al modificar los datos del cliente", "Datos no Modificados", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            RestaurarTagsBotones();
         }
 
         /// <summary>

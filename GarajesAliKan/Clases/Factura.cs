@@ -20,11 +20,12 @@ namespace GarajesAliKan.Clases
         public decimal Iva { get; set; }
         public decimal Total { get; set; }
         public string Concepto { get; set; }
+        public string Empresa { get; set; }
 
         /// <summary>
         /// Comprueba si existen facturas de todos los garajes.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>El número de facturas.</returns>
         public static bool HayFacturasGarajes()
         {
             Database conexion = Foo.ConexionABd();
@@ -38,13 +39,27 @@ namespace GarajesAliKan.Clases
         /// <summary>
         /// Comprueba si existen facturas del lavadero.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>El número de facturas.</returns>
         public static bool HayFacturasLavadero()
         {
             Database conexion = Foo.ConexionABd();
             int numFacturas = conexion.ExecuteScalar<int>(@"SELECT COUNT(id)
                                                             FROM   facturas
                                                             WHERE  esFacturaLavadero IS TRUE;");
+            conexion.CloseSharedConnection();
+            return numFacturas >= 1;
+        }
+
+        /// <summary>
+        /// Comprueba si existen facturas recibidas.
+        /// </summary>
+        /// <returns>El número de facturas.</returns>
+        public static bool HayFacturasRecibidas()
+        {
+            Database conexion = Foo.ConexionABd();
+            int numFacturas = conexion.ExecuteScalar<int>(@"SELECT COUNT(id)
+                                                            FROM   facturas
+                                                            WHERE  esFacturaRecibida IS TRUE;");
             conexion.CloseSharedConnection();
             return numFacturas >= 1;
         }
@@ -80,6 +95,22 @@ namespace GarajesAliKan.Clases
                                                                     FROM   facturas fact
                                                                            JOIN clientes cli ON fact.idCliente = cli.id
                                                                     WHERE  fact.esFacturaLavadero IS TRUE
+                                                                    ORDER BY fact.id;");
+            conexion.CloseSharedConnection();
+            return listaFacturas;
+        }
+
+        /// <summary>
+        /// Obtiene todas las facturas recibidas.
+        /// </summary>
+        /// <returns>Las facturas recibidas.</returns>
+        public static List<Factura> ObtenerFacturasRecibidas()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, fact.nombreEmpresa AS empresa, fact.baseImponible, fact.iva, fact.total
+                                                                    FROM   facturas fact
+                                                                           JOIN garajes gaj ON gaj.id = fact.idGaraje
+                                                                    WHERE  fact.esFacturaRecibida IS TRUE
                                                                     ORDER BY fact.id;");
             conexion.CloseSharedConnection();
             return listaFacturas;
@@ -140,6 +171,21 @@ namespace GarajesAliKan.Clases
             List<DateTime> listaFechas = conexion.Fetch<DateTime>(@"SELECT fecha
                                                                     FROM   facturas
                                                                     WHERE  esFacturaLavadero IS TRUE
+                                                                    ORDER BY fecha;");
+            conexion.CloseSharedConnection();
+            return listaFechas;
+        }
+
+        /// <summary>
+        /// Obtiene las fechas de las facturas recibidas.
+        /// </summary>
+        /// <returns>Las fechas de las facturas recibidas.</returns>
+        public static List<DateTime> ObtenerFechasRecibidas()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<DateTime> listaFechas = conexion.Fetch<DateTime>(@"SELECT fecha
+                                                                    FROM   facturas
+                                                                    WHERE  esFacturaRecibida IS TRUE
                                                                     ORDER BY fecha;");
             conexion.CloseSharedConnection();
             return listaFechas;
@@ -232,7 +278,23 @@ namespace GarajesAliKan.Clases
                                                                 JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
                                                                 JOIN garajes gaj ON fact.idGaraje = gaj.id
                                                                 JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
-                                                         WHERE  fact.fecha = @0;", fecha);
+                                                         WHERE  fact.fecha = @0 AND fact.esFacturaGaraje IS TRUE;", fecha);
+            conexion.CloseSharedConnection();
+            return factura;
+        }
+
+        /// <summary>
+        /// Obtiene una factura recibida a partir de una fecha.
+        /// </summary>
+        /// <param name="fecha">La fecha.</param>
+        /// <returns>Los datos de la factura.</returns>
+        public static Factura ObtenerFacturaRecibidaPorFecha(DateTime fecha)
+        {
+            Database conexion = Foo.ConexionABd();
+            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, fact.nombreEmpresa, fact.baseImponible, fact.iva, fact.total
+                                                         FROM   facturas fact
+                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                         WHERE  fact.fecha = @0 AND fact.esFacturaRecibida IS TRUE;", fecha);
             conexion.CloseSharedConnection();
             return factura;
         }
@@ -248,9 +310,40 @@ namespace GarajesAliKan.Clases
             Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.baseImponible, fact.iva, fact.total
                                                          FROM   facturas fact
                                                                 JOIN clientes cli ON fact.idCliente = cli.id                                                                
-                                                         WHERE  fact.fecha = @0;", fecha);
+                                                         WHERE  fact.fecha = @0 AND fact.esFacturaLavadero IS TRUE;", fecha);
             conexion.CloseSharedConnection();
             return factura;
+        }
+
+        /// <summary>
+        /// Obtiene una factura del lavadero a partir de un Id de un garaje.
+        /// </summary>
+        /// <param name="fecha">La fecha.</param>
+        /// <returns>Los datos de la factura.</returns>
+        public static Factura ObtenerFacturaLavaderoPorIdGaraje(int idGaraje)
+        {
+            Database conexion = Foo.ConexionABd();
+            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, fact.nombreEmpresa, fact.baseImponible, fact.iva, fact.total
+                                                         FROM   facturas fact
+                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                         WHERE  gaj.id = @0 AND fact.esFacturaRecibida IS TRUE;", idGaraje);
+            conexion.CloseSharedConnection();
+            return factura;
+        }
+
+        /// <summary>
+        /// Obtiene todos los nombres de las empresas.
+        /// </summary>
+        /// <returns>Los nombres de las empresas.</returns>
+        public static List<string> ObtenerNombresEmpresas()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<string> listaFacturas = conexion.Fetch<string>(@"SELECT DISTINCT nombreEmpresa AS empresa
+                                                                  FROM   facturas
+                                                                  WHERE  nombreEmpresa IS NOT NULL
+                                                                  ORDER BY nombreEmpresa;");
+            conexion.CloseSharedConnection();
+            return listaFacturas;
         }
 
         /// <summary>
@@ -338,6 +431,35 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Inserta una factura para recibida.
+        /// </summary>        
+        /// <returns>La factura se ha insertado.</returns>
+        public bool InsertarRecibida()
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"INSERT INTO facturas VALUES (@id, @fecha, NULL, NULL, @nombreEmpresa, @idGaraje, @baseImponible, @iva, @total, NULL,
+                                                                                   FALSE, FALSE, TRUE, NULL);", conexion);
+            comando.Parameters.AddWithValue("@id", Id);
+            comando.Parameters.AddWithValue("@fecha", Fecha);
+            comando.Parameters.AddWithValue("@nombreEmpresa", Empresa);
+            comando.Parameters.AddWithValue("@idGaraje", Garaje.Id);
+            comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
+            comando.Parameters.AddWithValue("@iva", Iva);
+            comando.Parameters.AddWithValue("@total", Total);            
+
+            int numFila = 0;
+            try
+            {
+                numFila = comando.ExecuteNonQuery();
+            }
+            catch (Exception)
+            { }
+
+            conexion.Close();
+            return numFila >= 1;
+        }
+
+        /// <summary>
         /// Modifica los datos de una factura para un garaje.
         /// </summary>
         /// <returns>Se han modificado los datos de la factura.</returns>
@@ -391,8 +513,38 @@ namespace GarajesAliKan.Clases
             {
                 numFila = comando.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            { Console.WriteLine(ex.Message); }
+            catch (Exception)
+            { }
+
+            conexion.Close();
+            return numFila >= 1;
+        }
+
+        /// <summary>
+        /// Modifica los datos de una factura recibida.
+        /// </summary>
+        /// <returns>Se han modificado los datos de la factura.</returns>
+        public bool ModificarRecibida()
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"UPDATE facturas SET fecha = @fecha, nombreEmpresa = @nombreEmpresa, baseImponible = @baseImponible, iva = @iva,
+                                                                          total = @total
+                                                      WHERE  id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", Id);
+            comando.Parameters.AddWithValue("@fecha", Fecha);
+            comando.Parameters.AddWithValue("@nombreEmpresa", Empresa);
+            comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
+            comando.Parameters.AddWithValue("@iva", Iva);
+            comando.Parameters.AddWithValue("@total", Total);
+
+            int numFila = 0;
+            try
+            {
+                numFila = comando.ExecuteNonQuery();
+            }
+            catch (Exception)
+            { }
 
             conexion.Close();
             return numFila >= 1;
@@ -406,10 +558,10 @@ namespace GarajesAliKan.Clases
                 Cliente.Alquiler = new Alquiler();
                 Garaje = new Garaje();
             }
-            else if (tipoFactura == 2)      // Es una factura del lavadero.
-            {
+            else if (tipoFactura == 2)      // Es una factura del lavadero.            
                 Cliente = new Cliente();
-            }
+            else
+                Garaje = new Garaje();     // Es una factura recibida.
         }
 
         public Factura()

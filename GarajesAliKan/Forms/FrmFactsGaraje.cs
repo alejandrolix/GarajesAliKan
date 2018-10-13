@@ -129,7 +129,7 @@ namespace GarajesAliKan.Forms
         private void HabilitarControles(bool habilitar)
         {
             BindingNavigator.Enabled = !habilitar;
-            TxtNumFactura.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
+            TxtNumFactura.Enabled = habilitar;
             DtFecha.Enabled = habilitar;
             CbClientes.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
 
