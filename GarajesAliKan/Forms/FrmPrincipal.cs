@@ -44,7 +44,7 @@ namespace GarajesAliKan
 
         private void FacturasRecibidasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmFactsRecibida frmFactsRecibida = new FrmFactsRecibida();
+            FrmFactsRecibidas frmFactsRecibida = new FrmFactsRecibidas();
             frmFactsRecibida.ShowDialog();
         }
 

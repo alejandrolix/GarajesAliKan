@@ -11,16 +11,16 @@ using System.Windows.Forms;
 
 namespace GarajesAliKan.Forms
 {
-    public partial class FrmFactsRecibida : Form
+    public partial class FrmFactsRecibidas : Form
     {
-        public FrmFactsRecibida()
+        public FrmFactsRecibidas()
         {
             InitializeComponent();
         }
 
         private void FrmFactsRecibida_Load(object sender, EventArgs e)
         {
-            CargarDatosComboBox(true, true, true, false);
+            CargarDatosComboBox(true, true, true);
             if (Factura.HayFacturasRecibidas())
             {
                 BindingSource.DataSource = Factura.ObtenerFacturasRecibidas();
@@ -40,16 +40,15 @@ namespace GarajesAliKan.Forms
         /// <param name="cargarFechas">Indica si hay que cargar las fechas.</param>
         /// <param name="cargarEmpresas">Indica si hay que cargar las empresas.</param>
         /// <param name="cargarGarajes">Indica si hay que cargar los garajes para buscar.</param>
-        /// <param name="cargarGarajesSeleccion">Indica si hay que cargar los garajes para seleccionarlo en los datos.</param>
-        private void CargarDatosComboBox(bool cargarFechas, bool cargarEmpresas, bool cargarGarajes, bool cargarGarajesSeleccion)
+        private void CargarDatosComboBox(bool cargarFechas, bool cargarEmpresas, bool cargarGarajes)
         {            
             if (cargarFechas)
                 CbFechas.DataSource = Factura.ObtenerFechasRecibidas();
 
             if (cargarEmpresas)
             {
-                CbEmpresas.DataSource = Factura.ObtenerNombresEmpresas();
-                CbEmpresas.DisplayMember = "Empresa";
+                CbEmpBuscar.DataSource = Proveedor.ObtenerNombresEmpresas();
+                CbEmpBuscar.DisplayMember = "Empresa";
             }
 
             if (cargarGarajes)
@@ -57,13 +56,6 @@ namespace GarajesAliKan.Forms
                 CbGjBuscar.DataSource = Garaje.ObtenerGarajes();
                 CbGjBuscar.DisplayMember = "Nombre";
                 CbGjBuscar.ValueMember = "Id";
-            }
-
-            if (cargarGarajesSeleccion)
-            {
-                CbGarajes.DataSource = Garaje.ObtenerGarajes();
-                CbGarajes.DisplayMember = "Nombre";
-                CbGarajes.ValueMember = "Id";
             }
         }
 
@@ -75,12 +67,12 @@ namespace GarajesAliKan.Forms
         {
             TxtNumFactura.Text = factura.Id.ToString();
             DtFecha.Value = factura.Fecha;
-            CbGarajes.Text = factura.Cliente.Nombre;
-            TxtEmpresa.Text = factura.Empresa;
+            CbGarajes.Text = factura.Cliente.Nombre;            
+            CbEmpresas.Text = factura.Proveedor.Empresa;
 
-            TxtBaseImponible.Text = factura.Cliente.Alquiler.BaseImponible.ToString();
-            TxtIva.Text = factura.Cliente.Alquiler.Iva.ToString();
-            TxtTotalFactura.Text = factura.Cliente.Alquiler.Total.ToString();            
+            TxtBaseImponible.Text = factura.BaseImponible.ToString();
+            TxtIva.Text = factura.Iva.ToString();
+            TxtTotalFactura.Text = factura.Total.ToString();            
         }
 
         private void TxtNumFactura_KeyPress(object sender, KeyPressEventArgs e)
@@ -161,6 +153,10 @@ namespace GarajesAliKan.Forms
             CbGarajes.DisplayMember = "Nombre";
             CbGarajes.ValueMember = "Id";
 
+            CbEmpresas.DataSource = Proveedor.ObtenerNombresEmpresas();
+            CbEmpresas.DisplayMember = "Empresa";
+            CbEmpresas.ValueMember = "Id";
+
             HabilitarControles(true);
             TxtNumFactura.Focus();
             Factura factura = (Factura)BindingSource.Current;
@@ -179,8 +175,8 @@ namespace GarajesAliKan.Forms
             BindingNavigator.Enabled = !habilitar;
             TxtNumFactura.Enabled = habilitar;            
             DtFecha.Enabled = habilitar;
-            CbGarajes.Enabled = habilitar;
-            TxtEmpresa.Enabled = habilitar;
+            CbGarajes.Enabled = habilitar;            
+            CbEmpresas.Enabled = habilitar;
 
             TxtBaseImponible.Enabled = habilitar;
             TxtIva.Enabled = habilitar;            
@@ -198,8 +194,7 @@ namespace GarajesAliKan.Forms
         private void LimpiarCampos()
         {
             TxtNumFactura.Clear();
-            DtFecha.Value = DateTime.Now;
-            TxtEmpresa.Clear();
+            DtFecha.Value = DateTime.Now;            
             TxtBaseImponible.Clear();
             TxtIva.Clear();
             TxtTotalFactura.Clear();
@@ -222,7 +217,7 @@ namespace GarajesAliKan.Forms
                     MessageBox.Show("Factura eliminada", "Factura Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     BindingSource.DataSource = Factura.ObtenerFacturasLavadero();
                     HabilitarControles(false);
-                    CargarDatosComboBox(true, true, false, false);
+                    CargarDatosComboBox(true, true, false);
                     BindingSource.Position = BindingSource.Count - 1;
                 }
                 else
@@ -259,8 +254,8 @@ namespace GarajesAliKan.Forms
                     factura = new Factura(3);
                     factura.Id = int.Parse(TxtNumFactura.Text);
                     factura.Fecha = DtFecha.Value;
-                    factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;
-                    factura.Empresa = TxtEmpresa.Text;
+                    factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;                    
+                    factura.Proveedor.Id = ((Proveedor)CbEmpresas.SelectedItem).Id;
                     factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
                     factura.Iva = decimal.Parse(TxtIva.Text);
                     factura.Total = decimal.Parse(TxtTotalFactura.Text);
@@ -270,7 +265,7 @@ namespace GarajesAliKan.Forms
                         MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasRecibidas();
                         HabilitarControles(false);
-                        CargarDatosComboBox(true, true, false, false);
+                        CargarDatosComboBox(true, true, false);
                         BindingSource.Position = BindingSource.Count - 1;
                     }
                     else
@@ -281,7 +276,7 @@ namespace GarajesAliKan.Forms
                     factura = new Factura(3);
                     factura.Id = int.Parse(TxtNumFactura.Text);
                     factura.Fecha = DtFecha.Value;
-                    factura.Empresa = TxtEmpresa.Text;
+                    factura.Proveedor.Id = ((Proveedor)CbEmpresas.SelectedItem).Id;
                     factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
                     factura.Iva = decimal.Parse(TxtIva.Text);
                     factura.Total = decimal.Parse(TxtTotalFactura.Text);
@@ -291,7 +286,7 @@ namespace GarajesAliKan.Forms
                         MessageBox.Show("Factura modificada", "Factura Modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasRecibidas();
                         HabilitarControles(false);
-                        CargarDatosComboBox(false, true, false, false);
+                        CargarDatosComboBox(false, true, false);
                         BindingSource.Position = BindingSource.Count - 1;
                     }
                     else
@@ -307,8 +302,7 @@ namespace GarajesAliKan.Forms
         /// <returns>Indica si los datos introducidos son correctos.</returns>        
         private bool ComprobarDatosIntroducidos()
         {
-            bool hayNumFactura = false;
-            bool hayEmpresa = false;
+            bool hayNumFactura = false;            
             bool hayBaseImponible = false;
             bool hayIva = false;
             bool hayTotal = false;
@@ -316,12 +310,7 @@ namespace GarajesAliKan.Forms
             if (TxtNumFactura.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir un número de factura", "Nº de Factura Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
-                hayNumFactura = true;
-
-            if (TxtEmpresa.Text.Length == 0)
-                MessageBox.Show("Tiene que introducir un nombre de empresa", "Empresa Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
-                hayEmpresa = true;
+                hayNumFactura = true;            
 
             if (TxtBaseImponible.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir una base imponible", "Base Imponible Vacía", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -338,7 +327,7 @@ namespace GarajesAliKan.Forms
             else
                 hayTotal = true;
 
-            return hayNumFactura && hayEmpresa && hayBaseImponible && hayIva && hayTotal;
+            return hayNumFactura && hayBaseImponible && hayIva && hayTotal;
         }
 
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
@@ -378,6 +367,11 @@ namespace GarajesAliKan.Forms
         private void CbGjBuscar_SelectionChangeCommitted(object sender, EventArgs e)
         {
             // Preguntar.
+        }
+
+        private void CbEmpresas_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

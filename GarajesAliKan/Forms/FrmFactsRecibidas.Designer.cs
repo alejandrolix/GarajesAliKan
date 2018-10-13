@@ -1,6 +1,6 @@
 ﻿namespace GarajesAliKan.Forms
 {
-    partial class FrmFactsRecibida
+    partial class FrmFactsRecibidas
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmFactsRecibida));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmFactsRecibidas));
             this.BindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -51,7 +51,6 @@
             this.BtnEliminarFactura = new System.Windows.Forms.Button();
             this.BtnModificarFactura = new System.Windows.Forms.Button();
             this.BtnAddFactura = new System.Windows.Forms.Button();
-            this.TxtEmpresa = new System.Windows.Forms.TextBox();
             this.LEmpresa = new System.Windows.Forms.Label();
             this.TxtTotalFactura = new System.Windows.Forms.TextBox();
             this.LTotalFactura = new System.Windows.Forms.Label();
@@ -66,10 +65,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.LBuscarPor = new System.Windows.Forms.Label();
-            this.CbEmpresas = new System.Windows.Forms.ComboBox();
+            this.CbEmpBuscar = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.CbFechas = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.CbEmpresas = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
@@ -221,10 +221,10 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.CbEmpresas);
             this.panel1.Controls.Add(this.BtnCancelar);
             this.panel1.Controls.Add(this.BtnGuardar);
             this.panel1.Controls.Add(this.PBotonesControl);
-            this.panel1.Controls.Add(this.TxtEmpresa);
             this.panel1.Controls.Add(this.LEmpresa);
             this.panel1.Controls.Add(this.TxtTotalFactura);
             this.panel1.Controls.Add(this.LTotalFactura);
@@ -309,16 +309,6 @@
             this.BtnAddFactura.Text = "Añadir Factura";
             this.BtnAddFactura.UseVisualStyleBackColor = true;
             this.BtnAddFactura.Click += new System.EventHandler(this.BtnAddFactura_Click);
-            // 
-            // TxtEmpresa
-            // 
-            this.TxtEmpresa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.TxtEmpresa.Enabled = false;
-            this.TxtEmpresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtEmpresa.Location = new System.Drawing.Point(197, 137);
-            this.TxtEmpresa.Name = "TxtEmpresa";
-            this.TxtEmpresa.Size = new System.Drawing.Size(174, 24);
-            this.TxtEmpresa.TabIndex = 4;
             // 
             // LEmpresa
             // 
@@ -418,7 +408,7 @@
             this.PBuscarPor.Controls.Add(this.CbGjBuscar);
             this.PBuscarPor.Controls.Add(this.label3);
             this.PBuscarPor.Controls.Add(this.panel3);
-            this.PBuscarPor.Controls.Add(this.CbEmpresas);
+            this.PBuscarPor.Controls.Add(this.CbEmpBuscar);
             this.PBuscarPor.Controls.Add(this.label4);
             this.PBuscarPor.Controls.Add(this.CbFechas);
             this.PBuscarPor.Controls.Add(this.label5);
@@ -471,16 +461,16 @@
             this.LBuscarPor.TabIndex = 2;
             this.LBuscarPor.Text = "BUSCAR POR:";
             // 
-            // CbEmpresas
+            // CbEmpBuscar
             // 
-            this.CbEmpresas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.CbEmpresas.FormattingEnabled = true;
-            this.CbEmpresas.Location = new System.Drawing.Point(339, 58);
-            this.CbEmpresas.Name = "CbEmpresas";
-            this.CbEmpresas.Size = new System.Drawing.Size(169, 26);
-            this.CbEmpresas.TabIndex = 14;
-            this.CbEmpresas.SelectionChangeCommitted += new System.EventHandler(this.CbEmpresas_SelectionChangeCommitted);
-            this.CbEmpresas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbEmpresas_KeyPress);
+            this.CbEmpBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.CbEmpBuscar.FormattingEnabled = true;
+            this.CbEmpBuscar.Location = new System.Drawing.Point(339, 58);
+            this.CbEmpBuscar.Name = "CbEmpBuscar";
+            this.CbEmpBuscar.Size = new System.Drawing.Size(169, 26);
+            this.CbEmpBuscar.TabIndex = 14;
+            this.CbEmpBuscar.SelectionChangeCommitted += new System.EventHandler(this.CbEmpresas_SelectionChangeCommitted);
+            this.CbEmpBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbEmpresas_KeyPress);
             // 
             // label4
             // 
@@ -513,7 +503,18 @@
             this.label5.TabIndex = 22;
             this.label5.Text = "Fecha: ";
             // 
-            // FrmFactsRecibida
+            // CbEmpresas
+            // 
+            this.CbEmpresas.Enabled = false;
+            this.CbEmpresas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.CbEmpresas.FormattingEnabled = true;
+            this.CbEmpresas.Location = new System.Drawing.Point(197, 137);
+            this.CbEmpresas.Name = "CbEmpresas";
+            this.CbEmpresas.Size = new System.Drawing.Size(201, 26);
+            this.CbEmpresas.TabIndex = 34;
+            this.CbEmpresas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbEmpresas_KeyPress_1);
+            // 
+            // FrmFactsRecibidas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -523,7 +524,7 @@
             this.Controls.Add(this.BindingNavigator);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "FrmFactsRecibida";
+            this.Name = "FrmFactsRecibidas";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facturas Recibidas";
@@ -569,7 +570,6 @@
         private System.Windows.Forms.TextBox TxtBaseImponible;
         private System.Windows.Forms.Label LIva;
         private System.Windows.Forms.Label LBaseImponible;
-        private System.Windows.Forms.TextBox TxtEmpresa;
         private System.Windows.Forms.Label LEmpresa;
         private System.Windows.Forms.Button BtnCancelar;
         private System.Windows.Forms.Button BtnGuardar;
@@ -585,6 +585,7 @@
         private System.Windows.Forms.ComboBox CbFechas;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox CbEmpBuscar;
         private System.Windows.Forms.ComboBox CbEmpresas;
     }
 }
