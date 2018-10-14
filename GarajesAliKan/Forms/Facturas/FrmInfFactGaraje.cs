@@ -29,7 +29,9 @@ namespace GarajesAliKan.Forms.Facturas
         /// <param name="factura">Los datos de la factura.</param>
         private void EstablecerParametrosInforme(ReportDocument informe, Factura factura)
         {
-            informe.Load(@"..\..\..\Informes\InfFacturaGaraje.rpt");            
+            informe.Load(@"..\..\..\Informes\InfFacturaGaraje.rpt");
+            informe.SetParameterValue("numFactura", factura.Id);
+            informe.SetParameterValue("fecha", factura.Fecha);
         }
 
         private void FrmInfFactGaraje_Load(object sender, EventArgs e)
@@ -40,7 +42,7 @@ namespace GarajesAliKan.Forms.Facturas
             EstablecerParametrosInforme(informe, factura);
 
             CrystalReportViewer.ReportSource = informe;
-            CrystalReportViewer.RefreshReport();
+            CrystalReportViewer.Refresh();
         }
     }
 }

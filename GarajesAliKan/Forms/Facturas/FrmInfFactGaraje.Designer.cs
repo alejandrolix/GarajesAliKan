@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.CrystalReportViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.InfFacturaGaraje1 = new GarajesAliKan.Informes.InfFacturaGaraje();
             this.SuspendLayout();
             // 
             // CrystalReportViewer
@@ -40,8 +41,10 @@
             this.CrystalReportViewer.Location = new System.Drawing.Point(0, 0);
             this.CrystalReportViewer.Name = "CrystalReportViewer";
             this.CrystalReportViewer.ShowLogo = false;
+            this.CrystalReportViewer.ShowParameterPanelButton = false;
             this.CrystalReportViewer.Size = new System.Drawing.Size(800, 450);
             this.CrystalReportViewer.TabIndex = 0;
+            this.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
             // 
             // FrmInfFactGaraje
             // 
@@ -62,5 +65,6 @@
         #endregion
 
         private CrystalDecisions.Windows.Forms.CrystalReportViewer CrystalReportViewer;
+        private Informes.InfFacturaGaraje InfFacturaGaraje1;
     }
 }
