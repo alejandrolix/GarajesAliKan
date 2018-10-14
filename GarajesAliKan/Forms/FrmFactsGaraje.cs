@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GarajesAliKan.Clases;
+using GarajesAliKan.Forms.Facturas;
 
 namespace GarajesAliKan.Forms
 {
@@ -107,7 +108,8 @@ namespace GarajesAliKan.Forms
 
         private void BtnImprimirFactura_Click(object sender, EventArgs e)
         {
-            // Implementar.
+            FrmInfFactGaraje frmInfFactGaraje = new FrmInfFactGaraje(((Factura)BindingSource.Current).Id);
+            frmInfFactGaraje.ShowDialog();
         }
 
         private void BtnAddFactura_Click(object sender, EventArgs e)

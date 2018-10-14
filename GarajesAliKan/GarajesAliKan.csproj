@@ -120,6 +120,12 @@
     <Compile Include="Clases\Plaza.cs" />
     <Compile Include="Clases\Proveedor.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
+    <Compile Include="Forms\Facturas\FrmInfFactGaraje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Facturas\FrmInfFactGaraje.Designer.cs">
+      <DependentUpon>FrmInfFactGaraje.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmClientesGaraje.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,8 +170,17 @@
     <Compile Include="Forms\FrmProveedores.Designer.cs">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Informes\InfFacturaGaraje.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InfFacturaGaraje.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\Facturas\FrmInfFactGaraje.resx">
+      <DependentUpon>FrmInfFactGaraje.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmClientesGaraje.resx">
       <DependentUpon>FrmClientesGaraje.cs</DependentUpon>
     </EmbeddedResource>
@@ -186,6 +201,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmProveedores.resx">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\InfFacturaGaraje.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InfFacturaGaraje.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -225,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
