@@ -30,18 +30,26 @@ namespace GarajesAliKan.Forms.Facturas
         private void EstablecerParametrosInforme(ReportDocument informe, Factura factura)
         {
             informe.Load(@"..\..\..\Informes\InfFacturaGaraje.rpt");
+            CrystalReportViewer.ReportSource = informe;
             informe.SetParameterValue("numFactura", factura.Id);
             informe.SetParameterValue("fecha", factura.Fecha);
+            informe.SetParameterValue("cliente", factura.Cliente.Nombre);
+            informe.SetParameterValue("nif", factura.Cliente.Nif);
+            informe.SetParameterValue("direccion", factura.Cliente.Direccion);
+            informe.SetParameterValue("tipoAlquiler", factura.Cliente.Alquiler.Concepto);
+            informe.SetParameterValue("garaje", factura.Garaje.Nombre);
+            informe.SetParameterValue("plaza", factura.Plaza);
+            informe.SetParameterValue("baseImponible", factura.BaseImponible);
+            informe.SetParameterValue("iva", factura.Iva);
+            informe.SetParameterValue("totalFactura", factura.Total);
         }
 
         private void FrmInfFactGaraje_Load(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaGarajePorId(IdFactura);
+            Factura factura = Factura.ObtenerDatosFacturaGarajePorId(IdFactura);
 
             ReportDocument informe = new ReportDocument();
-            EstablecerParametrosInforme(informe, factura);
-
-            CrystalReportViewer.ReportSource = informe;
+            EstablecerParametrosInforme(informe, factura);            
             CrystalReportViewer.Refresh();
         }
     }

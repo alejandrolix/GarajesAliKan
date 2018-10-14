@@ -40,6 +40,7 @@
             this.CrystalReportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CrystalReportViewer.Location = new System.Drawing.Point(0, 0);
             this.CrystalReportViewer.Name = "CrystalReportViewer";
+            this.CrystalReportViewer.ShowGroupTreeButton = false;
             this.CrystalReportViewer.ShowLogo = false;
             this.CrystalReportViewer.ShowParameterPanelButton = false;
             this.CrystalReportViewer.Size = new System.Drawing.Size(800, 450);
