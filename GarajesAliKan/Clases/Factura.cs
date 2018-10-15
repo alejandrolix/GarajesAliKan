@@ -366,7 +366,25 @@ namespace GarajesAliKan.Clases
                                                          WHERE  gaj.id = @0 AND fact.esFacturaRecibida IS TRUE;", idGaraje);
             conexion.CloseSharedConnection();
             return factura;
-        }        
+        }
+
+        /// <summary>
+        /// Obtiene todas las facturas de los garajes a partir de dos fechas para realizar un informe.
+        /// </summary>
+        /// <returns>Todas las facturas de los garajes</returns>
+        public static List<Factura> ObtenerFacturasGarajesPorFechasInforme(DateTime desde, DateTime hasta)
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.nif, cli.direccion, gaj.nombre, fact.baseImponible,
+		                                                                   fact.iva, fact.total
+                                                                    FROM   facturas fact
+		                                                                   JOIN clientes cli ON cli.id = fact.idCliente
+		                                                                   JOIN garajes gaj ON gaj.id = fact.idGaraje
+                                                                    WHERE  fact.fecha BETWEEN @0 AND @1
+                                                                    ORDER BY fact.id;", desde, hasta);
+            conexion.CloseSharedConnection();
+            return listaFacturas;
+        }
 
         /// <summary>
         /// Elimina una factura.

@@ -188,6 +188,7 @@
             this.BtnImprFactGaraje.TabIndex = 4;
             this.BtnImprFactGaraje.Text = "Imprimir";
             this.BtnImprFactGaraje.UseVisualStyleBackColor = true;
+            this.BtnImprFactGaraje.Click += new System.EventHandler(this.BtnImprFactGaraje_Click);
             // 
             // label5
             // 

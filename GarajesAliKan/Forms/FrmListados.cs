@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GarajesAliKan.Forms.FacturasEInformes;
 using GarajesAliKan.Forms.Informes;
 
 namespace GarajesAliKan.Forms
@@ -22,6 +23,12 @@ namespace GarajesAliKan.Forms
         {
             FrmInfClientesGarajes frmInfClientesGarajes = new FrmInfClientesGarajes();
             frmInfClientesGarajes.ShowDialog();
+        }
+
+        private void BtnImprFactGaraje_Click(object sender, EventArgs e)
+        {
+            FrmFactGarajes frmFactGarajes = new FrmFactGarajes(DtFechaInicio.Value, DtFechaFin.Value);
+            frmFactGarajes.ShowDialog();
         }
     }
 }
