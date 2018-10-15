@@ -534,6 +534,7 @@ namespace GarajesAliKan.Forms
 
         private void BtnFacturarMes_Click(object sender, EventArgs e)
         {
+            // Preguntar.
             // Implementar.
         }
 

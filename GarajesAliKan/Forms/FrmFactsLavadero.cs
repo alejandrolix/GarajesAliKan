@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GarajesAliKan.Forms.Facturas;
 
 namespace GarajesAliKan.Forms
 {
@@ -338,7 +339,8 @@ namespace GarajesAliKan.Forms
 
         private void BtnImprimirFactura_Click(object sender, EventArgs e)
         {
-            // Implementar.
+            FrmInfFactLavadero frmInfFactLavadero = new FrmInfFactLavadero(((Factura)BindingSource.Current).Id);
+            frmInfFactLavadero.ShowDialog();
         }
 
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)

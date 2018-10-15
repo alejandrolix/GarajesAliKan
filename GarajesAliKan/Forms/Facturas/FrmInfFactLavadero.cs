@@ -12,11 +12,11 @@ using System.Windows.Forms;
 
 namespace GarajesAliKan.Forms.Facturas
 {
-    public partial class FrmInfFactGaraje : Form
+    public partial class FrmInfFactLavadero : Form
     {
         private int IdFactura;
 
-        public FrmInfFactGaraje(int idFactura)
+        public FrmInfFactLavadero(int idFactura)
         {
             InitializeComponent();
             IdFactura = idFactura;
@@ -28,28 +28,26 @@ namespace GarajesAliKan.Forms.Facturas
         /// <param name="informe">El informe para establecer los datos.</param>
         /// <param name="factura">Los datos de la factura.</param>
         private void EstablecerParametrosInforme(ReportDocument informe, Factura factura)
-        {            
+        {
             informe.SetParameterValue("numFactura", factura.Id);
             informe.SetParameterValue("fecha", factura.Fecha);
             informe.SetParameterValue("cliente", factura.Cliente.Nombre);
             informe.SetParameterValue("nif", factura.Cliente.Nif);
             informe.SetParameterValue("direccion", factura.Cliente.Direccion);
-            informe.SetParameterValue("tipoAlquiler", factura.Cliente.Alquiler.Concepto);
-            informe.SetParameterValue("garaje", factura.Garaje.Nombre);
-            informe.SetParameterValue("plaza", factura.Plaza);
+            informe.SetParameterValue("concepto", factura.Cliente.Alquiler.Concepto);                        
             informe.SetParameterValue("baseImponible", factura.BaseImponible);
             informe.SetParameterValue("iva", factura.Iva);
             informe.SetParameterValue("totalFactura", factura.Total);
         }
 
-        private void FrmInfFactGaraje_Load(object sender, EventArgs e)
+        private void FrmInfFactLavadero_Load(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerDatosFacturaGarajePorId(IdFactura);
+            Factura factura = Factura.ObtenerDatosFacturaLavaderoPorId(IdFactura);
 
             ReportDocument informe = new ReportDocument();
-            informe.Load(@"..\..\..\Informes\InfFacturaGaraje.rpt");
+            informe.Load(@"..\..\..\Informes\InfFacturaLavadero.rpt");
             CrystalReportViewer.ReportSource = informe;
-            EstablecerParametrosInforme(informe, factura);            
+            EstablecerParametrosInforme(informe, factura);
             CrystalReportViewer.Refresh();
         }
     }

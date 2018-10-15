@@ -249,6 +249,22 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene los datos de una factura del lavadero a partir de su Id para realizar el informe.
+        /// </summary>
+        /// <param name="idFactura">El Id de una factura-</param>
+        /// <returns>Los datos de la factura.</returns>
+        public static Factura ObtenerDatosFacturaLavaderoPorId(int idFactura)
+        {
+            Database conexion = Foo.ConexionABd();
+            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.direccion, fact.concepto, fact.baseImponible, fact.iva, fact.total
+                                                         FROM   facturas fact
+                                                                JOIN clientes cli ON fact.idCliente = cli.id
+                                                         WHERE  fact.id = @0;", idFactura);
+            conexion.CloseSharedConnection();
+            return factura;
+        }
+
+        /// <summary>
         /// Obtiene una factura de un garaje a partir de un Id de un cliente.
         /// </summary>
         /// <param name="idCliente">El Id de un cliente.</param>

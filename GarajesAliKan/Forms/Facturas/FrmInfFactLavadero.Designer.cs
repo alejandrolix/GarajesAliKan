@@ -1,6 +1,6 @@
 ﻿namespace GarajesAliKan.Forms.Facturas
 {
-    partial class FrmInfFactGaraje
+    partial class FrmInfFactLavadero
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.CrystalReportViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.InfFacturaGaraje1 = new GarajesAliKan.Informes.InfFacturaGaraje();
             this.SuspendLayout();
             // 
             // CrystalReportViewer
@@ -45,21 +44,21 @@
             this.CrystalReportViewer.ShowParameterPanelButton = false;
             this.CrystalReportViewer.ShowRefreshButton = false;
             this.CrystalReportViewer.Size = new System.Drawing.Size(800, 450);
-            this.CrystalReportViewer.TabIndex = 0;
-            this.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
+            this.CrystalReportViewer.TabIndex = 1;
+            this.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;            
             // 
-            // FrmInfFactGaraje
+            // FrmInfFactLavadero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.CrystalReportViewer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "FrmInfFactGaraje";
-            this.ShowInTaskbar = false;
-            this.Text = "Factura de Garaje";
+            this.Name = "FrmInfFactLavadero";
+            this.Text = "Factura de Lavadero";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.FrmInfFactGaraje_Load);
+            this.Load += new System.EventHandler(this.FrmInfFactLavadero_Load);
             this.ResumeLayout(false);
 
         }
@@ -67,6 +66,5 @@
         #endregion
 
         private CrystalDecisions.Windows.Forms.CrystalReportViewer CrystalReportViewer;
-        private Informes.InfFacturaGaraje InfFacturaGaraje1;
     }
 }

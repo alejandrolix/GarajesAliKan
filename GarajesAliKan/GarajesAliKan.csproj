@@ -126,6 +126,12 @@
     <Compile Include="Forms\Facturas\FrmInfFactGaraje.Designer.cs">
       <DependentUpon>FrmInfFactGaraje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Facturas\FrmInfFactLavadero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Facturas\FrmInfFactLavadero.Designer.cs">
+      <DependentUpon>FrmInfFactLavadero.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmClientesGaraje.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +176,12 @@
     <Compile Include="Forms\FrmProveedores.Designer.cs">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Informes\InfFacturaLavadero.cs">
+      <DependentUpon>InfFacturaLavadero.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Informes\InfFacturaGaraje.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,6 +192,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Facturas\FrmInfFactGaraje.resx">
       <DependentUpon>FrmInfFactGaraje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Facturas\FrmInfFactLavadero.resx">
+      <DependentUpon>FrmInfFactLavadero.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmClientesGaraje.resx">
       <DependentUpon>FrmClientesGaraje.cs</DependentUpon>
@@ -201,6 +216,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmProveedores.resx">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\InfFacturaLavadero.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InfFacturaLavadero.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes\InfFacturaGaraje.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
