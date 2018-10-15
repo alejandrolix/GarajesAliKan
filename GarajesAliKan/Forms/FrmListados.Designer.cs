@@ -223,7 +223,7 @@
             this.DtFechaInicio.Name = "DtFechaInicio";
             this.DtFechaInicio.Size = new System.Drawing.Size(122, 24);
             this.DtFechaInicio.TabIndex = 2;
-            this.DtFechaInicio.Value = new System.DateTime(2018, 10, 5, 0, 0, 0, 0);
+            this.DtFechaInicio.Value = new System.DateTime(2018, 10, 15, 0, 0, 0, 0);
             // 
             // label4
             // 
@@ -258,6 +258,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Listados";
+            this.Load += new System.EventHandler(this.FrmListados_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);

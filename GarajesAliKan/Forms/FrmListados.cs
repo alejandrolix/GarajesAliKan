@@ -19,6 +19,12 @@ namespace GarajesAliKan.Forms
             InitializeComponent();
         }
 
+        private void FrmListados_Load(object sender, EventArgs e)
+        {
+            DtFechaInicio.Value = DateTime.Now;
+            DtFechaFin.Value = DateTime.Now;
+        }
+
         private void BtnImprimirClientes_Click(object sender, EventArgs e)
         {
             FrmInfClientesGarajes frmInfClientesGarajes = new FrmInfClientesGarajes();
@@ -29,6 +35,6 @@ namespace GarajesAliKan.Forms
         {
             FrmFactGarajes frmFactGarajes = new FrmFactGarajes(DtFechaInicio.Value, DtFechaFin.Value);
             frmFactGarajes.ShowDialog();
-        }
+        }        
     }
 }

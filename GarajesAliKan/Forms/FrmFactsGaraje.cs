@@ -20,7 +20,7 @@ namespace GarajesAliKan.Forms
         }
 
         private void FrmFactsGaraje_Load(object sender, EventArgs e)
-        {
+        {            
             CargarDatosComboBox(true, true, true);
             if (Factura.HayFacturasGarajes())
             {
