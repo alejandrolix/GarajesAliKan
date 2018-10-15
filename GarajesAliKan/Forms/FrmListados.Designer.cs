@@ -35,16 +35,16 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.DtFechaInicio = new System.Windows.Forms.DateTimePicker();
-            this.DtFechaFin = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.BtnImprFactGaraje = new System.Windows.Forms.Button();
-            this.BtnImprFactLavadero = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.BtnImprFactRecibida = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
+            this.BtnImprFactLavadero = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.BtnImprFactGaraje = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.DtFechaFin = new System.Windows.Forms.DateTimePicker();
+            this.DtFechaInicio = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -81,7 +81,7 @@
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(12, 34);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(186, 115);
+            this.panel1.Size = new System.Drawing.Size(186, 110);
             this.panel1.TabIndex = 2;
             // 
             // BtnImprimirClientes
@@ -137,98 +137,10 @@
             this.panel4.Size = new System.Drawing.Size(530, 201);
             this.panel4.TabIndex = 4;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label3.Location = new System.Drawing.Point(16, 65);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 18);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Fecha Inicio: ";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label4.Location = new System.Drawing.Point(16, 120);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 18);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Fecha Fin: ";
-            // 
-            // DtFechaInicio
-            // 
-            this.DtFechaInicio.CustomFormat = "dd/MM/yyyy";
-            this.DtFechaInicio.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            this.DtFechaInicio.Enabled = false;
-            this.DtFechaInicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.DtFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DtFechaInicio.Location = new System.Drawing.Point(123, 60);
-            this.DtFechaInicio.Name = "DtFechaInicio";
-            this.DtFechaInicio.Size = new System.Drawing.Size(122, 24);
-            this.DtFechaInicio.TabIndex = 2;
-            this.DtFechaInicio.Value = new System.DateTime(2018, 10, 5, 0, 0, 0, 0);
-            // 
-            // DtFechaFin
-            // 
-            this.DtFechaFin.CustomFormat = "dd/MM/yyyy";
-            this.DtFechaFin.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            this.DtFechaFin.Enabled = false;
-            this.DtFechaFin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.DtFechaFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DtFechaFin.Location = new System.Drawing.Point(123, 115);
-            this.DtFechaFin.Name = "DtFechaFin";
-            this.DtFechaFin.Size = new System.Drawing.Size(122, 24);
-            this.DtFechaFin.TabIndex = 3;
-            this.DtFechaFin.Value = new System.DateTime(2018, 10, 5, 0, 0, 0, 0);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.White;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label5.Location = new System.Drawing.Point(329, 65);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 20);
-            this.label5.TabIndex = 29;
-            this.label5.Text = "Garajes";
-            // 
-            // BtnImprFactGaraje
-            // 
-            this.BtnImprFactGaraje.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnImprFactGaraje.Location = new System.Drawing.Point(427, 62);
-            this.BtnImprFactGaraje.Name = "BtnImprFactGaraje";
-            this.BtnImprFactGaraje.Size = new System.Drawing.Size(75, 27);
-            this.BtnImprFactGaraje.TabIndex = 4;
-            this.BtnImprFactGaraje.Text = "Imprimir";
-            this.BtnImprFactGaraje.UseVisualStyleBackColor = true;
-            // 
-            // BtnImprFactLavadero
-            // 
-            this.BtnImprFactLavadero.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnImprFactLavadero.Location = new System.Drawing.Point(427, 109);
-            this.BtnImprFactLavadero.Name = "BtnImprFactLavadero";
-            this.BtnImprFactLavadero.Size = new System.Drawing.Size(75, 27);
-            this.BtnImprFactLavadero.TabIndex = 5;
-            this.BtnImprFactLavadero.Text = "Imprimir";
-            this.BtnImprFactLavadero.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.White;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label6.Location = new System.Drawing.Point(329, 112);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 20);
-            this.label6.TabIndex = 31;
-            this.label6.Text = "Lavadero";
-            // 
             // BtnImprFactRecibida
             // 
             this.BtnImprFactRecibida.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.BtnImprFactRecibida.Location = new System.Drawing.Point(427, 156);
+            this.BtnImprFactRecibida.Location = new System.Drawing.Point(429, 156);
             this.BtnImprFactRecibida.Name = "BtnImprFactRecibida";
             this.BtnImprFactRecibida.Size = new System.Drawing.Size(75, 27);
             this.BtnImprFactRecibida.TabIndex = 6;
@@ -240,11 +152,97 @@
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.White;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label7.Location = new System.Drawing.Point(329, 159);
+            this.label7.Location = new System.Drawing.Point(325, 159);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(79, 20);
             this.label7.TabIndex = 33;
             this.label7.Text = "Recibidas";
+            // 
+            // BtnImprFactLavadero
+            // 
+            this.BtnImprFactLavadero.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.BtnImprFactLavadero.Location = new System.Drawing.Point(429, 109);
+            this.BtnImprFactLavadero.Name = "BtnImprFactLavadero";
+            this.BtnImprFactLavadero.Size = new System.Drawing.Size(75, 27);
+            this.BtnImprFactLavadero.TabIndex = 5;
+            this.BtnImprFactLavadero.Text = "Imprimir";
+            this.BtnImprFactLavadero.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.White;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label6.Location = new System.Drawing.Point(325, 112);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 20);
+            this.label6.TabIndex = 31;
+            this.label6.Text = "Lavadero";
+            // 
+            // BtnImprFactGaraje
+            // 
+            this.BtnImprFactGaraje.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.BtnImprFactGaraje.Location = new System.Drawing.Point(429, 62);
+            this.BtnImprFactGaraje.Name = "BtnImprFactGaraje";
+            this.BtnImprFactGaraje.Size = new System.Drawing.Size(75, 27);
+            this.BtnImprFactGaraje.TabIndex = 4;
+            this.BtnImprFactGaraje.Text = "Imprimir";
+            this.BtnImprFactGaraje.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.White;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label5.Location = new System.Drawing.Point(325, 65);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 20);
+            this.label5.TabIndex = 29;
+            this.label5.Text = "Garajes";
+            // 
+            // DtFechaFin
+            // 
+            this.DtFechaFin.CustomFormat = "dd/MM/yyyy";
+            this.DtFechaFin.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            this.DtFechaFin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.DtFechaFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.DtFechaFin.Location = new System.Drawing.Point(123, 115);
+            this.DtFechaFin.Name = "DtFechaFin";
+            this.DtFechaFin.Size = new System.Drawing.Size(122, 24);
+            this.DtFechaFin.TabIndex = 3;
+            this.DtFechaFin.Value = new System.DateTime(2018, 10, 5, 0, 0, 0, 0);
+            // 
+            // DtFechaInicio
+            // 
+            this.DtFechaInicio.CustomFormat = "dd/MM/yyyy";
+            this.DtFechaInicio.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            this.DtFechaInicio.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.DtFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.DtFechaInicio.Location = new System.Drawing.Point(123, 60);
+            this.DtFechaInicio.Name = "DtFechaInicio";
+            this.DtFechaInicio.Size = new System.Drawing.Size(122, 24);
+            this.DtFechaInicio.TabIndex = 2;
+            this.DtFechaInicio.Value = new System.DateTime(2018, 10, 5, 0, 0, 0, 0);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label4.Location = new System.Drawing.Point(16, 120);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 18);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Fecha Fin: ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label3.Location = new System.Drawing.Point(16, 65);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(95, 18);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Fecha Inicio: ";
             // 
             // FrmListados
             // 
