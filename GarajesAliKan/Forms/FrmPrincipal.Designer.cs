@@ -36,6 +36,7 @@
             this.facturasLavaderoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.facturasRecibidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProveedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ListadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +47,8 @@
             this.ClientesGarajeToolStripMenuItem,
             this.ClientesLavaderoToolStripMenuItem,
             this.facturasToolStripMenuItem,
-            this.ProveedoresToolStripMenuItem});
+            this.ProveedoresToolStripMenuItem,
+            this.ListadosToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Size = new System.Drawing.Size(800, 28);
@@ -83,21 +85,21 @@
             // facturasGarajeToolStripMenuItem
             // 
             this.facturasGarajeToolStripMenuItem.Name = "facturasGarajeToolStripMenuItem";
-            this.facturasGarajeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasGarajeToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.facturasGarajeToolStripMenuItem.Text = "Garaje";
             this.facturasGarajeToolStripMenuItem.Click += new System.EventHandler(this.FacturasGarajeToolStripMenuItem_Click);
             // 
             // facturasLavaderoToolStripMenuItem
             // 
             this.facturasLavaderoToolStripMenuItem.Name = "facturasLavaderoToolStripMenuItem";
-            this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.facturasLavaderoToolStripMenuItem.Text = "Lavadero";
             this.facturasLavaderoToolStripMenuItem.Click += new System.EventHandler(this.FacturasLavaderoToolStripMenuItem_Click);
             // 
             // facturasRecibidasToolStripMenuItem
             // 
             this.facturasRecibidasToolStripMenuItem.Name = "facturasRecibidasToolStripMenuItem";
-            this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.facturasRecibidasToolStripMenuItem.Text = "Recibidas";
             this.facturasRecibidasToolStripMenuItem.Click += new System.EventHandler(this.FacturasRecibidasToolStripMenuItem_Click);
             // 
@@ -108,6 +110,14 @@
             this.ProveedoresToolStripMenuItem.Size = new System.Drawing.Size(103, 24);
             this.ProveedoresToolStripMenuItem.Text = "Proveedores";
             this.ProveedoresToolStripMenuItem.Click += new System.EventHandler(this.ProveedoresToolStripMenuItem_Click);
+            // 
+            // ListadosToolStripMenuItem
+            // 
+            this.ListadosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.ListadosToolStripMenuItem.Name = "ListadosToolStripMenuItem";
+            this.ListadosToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+            this.ListadosToolStripMenuItem.Text = "Listados";
+            this.ListadosToolStripMenuItem.Click += new System.EventHandler(this.ListadosToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 
@@ -139,6 +149,7 @@
         private System.Windows.Forms.ToolStripMenuItem facturasLavaderoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem facturasRecibidasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ProveedoresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ListadosToolStripMenuItem;
     }
 }
 

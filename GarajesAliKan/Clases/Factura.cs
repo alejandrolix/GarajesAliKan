@@ -33,7 +33,7 @@ namespace GarajesAliKan.Clases
                                                             FROM   facturas
                                                             WHERE  esFacturaGaraje IS TRUE;");
             conexion.CloseSharedConnection();
-            return numFacturas >= 1;
+            return numFacturas >= 1;                        
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace GarajesAliKan.Clases
                                                          WHERE  gaj.id = @0 AND fact.esFacturaRecibida IS TRUE;", idGaraje);
             conexion.CloseSharedConnection();
             return factura;
-        }
+        }        
 
         /// <summary>
         /// Elimina una factura.

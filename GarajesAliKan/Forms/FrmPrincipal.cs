@@ -53,5 +53,11 @@ namespace GarajesAliKan
             FrmProveedores frmProveedores = new FrmProveedores();
             frmProveedores.ShowDialog();
         }
+
+        private void ListadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmListados frmListados = new FrmListados();
+            frmListados.ShowDialog();
+        }
     }
 }

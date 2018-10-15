@@ -48,6 +48,7 @@ namespace GarajesAliKan.Forms.Facturas
 
             ReportDocument informe = new ReportDocument();
             informe.Load(@"..\..\..\Informes\InfFacturaGaraje.rpt");
+
             CrystalReportViewer.ReportSource = informe;
             EstablecerParametrosInforme(informe, factura);            
             CrystalReportViewer.Refresh();

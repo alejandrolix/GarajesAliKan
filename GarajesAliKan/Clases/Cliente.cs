@@ -67,6 +67,21 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene los clientes de todos los garajes para realizar un informe.
+        /// </summary>
+        /// <returns>Los clientes de todos los garajes.</returns>
+        public static List<Cliente> ObtenerClientesGarajesInforme()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT plzCli.plaza, cli.nombre, cli.apellidos, cli.telefono, alqPc.total, cli.observaciones
+                                                                    FROM   plazaCliente plzCli
+		                                                                   JOIN clientes cli ON cli.id = plzCli.idCliente
+		                                                                   JOIN alquilerPorCliente alqPc ON cli.id = alqPc.idCliente;");
+            conexion.CloseSharedConnection();
+            return listaClientes;
+        }
+
+        /// <summary>
         /// Obtiene todos los clientes del lavedero.
         /// </summary>
         /// <returns>Los clientes existentes del lavadero.</returns>

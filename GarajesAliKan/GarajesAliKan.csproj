@@ -120,6 +120,11 @@
     <Compile Include="Clases\Plaza.cs" />
     <Compile Include="Clases\Proveedor.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
+    <Compile Include="DataSets\DtClientesGarajes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Facturas\FrmInfFactGaraje.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +161,12 @@
     <Compile Include="Forms\FrmFactsLavadero.Designer.cs">
       <DependentUpon>FrmFactsLavadero.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmListados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmListados.Designer.cs">
+      <DependentUpon>FrmListados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +186,18 @@
     </Compile>
     <Compile Include="Forms\FrmProveedores.Designer.cs">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Informes\FrmInfClientesGarajes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Informes\FrmInfClientesGarajes.Designer.cs">
+      <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Informes\InfClientesGarajes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InfClientesGarajes.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Informes\InfFacturaLavadero.cs">
       <DependentUpon>InfFacturaLavadero.rpt</DependentUpon>
@@ -208,6 +231,9 @@
     <EmbeddedResource Include="Forms\FrmFactsLavadero.resx">
       <DependentUpon>FrmFactsLavadero.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmListados.resx">
+      <DependentUpon>FrmListados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,6 +242,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmProveedores.resx">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Informes\FrmInfClientesGarajes.resx">
+      <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\InfClientesGarajes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InfClientesGarajes.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes\InfFacturaLavadero.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -235,6 +268,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DataSets\DtClientesGarajes.xsc">
+      <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DtClientesGarajes.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtClientesGarajes.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DtClientesGarajes.xss">
+      <DependentUpon>DtClientesGarajes.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

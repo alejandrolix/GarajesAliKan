@@ -1,6 +1,6 @@
-﻿namespace GarajesAliKan.Forms.Facturas
+﻿namespace GarajesAliKan.Forms.Informes
 {
-    partial class FrmInfFactGaraje
+    partial class FrmInfClientesGarajes
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CrystalReportViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();            
+            this.CrystalReportViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.SuspendLayout();
             // 
             // CrystalReportViewer
@@ -47,24 +47,25 @@
             this.CrystalReportViewer.TabIndex = 0;
             this.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
             // 
-            // FrmInfFactGaraje
+            // FrmInfClientesGarajes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.CrystalReportViewer);
-            this.MaximizeBox = false;
-            this.Name = "FrmInfFactGaraje";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MinimizeBox = false;
+            this.Name = "FrmInfClientesGarajes";
             this.ShowInTaskbar = false;
-            this.Text = "Factura de Garaje";
+            this.Text = "Informe Clientes";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.FrmInfFactGaraje_Load);
+            this.Load += new System.EventHandler(this.FrmInfClientesGarajes_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private CrystalDecisions.Windows.Forms.CrystalReportViewer CrystalReportViewer;        
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer CrystalReportViewer;
     }
 }
