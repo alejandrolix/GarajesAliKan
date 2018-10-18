@@ -7,7 +7,7 @@
         <ReportItems>
           <Rectangle Name="Rectangle3">
             <KeepTogether>true</KeepTogether>
-            <Top>5.62187cm</Top>
+            <Top>5.93937cm</Top>
             <Left>1.39065cm</Left>
             <Height>5cm</Height>
             <Width>15.39cm</Width>
@@ -523,7 +523,7 @@
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>5.48958cm</Top>
+            <Top>5.80708cm</Top>
             <Left>1.39065cm</Left>
             <Height>4.94917cm</Height>
             <Width>15.214cm</Width>
@@ -538,9 +538,9 @@
           </Rectangle>
           <Rectangle Name="Rectangle5">
             <KeepTogether>true</KeepTogether>
-            <Top>11.89249cm</Top>
+            <Top>12.84499cm</Top>
             <Left>1.39065cm</Left>
-            <Height>4.9cm</Height>
+            <Height>3cm</Height>
             <Width>15.39cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -635,79 +635,11 @@
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
-              <Textbox Name="garaje">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>=Parameters!garaje.Value</Value>
-                        <Style>
-                          <FontSize>13pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style>
-                      <TextAlign>Center</TextAlign>
-                    </Style>
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>garaje</rd:DefaultName>
-                <Top>2.78871cm</Top>
-                <Left>0.30268cm</Left>
-                <Height>0.65292cm</Height>
-                <Width>14.60182cm</Width>
-                <ZIndex>2</ZIndex>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
-              <Textbox Name="plaza">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>=Parameters!plaza.Value</Value>
-                        <Style>
-                          <FontSize>13pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style>
-                      <TextAlign>Center</TextAlign>
-                    </Style>
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>plaza</rd:DefaultName>
-                <Top>3.91583cm</Top>
-                <Left>0.30268cm</Left>
-                <Height>0.70583cm</Height>
-                <Width>14.60182cm</Width>
-                <ZIndex>3</ZIndex>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>11.62791cm</Top>
+            <Top>12.58041cm</Top>
             <Left>1.39065cm</Left>
-            <Height>4.94975cm</Height>
+            <Height>3.04475cm</Height>
             <Width>15.214cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
@@ -736,7 +668,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox10</rd:DefaultName>
-            <Top>18.12078cm</Top>
+            <Top>17.16828cm</Top>
             <Left>8.19584cm</Left>
             <Height>0.6cm</Height>
             <Width>4.39452cm</Width>
@@ -769,7 +701,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox10</rd:DefaultName>
-            <Top>19.738cm</Top>
+            <Top>18.7855cm</Top>
             <Left>8.19584cm</Left>
             <Height>0.6cm</Height>
             <Width>4.39452cm</Width>
@@ -786,7 +718,7 @@
           </Textbox>
           <Rectangle Name="Rectangle10">
             <KeepTogether>true</KeepTogether>
-            <Top>19.56927cm</Top>
+            <Top>18.61677cm</Top>
             <Left>12.88819cm</Left>
             <Height>1.13104cm</Height>
             <Width>3.66cm</Width>
@@ -825,7 +757,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>baseImponible</rd:DefaultName>
-            <Top>19.42375cm</Top>
+            <Top>18.47125cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.99104cm</Height>
             <Width>3.5cm</Width>
@@ -861,7 +793,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox10</rd:DefaultName>
-            <Top>21.35521cm</Top>
+            <Top>20.40271cm</Top>
             <Left>8.19584cm</Left>
             <Height>0.6cm</Height>
             <Width>4.39452cm</Width>
@@ -878,7 +810,7 @@
           </Textbox>
           <Rectangle Name="Rectangle11">
             <KeepTogether>true</KeepTogether>
-            <Top>21.35521cm</Top>
+            <Top>20.40271cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.84cm</Height>
             <Width>3.66cm</Width>
@@ -917,7 +849,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>baseImponible</rd:DefaultName>
-            <Top>21.06417cm</Top>
+            <Top>20.11167cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.99104cm</Height>
             <Width>3.5cm</Width>
@@ -937,7 +869,7 @@
           </Textbox>
           <Rectangle Name="Rectangle12">
             <KeepTogether>true</KeepTogether>
-            <Top>18.12078cm</Top>
+            <Top>17.16828cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.84cm</Height>
             <Width>3.66cm</Width>
@@ -976,7 +908,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>baseImponible</rd:DefaultName>
-            <Top>17.82974cm</Top>
+            <Top>16.87724cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.99104cm</Height>
             <Width>3.5cm</Width>
@@ -995,7 +927,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>23.17416cm</Height>
+        <Height>22.38041cm</Height>
         <Style />
       </Body>
       <Width>17.99167cm</Width>
@@ -1078,14 +1010,6 @@
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="garaje">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="plaza">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
     <ReportParameter Name="baseImponible">
       <DataType>Float</DataType>
       <Prompt>ReportParameter1</Prompt>
@@ -1133,16 +1057,6 @@
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>1</RowIndex>
           <ParameterName>tipoAlquiler</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
-          <RowIndex>1</RowIndex>
-          <ParameterName>garaje</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>3</ColumnIndex>
-          <RowIndex>1</RowIndex>
-          <ParameterName>plaza</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>

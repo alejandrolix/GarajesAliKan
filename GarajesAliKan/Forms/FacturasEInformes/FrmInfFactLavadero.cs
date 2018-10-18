@@ -1,5 +1,5 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
-using GarajesAliKan.Clases;
+﻿using GarajesAliKan.Clases;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,32 +24,29 @@ namespace GarajesAliKan.Forms.Facturas
 
         /// <summary>
         /// Establece los datos al informe del garaje.
-        /// </summary>
-        /// <param name="informe">El informe para establecer los datos.</param>
+        /// </summary>        
         /// <param name="factura">Los datos de la factura.</param>
-        private void EstablecerParametrosInforme(ReportDocument informe, Factura factura)
+        private void EstablecerParametrosInforme(Factura factura)
         {
-            informe.SetParameterValue("numFactura", factura.Id);
-            informe.SetParameterValue("fecha", factura.Fecha);
-            informe.SetParameterValue("cliente", factura.Cliente.Nombre);
-            informe.SetParameterValue("nif", factura.Cliente.Nif);
-            informe.SetParameterValue("direccion", factura.Cliente.Direccion);
-            informe.SetParameterValue("concepto", factura.Cliente.Alquiler.Concepto);                        
-            informe.SetParameterValue("baseImponible", factura.BaseImponible);
-            informe.SetParameterValue("iva", factura.Iva);
-            informe.SetParameterValue("totalFactura", factura.Total);
+            ReportParameterCollection listaParametros = new ReportParameterCollection();
+            listaParametros.Add(new ReportParameter("numFactura", factura.Id.ToString()));
+            listaParametros.Add(new ReportParameter("fecha", factura.Fecha.ToString()));
+            listaParametros.Add(new ReportParameter("nombre", factura.Cliente.Nombre));
+            listaParametros.Add(new ReportParameter("nif", factura.Cliente.Nif));
+            listaParametros.Add(new ReportParameter("direccion", factura.Cliente.Direccion));
+            listaParametros.Add(new ReportParameter("tipoAlquiler", factura.Cliente.Alquiler.Concepto));            
+            listaParametros.Add(new ReportParameter("baseImponible", factura.Cliente.Alquiler.BaseImponible.ToString()));
+            listaParametros.Add(new ReportParameter("iva", factura.Cliente.Alquiler.Iva.ToString()));
+            listaParametros.Add(new ReportParameter("totalFactura", factura.Cliente.Alquiler.Total.ToString()));
+            ReportViewer.LocalReport.SetParameters(listaParametros);
         }
 
         private void FrmInfFactLavadero_Load(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerDatosFacturaLavaderoPorId(IdFactura);
-
-            ReportDocument informe = new ReportDocument();
-            informe.Load(@"..\..\..\Informes\InfFacturaLavadero.rpt");
-
-            CrystalReportViewer.ReportSource = informe;
-            EstablecerParametrosInforme(informe, factura);
-            CrystalReportViewer.Refresh();
+            Factura factura = Factura.ObtenerDatosFacturaLavaderoPorId(IdFactura);                       
+            EstablecerParametrosInforme(factura);
+            ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            ReportViewer.RefreshReport();
         }
     }
 }
