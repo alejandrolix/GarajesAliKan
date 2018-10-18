@@ -270,6 +270,7 @@
       <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes\FacturaLavadero.rdlc" />
+    <EmbeddedResource Include="Informes\FacturasGarajes.rdlc" />
     <EmbeddedResource Include="Informes\InfClientesGarajes.rdlc" />
     <EmbeddedResource Include="Informes\InfFacturaGarajesListado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

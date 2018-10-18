@@ -1,4 +1,4 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
+﻿using Microsoft.Reporting.WinForms;
 using GarajesAliKan.Clases;
 using GarajesAliKan.DataSets;
 using System;
@@ -27,24 +27,18 @@ namespace GarajesAliKan.Forms.FacturasEInformes
 
         private void FrmFactGarajes_Load(object sender, EventArgs e)
         {
-            //ReportDocument informe = new ReportDocument();
-            //informe.Load(@"..\..\..\Informes\InfFacturaGarajesListado.rpt");
+            List<Factura> listaFacturas = Factura.ObtenerFacturasGarajesPorFechasInforme(Desde, Hasta);
+            DtFacturasGarajes dtFacturasGarajes = new DtFacturasGarajes();
 
-            //List<Factura> listaFacturas = Factura.ObtenerFacturasGarajesPorFechasInforme(Desde, Hasta);
-            //DtFacturasGarajes dtFacturasGarajes = new DtFacturasGarajes();
-
-            //foreach (Factura factura in listaFacturas)
-            //{
-            //    dtFacturasGarajes.Tables["facturas"].Rows.Add(factura.Id, factura.Fecha, factura.Cliente.Nombre, factura.Cliente.Nif, factura.Cliente.Direccion, factura.Cliente.Garaje.Nombre,
-            //                                                  factura.Cliente.Alquiler.BaseImponible, factura.Cliente.Alquiler.Iva, factura.Cliente.Alquiler.Total);
-            //}                       
-            //informe.SetDataSource(dtFacturasGarajes);
-            //informe.SetParameterValue("desde", Desde);
-            //informe.SetParameterValue("hasta", Hasta);
-            //CrystalReportViewer.ReportSource = informe;
-
-            
-            
+            foreach (Factura factura in listaFacturas)
+            {
+                dtFacturasGarajes.Tables["facturas"].Rows.Add(factura.Id, factura.Fecha, factura.Cliente.Nombre, factura.Cliente.Nif, factura.Cliente.Direccion, factura.Cliente.Garaje.Nombre,
+                                                              factura.Cliente.Alquiler.BaseImponible, factura.Cliente.Alquiler.Iva, factura.Cliente.Alquiler.Total);
+            }
+            ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            ReportViewer.LocalReport.DataSources.Add(new ReportDataSource("DtFacturasGarajes", dtFacturasGarajes.Tables["facturas"]));
+            ReportViewer.LocalReport.SetParameters(new ReportParameter("desde", Desde.ToString()));
+            ReportViewer.LocalReport.SetParameters(new ReportParameter("hasta", Hasta.ToString()));            
             ReportViewer.RefreshReport();
         }
     }

@@ -51,6 +51,7 @@
             // ReportViewer
             // 
             this.ReportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReportViewer.LocalReport.ReportEmbeddedResource = "GarajesAliKan.Informes.FacturasGarajes.rdlc";
             this.ReportViewer.Location = new System.Drawing.Point(0, 0);
             this.ReportViewer.Name = "ReportViewer";
             this.ReportViewer.ServerReport.BearerToken = null;
