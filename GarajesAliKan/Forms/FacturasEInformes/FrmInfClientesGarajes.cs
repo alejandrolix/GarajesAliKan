@@ -1,4 +1,4 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
+﻿using Microsoft.Reporting.WinForms;
 using GarajesAliKan.Clases;
 using GarajesAliKan.DataSets;
 using System;
@@ -22,9 +22,6 @@ namespace GarajesAliKan.Forms.Informes
 
         private void FrmInfClientesGarajes_Load(object sender, EventArgs e)
         {
-            ReportDocument informe = new ReportDocument();
-            informe.Load(@"..\..\..\Informes\InfClientesGarajes.rpt");
-
             List<Cliente> listaClientes = Cliente.ObtenerClientesGarajesInforme();
             DtClientesGarajes dtClientesGarajes = new DtClientesGarajes();
 
@@ -32,9 +29,9 @@ namespace GarajesAliKan.Forms.Informes
             {
                 dtClientesGarajes.Tables["clientes"].Rows.Add(cliente.Alquiler.Plaza, cliente.Nombre, cliente.Apellidos, cliente.Telefono, cliente.Alquiler.Total, cliente.Observaciones);
             }
-            CrystalReportViewer.ReportSource = informe;
-            informe.SetDataSource(dtClientesGarajes);            
-            CrystalReportViewer.RefreshReport();
+            ReportViewer.LocalReport.DataSources.Add(new ReportDataSource("DtClientesGarajes", dtClientesGarajes.Tables["clientes"]));
+            ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            ReportViewer.RefreshReport();
         }
     }
 }

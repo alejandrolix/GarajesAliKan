@@ -225,12 +225,6 @@
     <Compile Include="Forms\FacturasEInformes\FrmInfClientesGarajes.Designer.cs">
       <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Informes\InfClientesGarajes.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InfClientesGarajes.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Informes\InfFacturaGarajesListado.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,10 +270,7 @@
       <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes\FacturaLavadero.rdlc" />
-    <EmbeddedResource Include="Informes\InfClientesGarajes.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>InfClientesGarajes.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Informes\InfClientesGarajes.rdlc" />
     <EmbeddedResource Include="Informes\InfFacturaGarajesListado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InfFacturaGarajesListado.cs</LastGenOutput>
