@@ -1,5 +1,6 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
-using GarajesAliKan.Clases;
+﻿using GarajesAliKan.Clases;
+using GarajesAliKan.DataSets;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,31 +28,34 @@ namespace GarajesAliKan.Forms.Facturas
         /// </summary>
         /// <param name="informe">El informe para establecer los datos.</param>
         /// <param name="factura">Los datos de la factura.</param>
-        private void EstablecerParametrosInforme(ReportDocument informe, Factura factura)
-        {            
-            informe.SetParameterValue("numFactura", factura.Id);
-            informe.SetParameterValue("fecha", factura.Fecha);
-            informe.SetParameterValue("cliente", factura.Cliente.Nombre);
-            informe.SetParameterValue("nif", factura.Cliente.Nif);
-            informe.SetParameterValue("direccion", factura.Cliente.Direccion);
-            informe.SetParameterValue("tipoAlquiler", factura.Cliente.Alquiler.Concepto);
-            informe.SetParameterValue("garaje", factura.Garaje.Nombre);
-            informe.SetParameterValue("plaza", factura.Plaza);
-            informe.SetParameterValue("baseImponible", factura.BaseImponible);
-            informe.SetParameterValue("iva", factura.Iva);
-            informe.SetParameterValue("totalFactura", factura.Total);
+        private void EstablecerParametrosInforme(Factura factura)
+        {
+            ReportParameterCollection listaParametros = new ReportParameterCollection();
+            listaParametros.Add(new ReportParameter("numFactura", factura.Id.ToString()));
+            listaParametros.Add(new ReportParameter("fecha", factura.Fecha.ToString()));
+            listaParametros.Add(new ReportParameter("nombre", "ALEJANDRO PONS ANTELO"));
+            listaParametros.Add(new ReportParameter("nif", "53243167F"));
+            listaParametros.Add(new ReportParameter("direccion", "C/ GARBINET, 97 3ºB"));
+            listaParametros.Add(new ReportParameter("tipoAlquiler", "ALQUILER PLAZA DE GARAJE"));
+            listaParametros.Add(new ReportParameter("garaje", "GONZALO MENGUAL"));
+            listaParametros.Add(new ReportParameter("plaza", "GM 19"));
+            listaParametros.Add(new ReportParameter("baseImponible", "19.40"));
+            listaParametros.Add(new ReportParameter("iva", "11"));
+            listaParametros.Add(new ReportParameter("totalFactura", "22.69"));
+            ReportViewer.LocalReport.SetParameters(listaParametros);
         }
 
         private void FrmInfFactGaraje_Load(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerDatosFacturaGarajePorId(IdFactura);
+            Factura factura = Factura.ObtenerDatosFacturaGarajePorId(IdFactura);            
+            EstablecerParametrosInforme(factura);            
 
-            ReportDocument informe = new ReportDocument();
-            informe.Load(@"..\..\..\Informes\InfFacturaGaraje.rpt");
+            DtFacturasGarajes dtFacturasGarajes = new DtFacturasGarajes();
+            dtFacturasGarajes.Tables["facturas"].Rows.Add(factura.Id);
 
-            CrystalReportViewer.ReportSource = informe;
-            EstablecerParametrosInforme(informe, factura);            
-            CrystalReportViewer.Refresh();
+            ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            ReportViewer.LocalReport.DataSources.Add(new ReportDataSource("DtFacturasGarajes", dtFacturasGarajes.Tables["facturas"]));
+            ReportViewer.RefreshReport();            
         }
     }
 }
