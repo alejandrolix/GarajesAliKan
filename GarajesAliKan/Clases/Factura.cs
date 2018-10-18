@@ -387,6 +387,22 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todas las facturas del lavadero para realizar un informe.
+        /// </summary>
+        /// <returns>Todas las facturas del lavadero</returns>
+        public static List<Factura> ObtenerFacturasLavaderoInforme()
+        {
+            Database conexion = Foo.ConexionABd();
+            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.direccion, cli.nif, fact.baseImponible, fact.iva, fact.total
+                                                                    FROM   facturas fact
+		                                                                   JOIN clientes cli ON cli.id = fact.idCliente
+                                                                    WHERE  fact.esFacturaLavadero IS TRUE
+                                                                    ORDER BY fact.id;");
+            conexion.CloseSharedConnection();
+            return listaFacturas;
+        }
+
+        /// <summary>
         /// Elimina una factura.
         /// </summary>        
         /// <returns>La factura se ha eliminado.</returns>

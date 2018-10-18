@@ -152,7 +152,7 @@
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.White;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label7.Location = new System.Drawing.Point(325, 159);
+            this.label7.Location = new System.Drawing.Point(323, 159);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(79, 20);
             this.label7.TabIndex = 33;
@@ -167,13 +167,14 @@
             this.BtnImprFactLavadero.TabIndex = 5;
             this.BtnImprFactLavadero.Text = "Imprimir";
             this.BtnImprFactLavadero.UseVisualStyleBackColor = true;
+            this.BtnImprFactLavadero.Click += new System.EventHandler(this.BtnImprFactLavadero_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.White;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label6.Location = new System.Drawing.Point(325, 112);
+            this.label6.Location = new System.Drawing.Point(323, 112);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 20);
             this.label6.TabIndex = 31;
@@ -195,7 +196,7 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.White;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label5.Location = new System.Drawing.Point(325, 65);
+            this.label5.Location = new System.Drawing.Point(323, 65);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 20);
             this.label5.TabIndex = 29;

@@ -530,7 +530,7 @@
         <Top>2.29157cm</Top>
         <Left>0.31193cm</Left>
         <Height>1.47851cm</Height>
-        <Width>26.30515cm</Width>
+        <Width>26.30516cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -560,7 +560,7 @@
                   <Value>=Globals!ExecutionTime</Value>
                   <Style>
                     <FontSize>11pt</FontSize>
-                    <Format>dd-mm-yyyy</Format>
+                    <Format>dd-MM-yyyy</Format>
                   </Style>
                 </TextRun>
               </TextRuns>

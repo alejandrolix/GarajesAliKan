@@ -35,6 +35,12 @@ namespace GarajesAliKan.Forms
         {
             FrmFactGarajes frmFactGarajes = new FrmFactGarajes(DtFechaInicio.Value, DtFechaFin.Value);
             frmFactGarajes.ShowDialog();
-        }        
+        }
+
+        private void BtnImprFactLavadero_Click(object sender, EventArgs e)
+        {
+            FrmListadosLavadero frmListadosLavadero = new FrmListadosLavadero();
+            frmListadosLavadero.ShowDialog();
+        }
     }
 }

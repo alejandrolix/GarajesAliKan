@@ -2,18 +2,18 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="DtFacturasGarajes">
+    <DataSource Name="DtFacturasLavadero">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>54ea3f2d-fb94-4336-9535-a69ed69431f3</rd:DataSourceID>
+      <rd:DataSourceID>f32da648-629a-432a-955e-907864865a11</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DtFacturasGarajes">
+    <DataSet Name="DtFacturasLavadero">
       <Query>
-        <DataSourceName>DtFacturasGarajes</DataSourceName>
+        <DataSourceName>DtFacturasLavadero</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -29,16 +29,12 @@
           <DataField>cliente</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="nif">
-          <DataField>nif</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="direccion">
           <DataField>direccion</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="garaje">
-          <DataField>garaje</DataField>
+        <Field Name="nif">
+          <DataField>nif</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="baseImponible">
@@ -55,8 +51,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>DtFacturasGarajes</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\Alejandro\Desktop\GarajesAliKan\GarajesAliKan\DataSets\DtFacturasGarajes.xsd</rd:SchemaPath>
+        <rd:DataSetName>DtFacturasLavadero</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\Alejandro\Desktop\GarajesAliKan\GarajesAliKan\DataSets\DtFacturasLavadero.xsd</rd:SchemaPath>
         <rd:TableName>facturas</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -77,7 +73,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>Facturas Garajes</Value>
+                        <Value>Facturas Lavadero</Value>
                         <Style>
                           <FontSize>16pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -91,9 +87,9 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox1</rd:DefaultName>
                 <Top>0.34646cm</Top>
-                <Left>11.36084cm</Left>
+                <Left>10.91105cm</Left>
                 <Height>0.72228cm</Height>
-                <Width>4.95375cm</Width>
+                <Width>5.85333cm</Width>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -119,28 +115,25 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.02375cm</Width>
+                  <Width>2.57479cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.36771cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.39127cm</Width>
+                  <Width>5.84106cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.73813cm</Width>
+                  <Width>4.64966cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.87989cm</Width>
+                  <Width>3.08072cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.0584cm</Width>
+                  <Width>2.84396cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.71167cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.07667cm</Width>
+                  <Width>2.23542cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.26188cm</Width>
@@ -264,7 +257,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>N.I.F.</Value>
+                                  <Value>Dirección</Value>
                                   <Style>
                                     <FontSize>14pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -299,7 +292,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Dirección</Value>
+                                  <Value>N.I.F.</Value>
                                   <Style>
                                     <FontSize>14pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -312,41 +305,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox11</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>White</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox13">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Garaje</Value>
-                                  <Style>
-                                    <FontSize>14pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox13</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>White</Color>
@@ -573,6 +531,39 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="direccion1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!direccion.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>direccion1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>White</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="nif">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -590,72 +581,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>nif</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>White</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="direccion">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!direccion.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>direccion</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>White</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="garaje">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!garaje.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>garaje</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>White</Color>
@@ -776,7 +701,6 @@
                             <rd:FormatSymbolCulture>ast-ES</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -785,7 +709,6 @@
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
-                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -806,11 +729,11 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>DtFacturasGarajes</DataSetName>
+            <DataSetName>DtFacturasLavadero</DataSetName>
             <Top>2.51037cm</Top>
-            <Left>0.08303cm</Left>
+            <Left>0.91011cm</Left>
             <Height>1.33229cm</Height>
-            <Width>27.50937cm</Width>
+            <Width>25.85521cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -836,28 +759,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Del </Value>
-                      <Style>
-                        <FontSize>11pt</FontSize>
-                        <Format>dd-mm-yyyy</Format>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!desde.Value</Value>
-                      <Style>
-                        <FontSize>11pt</FontSize>
-                        <Format>dd-MM-yyyy</Format>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value> al </Value>
-                      <Style>
-                        <FontSize>11pt</FontSize>
-                        <Format>dd-mm-yyyy</Format>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!hasta.Value</Value>
+                      <Value>=Globals!ExecutionTime</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                         <Format>dd-MM-yyyy</Format>
@@ -872,7 +774,7 @@
               <rd:DefaultName>ExecutionTime</rd:DefaultName>
               <Top>0.07056cm</Top>
               <Height>0.6cm</Height>
-              <Width>6.97255cm</Width>
+              <Width>4.85588cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -953,32 +855,10 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParameters>
-    <ReportParameter Name="desde">
-      <DataType>DateTime</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="hasta">
-      <DataType>DateTime</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
       <NumberOfRows>2</NumberOfRows>
-      <CellDefinitions>
-        <CellDefinition>
-          <ColumnIndex>0</ColumnIndex>
-          <RowIndex>0</RowIndex>
-          <ParameterName>desde</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>0</RowIndex>
-          <ParameterName>hasta</ParameterName>
-        </CellDefinition>
-      </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
