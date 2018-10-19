@@ -159,11 +159,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtFacturasLavadero.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSets\DtFacturasRecibidas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DtFacturasRecibidas.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FacturasEInformes\FrmFactGarajes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FacturasEInformes\FrmFactGarajes.Designer.cs">
       <DependentUpon>FrmFactGarajes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FacturasEInformes\FrmFacturasRecibidas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FacturasEInformes\FrmFacturasRecibidas.Designer.cs">
+      <DependentUpon>FrmFacturasRecibidas.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FacturasEInformes\FrmInfFactGaraje.cs">
       <SubType>Form</SubType>
@@ -244,6 +255,9 @@
     <EmbeddedResource Include="Forms\FacturasEInformes\FrmFactGarajes.resx">
       <DependentUpon>FrmFactGarajes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FacturasEInformes\FrmFacturasRecibidas.resx">
+      <DependentUpon>FrmFacturasRecibidas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FacturasEInformes\FrmInfFactGaraje.resx">
       <DependentUpon>FrmInfFactGaraje.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,6 +295,7 @@
       <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes\FacturaLavadero.rdlc" />
+    <EmbeddedResource Include="Informes\FacturasRecibidas.rdlc" />
     <EmbeddedResource Include="Informes\FacturasLavadero.rdlc" />
     <EmbeddedResource Include="Informes\FacturasGarajes.rdlc" />
     <EmbeddedResource Include="Informes\InfClientesGarajes.rdlc" />
@@ -327,6 +342,17 @@
     </None>
     <None Include="DataSets\DtFacturasLavadero.xss">
       <DependentUpon>DtFacturasLavadero.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DtFacturasRecibidas.xsc">
+      <DependentUpon>DtFacturasRecibidas.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DtFacturasRecibidas.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtFacturasRecibidas.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DtFacturasRecibidas.xss">
+      <DependentUpon>DtFacturasRecibidas.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

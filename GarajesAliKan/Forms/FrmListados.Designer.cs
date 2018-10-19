@@ -146,6 +146,7 @@
             this.BtnImprFactRecibida.TabIndex = 6;
             this.BtnImprFactRecibida.Text = "Imprimir";
             this.BtnImprFactRecibida.UseVisualStyleBackColor = true;
+            this.BtnImprFactRecibida.Click += new System.EventHandler(this.BtnImprFactRecibida_Click);
             // 
             // label7
             // 

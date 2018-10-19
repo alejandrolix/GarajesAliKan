@@ -403,6 +403,43 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todas las facturas recibidas para realizar un informe.
+        /// </summary>
+        /// <returns>Todas las facturas recibidas</returns>
+        public static List<Factura> ObtenerFacturasRecibidasInforme()
+        {
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, prov.empresa, prov.cif, gaj.nombre, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN proveedores prov ON prov.id = fact.idProveedor
+                                                             JOIN garajes gaj ON gaj.id = fact.idGaraje
+                                                      WHERE fact.esFacturaRecibida IS TRUE
+                                                      ORDER BY fact.id;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Factura> listaFacturas = new List<Factura>();
+            while (cursor.Read())
+            {
+                Factura factura = new Factura();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Proveedor = new Proveedor();
+                factura.Proveedor.Empresa = cursor.GetString("empresa");
+                factura.Proveedor.Cif = cursor.GetString("cif");
+                factura.Garaje = new Garaje();
+                factura.Garaje.Nombre = cursor.GetString("nombre");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                listaFacturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return listaFacturas;
+        }
+
+        /// <summary>
         /// Elimina una factura.
         /// </summary>        
         /// <returns>La factura se ha eliminado.</returns>

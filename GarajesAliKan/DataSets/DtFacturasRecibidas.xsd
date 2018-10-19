@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DtFacturasRecibidas" targetNamespace="http://tempuri.org/DtFacturasRecibidas.xsd" xmlns:mstns="http://tempuri.org/DtFacturasRecibidas.xsd" xmlns="http://tempuri.org/DtFacturasRecibidas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DtFacturasRecibidas" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DtFacturasRecibidas" msprop:Generator_UserDSName="DtFacturasRecibidas">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="facturas" msprop:Generator_TableClassName="facturasDataTable" msprop:Generator_TableVarName="tablefacturas" msprop:Generator_TablePropName="facturas" msprop:Generator_RowDeletingName="facturasRowDeleting" msprop:Generator_RowChangingName="facturasRowChanging" msprop:Generator_RowEvHandlerName="facturasRowChangeEventHandler" msprop:Generator_RowDeletedName="facturasRowDeleted" msprop:Generator_UserTableName="facturas" msprop:Generator_RowChangedName="facturasRowChanged" msprop:Generator_RowEvArgName="facturasRowChangeEvent" msprop:Generator_RowClassName="facturasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="numFactura" msprop:Generator_ColumnVarNameInTable="columnnumFactura" msprop:Generator_ColumnPropNameInRow="numFactura" msprop:Generator_ColumnPropNameInTable="numFacturaColumn" msprop:Generator_UserColumnName="numFactura" type="xs:int" minOccurs="0" />
+              <xs:element name="fecha" msprop:Generator_ColumnVarNameInTable="columnfecha" msprop:Generator_ColumnPropNameInRow="fecha" msprop:Generator_ColumnPropNameInTable="fechaColumn" msprop:Generator_UserColumnName="fecha" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="empresa" msprop:Generator_ColumnVarNameInTable="columnempresa" msprop:Generator_ColumnPropNameInRow="empresa" msprop:Generator_ColumnPropNameInTable="empresaColumn" msprop:Generator_UserColumnName="empresa" type="xs:string" minOccurs="0" />
+              <xs:element name="cif" msprop:Generator_ColumnVarNameInTable="columncif" msprop:Generator_ColumnPropNameInRow="cif" msprop:Generator_ColumnPropNameInTable="cifColumn" msprop:Generator_UserColumnName="cif" type="xs:string" minOccurs="0" />
+              <xs:element name="garaje" msprop:Generator_ColumnVarNameInTable="columngaraje" msprop:Generator_ColumnPropNameInRow="garaje" msprop:Generator_ColumnPropNameInTable="garajeColumn" msprop:Generator_UserColumnName="garaje" type="xs:string" minOccurs="0" />
+              <xs:element name="baseImponible" msprop:Generator_ColumnVarNameInTable="columnbaseImponible" msprop:Generator_ColumnPropNameInRow="baseImponible" msprop:Generator_ColumnPropNameInTable="baseImponibleColumn" msprop:Generator_UserColumnName="baseImponible" type="xs:decimal" minOccurs="0" />
+              <xs:element name="iva" msprop:Generator_ColumnVarNameInTable="columniva" msprop:Generator_ColumnPropNameInRow="iva" msprop:Generator_ColumnPropNameInTable="ivaColumn" msprop:Generator_UserColumnName="iva" type="xs:decimal" minOccurs="0" />
+              <xs:element name="total" msprop:Generator_ColumnVarNameInTable="columntotal" msprop:Generator_ColumnPropNameInRow="total" msprop:Generator_ColumnPropNameInTable="totalColumn" msprop:Generator_UserColumnName="total" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

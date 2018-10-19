@@ -42,5 +42,11 @@ namespace GarajesAliKan.Forms
             FrmListadosLavadero frmListadosLavadero = new FrmListadosLavadero();
             frmListadosLavadero.ShowDialog();
         }
+
+        private void BtnImprFactRecibida_Click(object sender, EventArgs e)
+        {
+            FrmFacturasRecibidas frmFacturasRecibidas = new FrmFacturasRecibidas();
+            frmFacturasRecibidas.ShowDialog();
+        }
     }
 }
