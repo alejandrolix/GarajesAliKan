@@ -352,7 +352,7 @@ namespace GarajesAliKan.Forms
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaLavaderoPorFecha((DateTime)CbFechas.SelectedItem);
+            Factura factura = Factura.ObtenerFacturaRecibidaPorFecha((DateTime)CbFechas.SelectedItem);
             RellenarDatosFactura(factura);
         }
 

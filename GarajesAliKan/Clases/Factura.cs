@@ -328,9 +328,10 @@ namespace GarajesAliKan.Clases
         public static Factura ObtenerFacturaRecibidaPorFecha(DateTime fecha)
         {
             Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, fact.nombreEmpresa, fact.baseImponible, fact.iva, fact.total
+            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, prov.empresa, fact.baseImponible, fact.iva, fact.total
                                                          FROM   facturas fact
                                                                 JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                                JOIN proveedores prov ON prov.id = fact.idProveedor
                                                          WHERE  fact.fecha = @0 AND fact.esFacturaRecibida IS TRUE;", fecha);
             conexion.CloseSharedConnection();
             return factura;

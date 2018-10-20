@@ -27,26 +27,9 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-        {
-            this.CrystalReportViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+        {            
             this.ReportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.SuspendLayout();
-            // 
-            // CrystalReportViewer
-            // 
-            this.CrystalReportViewer.ActiveViewIndex = -1;
-            this.CrystalReportViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CrystalReportViewer.Cursor = System.Windows.Forms.Cursors.Default;
-            this.CrystalReportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CrystalReportViewer.Location = new System.Drawing.Point(0, 0);
-            this.CrystalReportViewer.Name = "CrystalReportViewer";
-            this.CrystalReportViewer.ShowGroupTreeButton = false;
-            this.CrystalReportViewer.ShowLogo = false;
-            this.CrystalReportViewer.ShowParameterPanelButton = false;
-            this.CrystalReportViewer.ShowRefreshButton = false;
-            this.CrystalReportViewer.Size = new System.Drawing.Size(800, 450);
-            this.CrystalReportViewer.TabIndex = 0;
-            this.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
+            this.SuspendLayout();            
             // 
             // ReportViewer
             // 
@@ -63,8 +46,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.ReportViewer);
-            this.Controls.Add(this.CrystalReportViewer);
+            this.Controls.Add(this.ReportViewer);            
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FrmFactGarajes";
@@ -77,8 +59,7 @@
         }
 
         #endregion
-
-        private CrystalDecisions.Windows.Forms.CrystalReportViewer CrystalReportViewer;
+        
         private Microsoft.Reporting.WinForms.ReportViewer ReportViewer;
     }
 }

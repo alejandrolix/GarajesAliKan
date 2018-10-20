@@ -1,4 +1,5 @@
 ﻿using GarajesAliKan.Forms;
+using GarajesAliKan.Clases;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,18 @@ namespace GarajesAliKan
         public FrmPrincipal()
         {
             InitializeComponent();
-        }        
+        }
+
+        private void FrmPrincipal_Load(object sender, EventArgs e)
+        {
+            DateTime fecha = Foo.ObtenerFechaActual();
+
+            if ((DateTime.Now.Date - fecha.Date).Days == 14)
+            {
+                Foo.InsertarFechaHoraBackup();
+                Foo.GuardarFechaActual();
+            }
+        }
 
         private void ClientesGarajeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -58,6 +70,6 @@ namespace GarajesAliKan
         {
             FrmListados frmListados = new FrmListados();
             frmListados.ShowDialog();
-        }
+        }        
     }
 }

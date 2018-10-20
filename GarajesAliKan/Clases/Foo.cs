@@ -49,5 +49,49 @@ namespace GarajesAliKan.Clases
 
             return datosConexion;
         }
+
+        /// <summary>
+        /// Guarda la fecha actual para realizar el backup de la base de datos.
+        /// </summary>
+        public static void GuardarFechaActual()
+        {
+            StreamWriter escribir = new StreamWriter(@"..\..\..\FechaBackupBD.txt", false, Encoding.UTF8);
+            escribir.WriteLine(DateTime.Now.ToString("dd-MM-yyyy"));
+
+            escribir.Close();
+        }
+
+        /// <summary>
+        /// Lee la fecha guardada para compararla con la actual.
+        /// </summary>
+        /// <returns>La fecha guardada</returns>
+        public static DateTime ObtenerFechaActual()
+        {
+            StreamReader leer = new StreamReader(@"..\..\..\FechaBackupBD.txt", Encoding.UTF8);
+            DateTime fecha = DateTime.Parse(leer.ReadLine());
+
+            leer.Close();
+            return fecha;
+        }
+
+        /// <summary>
+        /// Inserta la fecha y hora de la realización del backup de la base de datos.
+        /// </summary>
+        public static void InsertarFechaHoraBackup()
+        {
+            MySqlConnection conexion = ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand("INSERT INTO backupsBD (fechaHoraCopia) VALUES (@fecha);", conexion);
+
+            comando.Parameters.AddWithValue("@fecha", DateTime.Now);
+            try
+            {
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            conexion.Close();
+        }
     }
 }
