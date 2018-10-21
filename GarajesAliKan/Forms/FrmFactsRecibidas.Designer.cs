@@ -45,6 +45,7 @@
             this.LFecha = new System.Windows.Forms.Label();
             this.LNumFactura = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CbEmpresas = new System.Windows.Forms.ComboBox();
             this.BtnCancelar = new System.Windows.Forms.Button();
             this.BtnGuardar = new System.Windows.Forms.Button();
             this.PBotonesControl = new System.Windows.Forms.Panel();
@@ -69,7 +70,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.CbFechas = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.CbEmpresas = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
@@ -110,8 +110,8 @@
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(48, 24);
-            this.bindingNavigatorCountItem.Text = "de {0}";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 24);
+            this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Número total de elementos";
             // 
             // bindingNavigatorMoveFirstItem
@@ -242,6 +242,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(861, 304);
             this.panel1.TabIndex = 7;
+            // 
+            // CbEmpresas
+            // 
+            this.CbEmpresas.Enabled = false;
+            this.CbEmpresas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.CbEmpresas.FormattingEnabled = true;
+            this.CbEmpresas.Location = new System.Drawing.Point(197, 137);
+            this.CbEmpresas.Name = "CbEmpresas";
+            this.CbEmpresas.Size = new System.Drawing.Size(201, 26);
+            this.CbEmpresas.TabIndex = 34;
+            this.CbEmpresas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbEmpresas_KeyPress_1);
             // 
             // BtnCancelar
             // 
@@ -503,17 +514,6 @@
             this.label5.TabIndex = 22;
             this.label5.Text = "Fecha: ";
             // 
-            // CbEmpresas
-            // 
-            this.CbEmpresas.Enabled = false;
-            this.CbEmpresas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.CbEmpresas.FormattingEnabled = true;
-            this.CbEmpresas.Location = new System.Drawing.Point(197, 137);
-            this.CbEmpresas.Name = "CbEmpresas";
-            this.CbEmpresas.Size = new System.Drawing.Size(201, 26);
-            this.CbEmpresas.TabIndex = 34;
-            this.CbEmpresas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbEmpresas_KeyPress_1);
-            // 
             // FrmFactsRecibidas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -523,6 +523,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BindingNavigator);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FrmFactsRecibidas";
             this.ShowInTaskbar = false;
