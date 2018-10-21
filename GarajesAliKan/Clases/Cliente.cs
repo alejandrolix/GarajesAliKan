@@ -193,12 +193,19 @@ namespace GarajesAliKan.Clases
         /// <summary>
         /// Obtiene el último Id insertado.
         /// </summary>
-        /// <param name="conexion">La conexión con la base de datos. Opcional.</param>
+        /// <param name="comando">Un objeto de la clase MySqlCommand para obtener el último id.</param>
         /// <returns>El último Id insertado.</returns>
-        public static int ObtenerUltimoId(Database conexion = null)
+        private int ObtenerUltimoId(MySqlCommand comando)
         {
-            int ultimoId = conexion.ExecuteScalar<int>("SELECT MAX(id) FROM clientes;");
-            conexion.CloseSharedConnection();
+            comando.CommandText = "SELECT MAX(id) FROM clientes;";
+            int ultimoId = 0;
+
+            try
+            {
+                ultimoId = Convert.ToInt32(comando.ExecuteScalar());
+            }
+            catch (Exception)
+            { }            
 
             return ultimoId;
         }
@@ -255,7 +262,7 @@ namespace GarajesAliKan.Clases
                 numFila = comando.ExecuteNonQuery();
                 if (EsClienteGaraje)
                 {
-                    Id = ObtenerUltimoId(Foo.ConexionABd());
+                    Id = ObtenerUltimoId(comando);
                 }
             }
             catch (Exception)
