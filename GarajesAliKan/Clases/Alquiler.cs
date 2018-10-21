@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using NPoco;
 
 namespace GarajesAliKan.Clases
-{    
+{
     class Alquiler
-    {        
-        public int IdTipoAlquiler { get; set; }
+    {
         public int IdCliente { get; set; }
-        public int IdVehiculo { get; set; }                
+        public int IdVehiculo { get; set; }
+        public int IdTipoAlquiler { get; set; }
         public decimal BaseImponible { get; set; }
         public decimal Iva { get; set; }
         public decimal Total { get; set; }
         public string Plaza { get; set; }
-        public int Llave { get; set; }        
+        public int Llave { get; set; }
         public string Concepto { get; set; }
 
         /// <summary>
@@ -26,12 +25,24 @@ namespace GarajesAliKan.Clases
         /// <returns>Los conceptos.</returns>
         public static List<Alquiler> ObtenerConceptos()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Alquiler> listaTiposAlquileres = conexion.Fetch<Alquiler>("SELECT id AS idTipoAlquiler, concepto FROM tiposAlquileres;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id, concepto
+                                                      FROM   tiposAlquileres
+                                                      ORDER BY concepto;", conexion);
 
-            return listaTiposAlquileres;
-        }        
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Alquiler> listaConceptos = new List<Alquiler>();
+
+            while (cursor.Read())
+            {
+                Alquiler alquiler = new Alquiler(cursor.GetInt32("id"), cursor.GetString("concepto"));
+                listaConceptos.Add(alquiler);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return listaConceptos;
+        }
 
         /// <summary>
         /// Inserta los datos del alquiler que tiene un cliente.
@@ -41,19 +52,19 @@ namespace GarajesAliKan.Clases
         public bool Insertar(int idGaraje)
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand("INSERT INTO alquilerPorCliente VALUES (@idCliente", conexion);            
+            MySqlCommand comando = new MySqlCommand("INSERT INTO alquilerPorCliente VALUES (@idCliente", conexion);
 
-            if (IdVehiculo == 0)            
-                comando.CommandText += ", NULL, ";            
-            else            
-                comando.CommandText += ", @idVehiculo, ";                            
+            if (IdVehiculo == 0)
+                comando.CommandText += ", NULL, ";
+            else
+                comando.CommandText += ", @idVehiculo, ";
 
-            comando.CommandText += "@idTipoAlquiler, @idGaraje, @baseImponible, @iva, @total, @plaza";            
+            comando.CommandText += "@idTipoAlquiler, @idGaraje, @baseImponible, @iva, @total, @plaza";
 
-            if (Llave == 0)            
-                comando.CommandText += ", NULL);";            
-            else            
-                comando.CommandText += ", @llave);";                            
+            if (Llave == 0)
+                comando.CommandText += ", NULL);";
+            else
+                comando.CommandText += ", @llave);";
 
             comando.Parameters.AddWithValue("@idCliente", IdCliente);
             comando.Parameters.AddWithValue("@idVehiculo", IdVehiculo);
@@ -65,16 +76,11 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@plaza", Plaza);
             comando.Parameters.AddWithValue("@llave", Llave);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();                
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
             conexion.Close();
+
             return numFila >= 1;
-        }                
+        }
 
         /// <summary>
         /// Modifica los datos del alquiler del cliente.
@@ -85,84 +91,46 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
             MySqlCommand comando = new MySqlCommand(@"UPDATE alquilerPorCliente SET baseImponible = @baseImponible, iva = @iva, total = @total
-                                                      WHERE  idCliente = @idCliente;", conexion);                        
-            
+                                                      WHERE  idCliente = @idCliente;", conexion);
+
             comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
             comando.Parameters.AddWithValue("@iva", Iva);
             comando.Parameters.AddWithValue("@total", Total);
             comando.Parameters.AddWithValue("@idCliente", idCliente);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
             conexion.Close();
+
             return numFila >= 1;
         }
 
         /// <summary>
-        /// Elimina la plaza de garaje que tiene un cliente a partir de su Id.
+        /// Elimina el alquiler que tiene un cliente a partir de su Id.
         /// </summary>
         /// <param name="idCliente">El Id de un cliente.</param>
-        /// <returns>La plaza de garaje se ha eliminado.</returns>
-        public bool EliminarPlzGarajePorIdCliente(int idCliente)
+        /// <returns>El alquiler del cliente se ha eliminado.</returns>
+        public bool EliminarPorIdCliente(int idCliente)
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"DELETE FROM alquilerPorCliente WHERE idCliente = @idCliente;", conexion);
-            
-            comando.Parameters.AddWithValue("@idCliente", idCliente);
-
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
-            conexion.Close();
-            return numFila >= 1;
-        }
-
-        public bool EliminarPlzTrasteroPorIdCliente(int idCliente)
-        {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"DELETE FROM alquilerPorCliente WHERE idCliente = @idCliente;", conexion);
+            MySqlCommand comando = new MySqlCommand(@"DELETE FROM alquilerPorCliente
+                                                      WHERE idCliente = @idCliente;", conexion);
 
             comando.Parameters.AddWithValue("@idCliente", idCliente);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
             conexion.Close();
+
             return numFila >= 1;
         }
 
-        public Alquiler(decimal baseImponible, decimal iva, decimal total)              // Para crear un alquiler a la hora de modificar los datos de un cliente.
-        {            
-            BaseImponible = baseImponible;
-            Iva = iva;
-            Total = total;
-        }                
-
-        public Alquiler(int idTipoAlquiler, decimal baseImponible, decimal iva, decimal total, string plaza, int llave)             // Para crear un alquiler a la hora de crear un cliente.
+        public Alquiler(int idTipoAlquiler, string concepto)
         {
             IdTipoAlquiler = idTipoAlquiler;
-            BaseImponible = baseImponible;
-            Iva = iva;
-            Total = total;
-            Plaza = plaza;
-            Llave = llave;
+            Concepto = concepto;
         }
 
         public Alquiler()
         {
-        }        
+        }
     }
 }

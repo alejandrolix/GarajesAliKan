@@ -8,9 +8,7 @@ using System.Data;
 namespace GarajesAliKan.Forms
 {
     public partial class FrmClientesGaraje : Form
-    {
-        private List<Cliente> ListaClientes;
-
+    {        
         public FrmClientesGaraje()
         {
             InitializeComponent();
@@ -21,9 +19,8 @@ namespace GarajesAliKan.Forms
             CargarDatosComboBox(true, true);
             if (Cliente.HayClientesGarajes())
             {
-                ListaClientes = Cliente.ObtenerClientesGarajes();
-                CargarClientesAlDataTable();
-                RellenarDatosCliente(ListaClientes[0]);
+                BindingSource.DataSource = Cliente.ObtenerClientesGarajes();                
+                RellenarDatosCliente((Cliente)BindingSource.Current);
             }
             else
             {
@@ -65,47 +62,15 @@ namespace GarajesAliKan.Forms
             CbNifs.ValueMember = "Id";
         }
 
-        /// <summary>
-        /// Carga los datos de los clientes en un DataTable.
-        /// </summary>        
-        private void CargarClientesAlDataTable()
-        {
-            DataTable dtClientes = new DataTable("clientes");
-            dtClientes.Columns.Add("id", typeof(int));
-            dtClientes.Columns.Add("nombre", typeof(string));
-            dtClientes.Columns.Add("apellidos", typeof(string));
-            dtClientes.Columns.Add("nif", typeof(string));
-            dtClientes.Columns.Add("direccion", typeof(string));
-            dtClientes.Columns.Add("telefono", typeof(string));
-            dtClientes.Columns.Add("nombreGaraje", typeof(string));
-            dtClientes.Columns.Add("llave", typeof(int));
-            dtClientes.Columns.Add("matricula", typeof(string));
-            dtClientes.Columns.Add("marca", typeof(string));
-            dtClientes.Columns.Add("modelo", typeof(string));
-            dtClientes.Columns.Add("plaza", typeof(string));
-            dtClientes.Columns.Add("concepto", typeof(string));
-            dtClientes.Columns.Add("baseImponible", typeof(string));
-            dtClientes.Columns.Add("iva", typeof(string));
-            dtClientes.Columns.Add("total", typeof(string));
-            dtClientes.Columns.Add("observaciones", typeof(string));
-
-            foreach (Cliente cliente in ListaClientes)
-            {
-                dtClientes.Rows.Add(cliente.Id, cliente.Nombre, cliente.Apellidos, cliente.Nif, cliente.Direccion, cliente.Telefono,
-                    cliente.Garaje.Nombre, cliente.Alquiler.Llave, cliente.Vehiculo.Matricula, cliente.Vehiculo.Marca, cliente.Vehiculo.Modelo, cliente.Alquiler.Plaza,
-                    cliente.Alquiler.Concepto, cliente.Alquiler.BaseImponible.ToString(), cliente.Alquiler.Iva.ToString(), cliente.Alquiler.Total.ToString(), cliente.Observaciones);
-            }
-            BindingSource.DataSource = dtClientes;
-        }
-
         private void BtnAddCliente_Click(object sender, EventArgs e)
         {
             BtnAddCliente.Tag = 1;
             HabilitarControles(true);
             TxtNombre.Focus();
+            Cliente cliente = (Cliente)BindingSource.Current;
 
-            if (ListaClientes != null)
-                if (ListaClientes[0].Id != 0)
+            if (cliente != null)
+                if (cliente.Id != 0)
                     LimpiarCampos();
         }
 
@@ -172,20 +137,30 @@ namespace GarajesAliKan.Forms
             if (ComprobarDatosIntroducidos())
             {
                 Garaje garaje = new Garaje(((Garaje)CbGarajes.SelectedItem).Id, ((Garaje)CbGarajes.SelectedItem).Nombre);
-                Alquiler alquiler = null;
-                Vehiculo vehiculo = null;
-                Cliente cliente = null;
+                Alquiler alquiler = new Alquiler();
+                alquiler.IdTipoAlquiler = ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler;
+                alquiler.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
+                alquiler.Iva = decimal.Parse(TxtIva.Text);
+                alquiler.Total = decimal.Parse(TxtTotal.Text);
+                alquiler.Plaza = TxtPlaza.Text;
+                alquiler.Llave = int.Parse(TxtLlave.Text);
 
-                if (TxtMarca.Text.Length == 0 && TxtModelo.Text.Length == 0 && TxtMatricula.Text.Length == 0 && TxtLlave.Text.Length == 0)      // Si no hay datos del vehículo, alquila un trastero.                       
+                Vehiculo vehiculo = null;
+                Cliente cliente = new Cliente();
+                cliente.Nombre = TxtNombre.Text;
+                cliente.Apellidos = TxtApellidos.Text;
+                cliente.Nif = TxtNif.Text;
+                cliente.Direccion = TxtDireccion.Text;
+                cliente.Telefono = TxtTelefono.Text;
+                cliente.Observaciones = TxtObservaciones.Text;
+                cliente.Garaje = garaje;
+                cliente.EsClienteGaraje = true;
+                cliente.Alquiler = alquiler;
+
+                if (TxtMarca.Text.Length != 0 && TxtModelo.Text.Length != 0 && TxtMatricula.Text.Length != 0 && TxtLlave.Text.Length != 0)      // Alquila una plaza de garaje.                       
                 {
-                    alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
-                    cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, null, alquiler);
-                }
-                else
-                {
-                    alquiler = new Alquiler(((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler, decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text), TxtPlaza.Text, int.Parse(TxtLlave.Text));
-                    vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text);
-                    cliente = new Cliente(TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, garaje, true, vehiculo, alquiler);
+                    vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text);                    
+                    cliente.Vehiculo = vehiculo;                    
                 }
                 HabilitarControles(false);
 
@@ -199,15 +174,13 @@ namespace GarajesAliKan.Forms
                             {
                                 alquiler.IdCliente = cliente.Id;
                                 alquiler.IdVehiculo = vehiculo.Id;
-
                                 if (alquiler.Insertar(garaje.Id))
                                 {
                                     MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    ListaClientes = Cliente.ObtenerClientesGarajes();
-                                    CargarClientesAlDataTable();
+                                    BindingSource.DataSource = Cliente.ObtenerClientesGarajes();                                    
                                     CargarDatosComboBox(false, true);
 
-                                    int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
+                                    int pos = ((List<Cliente>)BindingSource.DataSource).IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
                                     BindingSource.Position = pos;
 
                                     if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
@@ -223,15 +196,13 @@ namespace GarajesAliKan.Forms
                         else
                         {
                             alquiler.IdCliente = cliente.Id;
-
                             if (alquiler.Insertar(garaje.Id))
                             {
                                 MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                ListaClientes = Cliente.ObtenerClientesGarajes();
-                                CargarClientesAlDataTable();
+                                BindingSource.DataSource = Cliente.ObtenerClientesGarajes();                                
                                 CargarDatosComboBox(false, true);
 
-                                int pos = ListaClientes.IndexOf(new Cliente(cliente.Id));
+                                int pos = ((List<Cliente>)BindingSource.DataSource).IndexOf(new Cliente(cliente.Id));
                                 BindingSource.Position = pos;
 
                                 if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
@@ -247,9 +218,7 @@ namespace GarajesAliKan.Forms
                 }
                 else       // Modificamos los datos del cliente.       
                 {
-                    alquiler = new Alquiler(decimal.Parse(TxtBaseImponible.Text), decimal.Parse(TxtIva.Text), decimal.Parse(TxtTotal.Text));
-                    cliente = new Cliente(ListaClientes[BindingSource.Position].Id, TxtNombre.Text, TxtApellidos.Text, TxtNif.Text, TxtDireccion.Text, TxtTelefono.Text, TxtObservaciones.Text, alquiler);
-
+                    cliente.Id = ((Cliente)BindingSource.Current).Id;
                     if (cliente.Modificar())
                     {
                         if (alquiler.Modificar(cliente.Id))
@@ -418,7 +387,7 @@ namespace GarajesAliKan.Forms
         {
             HabilitarControles(false);
             LimpiarCampos();
-            RellenarDatosCliente(ListaClientes[BindingSource.Position]);
+            RellenarDatosCliente((Cliente)BindingSource.Current);
             RestaurarTagsBotones();
         }
 
@@ -447,21 +416,18 @@ namespace GarajesAliKan.Forms
         {
             if (MessageBox.Show("¿Está seguro de que desea eliminar el cliente?", "¿Eliminar Cliente?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Cliente cliente = ListaClientes[BindingSource.Position];
+                Cliente cliente = (Cliente)BindingSource.Current;
                 if (CbConceptos.SelectedIndex == 0)         // Eliminamos la plaza de garaje.
-                {
-                    int idVehiculoCliente = cliente.Vehiculo.ObtenerIdPorIdCliente(cliente.Id);
-
-                    if (cliente.Alquiler.EliminarPlzGarajePorIdCliente(cliente.Id))
+                {                    
+                    if (cliente.Alquiler.EliminarPorIdCliente(cliente.Id))
                         if (cliente.Vehiculo.Eliminar(cliente.Vehiculo.Id))
                             if (cliente.Eliminar())
                             {
                                 MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                ListaClientes = Cliente.ObtenerClientesGarajes();
-                                HabilitarControles(false);
-                                CargarClientesAlDataTable();
+                                BindingSource.DataSource = Cliente.ObtenerClientesGarajes();
+                                HabilitarControles(false);                                
                                 CargarDatosComboBox(false, true);
-                                BindingSource.Position = ListaClientes.Count - 1;
+                                BindingSource.Position = BindingSource.Count - 1;
                             }
                             else
                                 MessageBox.Show("Ha habido un problema al eliminar el cliente", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -472,15 +438,14 @@ namespace GarajesAliKan.Forms
                 }
                 else      // Eliminamos la plaza de trastero.
                 {
-                    if (cliente.Alquiler.EliminarPlzTrasteroPorIdCliente(cliente.Id))
+                    if (cliente.Alquiler.EliminarPorIdCliente(cliente.Id))
                         if (cliente.Eliminar())
                         {
                             MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            ListaClientes = Cliente.ObtenerClientesGarajes();
-                            HabilitarControles(false);
-                            CargarClientesAlDataTable();
+                            BindingSource.DataSource = Cliente.ObtenerClientesGarajes();
+                            HabilitarControles(false);                            
                             CargarDatosComboBox(false, true);
-                            BindingSource.Position = ListaClientes.Count - 1;
+                            BindingSource.Position = BindingSource.Count - 1;
                         }
                         else
                             MessageBox.Show("Ha habido un problema al eliminar el cliente.", "Cliente no Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -550,22 +515,22 @@ namespace GarajesAliKan.Forms
 
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente(ListaClientes[BindingSource.Position]);
+            RellenarDatosCliente((Cliente)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente(ListaClientes[BindingSource.Position]);
+            RellenarDatosCliente((Cliente)BindingSource.Current);
         }
 
         private void BindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente(ListaClientes[BindingSource.Position]);
+            RellenarDatosCliente((Cliente)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente(ListaClientes[BindingSource.Position]);
+            RellenarDatosCliente((Cliente)BindingSource.Current);
         }
 
         private void TxtNif_KeyPress(object sender, KeyPressEventArgs e)

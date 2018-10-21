@@ -1,16 +1,15 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NPoco;
 
 namespace GarajesAliKan.Clases
 {
     class Plaza
-    {
-        public int IdCliente { get; set; }
-        [Column("plaza")]
+    {        
+        public int IdCliente { get; set; }        
         public string NombrePlaza { get; set; }
 
         /// <summary>
@@ -19,11 +18,29 @@ namespace GarajesAliKan.Clases
         /// <returns>Las plazas de garajes y trasteros de los clientes.</returns>
         public static List<Plaza> ObtenerPlazas()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Plaza> listaPlazas = conexion.Fetch<Plaza>("SELECT idCliente, plaza FROM plazaCliente ORDER BY plaza;");
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT idCliente, plaza
+                                                      FROM   plazaCliente
+                                                      ORDER BY plaza;", conexion);
 
-            conexion.CloseSharedConnection();
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Plaza> listaPlazas = new List<Plaza>();
+
+            while (cursor.Read())
+            {
+                Plaza plaza = new Plaza(cursor.GetInt32("idCliente"), cursor.GetString("plaza"));
+                listaPlazas.Add(plaza);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaPlazas;
+        }
+
+        public Plaza(int idCliente, string nombrePlaza)
+        {
+            IdCliente = idCliente;
+            NombrePlaza = nombrePlaza;
         }
     }
 }

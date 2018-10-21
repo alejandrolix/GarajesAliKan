@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NPoco;
+using MySql.Data.MySqlClient;
 
 namespace GarajesAliKan.Clases
 {    
@@ -15,14 +15,26 @@ namespace GarajesAliKan.Clases
         /// <returns>Los Garajes.</returns>
         public static List<Garaje> ObtenerGarajes()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Garaje> listaNombresGarajes = conexion.Fetch<Garaje>("SELECT id, nombre FROM garajes;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id, nombre
+                                                      FROM   garajes
+                                                      ORDER BY nombre;", conexion);
 
-            return listaNombresGarajes;
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Garaje> listaGarajes = new List<Garaje>();
+
+            while (cursor.Read())
+            {
+                Garaje garaje = new Garaje(cursor.GetInt32("id"), cursor.GetString("nombre"));
+                listaGarajes.Add(garaje);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return listaGarajes;
         }        
 
-        public Garaje(int id, string nombre)            // Para establecer el garaje al que pertenece el cliente a la hora de crear el alquiler.
+        public Garaje(int id, string nombre)
         {
             Id = id;
             Nombre = nombre;

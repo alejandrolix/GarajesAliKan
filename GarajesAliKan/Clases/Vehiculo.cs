@@ -24,19 +24,24 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@marca", Marca);
             comando.Parameters.AddWithValue("@modelo", Modelo);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-
-                comando.CommandText = "SELECT MAX(id) FROM vehiculos;";
-                Id = Convert.ToInt32(comando.ExecuteScalar());                               
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
+            Id = ObtenerUltimoId(comando);
             conexion.Close();
 
             return numFila >= 1;
+        }
+
+        /// <summary>
+        /// Obtiene el último Id insertado.
+        /// </summary>
+        /// <param name="comando">Un objeto de la clase MySqlCommand para obtener el último id.</param>
+        /// <returns>El último Id insertado.</returns>
+        private int ObtenerUltimoId(MySqlCommand comando)
+        {
+            comando.CommandText = "SELECT MAX(id) FROM vehiculos;";
+            int ultimoId = Convert.ToInt32(comando.ExecuteScalar());
+
+            return ultimoId;
         }
 
         /// <summary>
@@ -47,44 +52,15 @@ namespace GarajesAliKan.Clases
         public bool Eliminar(int idVehiculo)
         {
             MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"DELETE FROM vehiculos WHERE id = @id;", conexion);
+            MySqlCommand comando = new MySqlCommand(@"DELETE FROM vehiculos
+                                                      WHERE id = @id;", conexion);
 
-            comando.Parameters.AddWithValue("@id", idVehiculo);            
+            comando.Parameters.AddWithValue("@id", idVehiculo);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();                
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
             conexion.Close();
 
             return numFila >= 1;
-        }
-
-        /// <summary>
-        /// Obtiene el Id de un vehículo a partir del Id de un cliente.
-        /// </summary>
-        /// <param name="idCliente">El Id de un cliente.</param>
-        /// <returns>El Id del vehículo del cliente.</returns>
-        public int ObtenerIdPorIdCliente(int idCliente)
-        {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
-            MySqlCommand comando = new MySqlCommand(@"SELECT idVehiculo FROM alquilerPorCliente WHERE idCliente = @idCliente;", conexion);
-
-            comando.Parameters.AddWithValue("@idCliente", idCliente);            
-
-            int idVehiculo = 0;
-            try
-            {
-                idVehiculo = Convert.ToInt32(comando.ExecuteScalar());
-            }
-            catch (Exception)
-            { }
-            conexion.Close();
-
-            return idVehiculo;
         }
 
         public Vehiculo(string matricula, string marca, string modelo)                  // Para crear un vehículo a la hora de crear un cliente.
@@ -96,7 +72,6 @@ namespace GarajesAliKan.Clases
 
         public Vehiculo()
         {
-
         }
     }
 }
