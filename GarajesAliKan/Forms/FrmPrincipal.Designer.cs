@@ -81,26 +81,26 @@
             this.facturasToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.facturasToolStripMenuItem.Name = "facturasToolStripMenuItem";
             this.facturasToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
-            this.facturasToolStripMenuItem.Text = "Facturas";
+            this.facturasToolStripMenuItem.Text = "Facturas";            
             // 
             // facturasGarajeToolStripMenuItem
             // 
             this.facturasGarajeToolStripMenuItem.Name = "facturasGarajeToolStripMenuItem";
-            this.facturasGarajeToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.facturasGarajeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.facturasGarajeToolStripMenuItem.Text = "Garaje";
             this.facturasGarajeToolStripMenuItem.Click += new System.EventHandler(this.FacturasGarajeToolStripMenuItem_Click);
             // 
             // facturasLavaderoToolStripMenuItem
             // 
             this.facturasLavaderoToolStripMenuItem.Name = "facturasLavaderoToolStripMenuItem";
-            this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.facturasLavaderoToolStripMenuItem.Text = "Lavadero";
             this.facturasLavaderoToolStripMenuItem.Click += new System.EventHandler(this.FacturasLavaderoToolStripMenuItem_Click);
             // 
             // facturasRecibidasToolStripMenuItem
             // 
             this.facturasRecibidasToolStripMenuItem.Name = "facturasRecibidasToolStripMenuItem";
-            this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.facturasRecibidasToolStripMenuItem.Text = "Recibidas";
             this.facturasRecibidasToolStripMenuItem.Click += new System.EventHandler(this.FacturasRecibidasToolStripMenuItem_Click);
             // 

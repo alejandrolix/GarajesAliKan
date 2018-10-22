@@ -22,17 +22,26 @@ namespace GarajesAliKan.Clases
         public decimal Total { get; set; }
         public string Concepto { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            Factura factura = obj as Factura;
+            return factura != null && Id == factura.Id;
+        }
+
         /// <summary>
         /// Comprueba si existen facturas de todos los garajes.
         /// </summary>
         /// <returns>Si existen facturas de todos los garajes.</returns>
         public static bool HayFacturasGarajes()
         {
-            Database conexion = Foo.ConexionABd();
-            int numFacturas = conexion.ExecuteScalar<int>(@"SELECT COUNT(id)
-                                                            FROM   facturas
-                                                            WHERE  esFacturaGaraje IS TRUE;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
+                                                      FROM   facturas
+                                                      WHERE  esFacturaGaraje IS TRUE;", conexion);
+
+            int numFacturas = Convert.ToInt32(comando.ExecuteScalar());
+            conexion.Close();
+
             return numFacturas >= 1;                        
         }
 
@@ -70,17 +79,38 @@ namespace GarajesAliKan.Clases
         /// <returns>Las facturas de los garajes.</returns>
         public static List<Factura> ObtenerFacturasGarajes()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
-    	                                                                   plzCli.plaza, fact.baseImponible, fact.iva, fact.total
-                                                                    FROM   facturas fact
-                                                                           JOIN clientes cli ON fact.idCliente = cli.id
-                                                                           JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
-                                                                           JOIN garajes gaj ON fact.idGaraje = gaj.id
-                                                                           JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
-                                                                    WHERE  fact.esFacturaGaraje IS TRUE
-                                                                    ORDER BY fact.id;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
+    	                                                     plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                             JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                             JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                             JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                      WHERE  fact.esFacturaGaraje IS TRUE
+                                                      ORDER BY fact.id;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Factura> listaFacturas = new List<Factura>();
+
+            while (cursor.Read())
+            {
+                Factura factura = new Factura();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Cliente.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                listaFacturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFacturas;
         }
 
@@ -123,12 +153,22 @@ namespace GarajesAliKan.Clases
         /// <returns>Los Ids de las facturas de todos los garajes.</returns>
         public static List<int> ObtenerIdsFacturasGarajes()
         {
-            Database conexion = Foo.ConexionABd();
-            List<int> listaIds = conexion.Fetch<int>(@"SELECT id
-                                                       FROM   facturas
-                                                       WHERE  esFacturaGaraje IS TRUE
-                                                       ORDER BY id;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id
+                                                      FROM   facturas
+                                                      WHERE  esFacturaGaraje IS TRUE
+                                                      ORDER BY id;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<int> listaIds = new List<int>();
+
+            while (cursor.Read())
+            {                
+                listaIds.Add(cursor.GetInt32("id"));
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaIds;
         }
 
@@ -153,12 +193,22 @@ namespace GarajesAliKan.Clases
         /// <returns>Las fechas de las facturas de todos los garajes.</returns>
         public static List<DateTime> ObtenerFechasGarajes()
         {
-            Database conexion = Foo.ConexionABd();
-            List<DateTime> listaFechas = conexion.Fetch<DateTime>(@"SELECT fecha
-                                                                    FROM   facturas
-                                                                    WHERE  esFacturaGaraje IS TRUE
-                                                                    ORDER BY fecha;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fecha
+                                                      FROM   facturas
+                                                      WHERE  esFacturaGaraje IS TRUE
+                                                      ORDER BY fecha;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<DateTime> listaFechas = new List<DateTime>();
+
+            while (cursor.Read())
+            {                
+                listaFechas.Add(cursor.GetDateTime("fecha"));
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFechas;
         }
 
@@ -642,27 +692,38 @@ namespace GarajesAliKan.Clases
 
             conexion.Close();
             return numFila >= 1;
-        }
+        }        
 
         public Factura(int tipoFactura)
         {
-            if (tipoFactura == 1)           // Es una factura de un garaje.
+            switch (tipoFactura)
             {
-                Cliente = new Cliente();
-                Cliente.Alquiler = new Alquiler();
-                Garaje = new Garaje();
-            }
-            else if (tipoFactura == 2)      // Es una factura del lavadero.            
-                Cliente = new Cliente();
-            else
-            {
-                Garaje = new Garaje();     // Es una factura recibida.
-                Proveedor = new Proveedor();
+                case 1:         // Es una factura de un garaje.
+                    Cliente = new Cliente();
+                    Cliente.Alquiler = new Alquiler();
+                    Garaje = new Garaje();
+                    break;
+
+                case 2:         // Es una factura del lavadero.
+                    Cliente = new Cliente();
+                    break;
+
+                case 3:         // Es una factura recibida.
+                    Garaje = new Garaje();     
+                    Proveedor = new Proveedor();
+                    break;
+
+                default:
+                    Id = tipoFactura;       // Para buscar un cliente a partir de su Id.
+                    break;
             }
         }
 
         public Factura()
         {
+            Cliente = new Cliente();
+            Cliente.Alquiler = new Alquiler();
+            Cliente.Garaje = new Garaje();
         }
     }
 }

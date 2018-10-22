@@ -70,6 +70,6 @@ namespace GarajesAliKan
         {
             FrmListados frmListados = new FrmListados();
             frmListados.ShowDialog();
-        }        
+        }
     }
 }

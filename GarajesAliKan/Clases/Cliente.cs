@@ -291,11 +291,24 @@ namespace GarajesAliKan.Clases
         /// <returns>La lista con los nombres y apellidos de los clientes de los garajes.</returns>
         public static List<Cliente> ObtenerNombresYApellidosGarajes()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT id, CONCAT(nombre, ' ', apellidos) AS nombre
-                                                                    FROM   clientes
-                                                                    WHERE  esClienteGaraje IS TRUE;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id, CONCAT(nombre, ' ', apellidos) AS nombre
+                                                      FROM   clientes
+                                                      WHERE  esClienteGaraje IS TRUE;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Cliente> listaClientes = new List<Cliente>();
+
+            while (cursor.Read())
+            {
+                Cliente cliente = new Cliente();
+                cliente.Id = cursor.GetInt32("id");
+                cliente.Nombre = cursor.GetString("nombre");                
+                listaClientes.Add(cliente);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaClientes;
         }
 

@@ -229,48 +229,46 @@ namespace GarajesAliKan.Forms
         {
             if (ComprobarDatosIntroducidos())
             {
-                Factura factura = null;
+                Factura factura = new Factura(1);
+                factura.Id = int.Parse(TxtNumFactura.Text);
+                factura.Fecha = DtFecha.Value;
+                factura.EstaPagada = CkBoxPagada.Checked;
+                factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
+                factura.Iva = decimal.Parse(TxtIva.Text);
+                factura.Total = decimal.Parse(TxtTotalFactura.Text);
+
                 if (Convert.ToInt32(BtnAddFactura.Tag) == 1)                // Insertamos la nueva factura.
-                {
-                    factura = new Factura(1);
-                    factura.Id = int.Parse(TxtNumFactura.Text);
-                    factura.Fecha = DtFecha.Value;
-                    factura.Cliente.Id = ((Cliente)CbClientes.SelectedItem).Id;
-                    factura.EstaPagada = CkBoxPagada.Checked;
+                {                                        
+                    factura.Cliente.Id = ((Cliente)CbClientes.SelectedItem).Id;                    
                     factura.Cliente.Alquiler.IdTipoAlquiler = ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler;
                     factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;
-                    factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
-                    factura.Iva = decimal.Parse(TxtIva.Text);
-                    factura.Total = decimal.Parse(TxtTotalFactura.Text);
-
+                    
                     if (factura.InsertarParaGaraje())
                     {
                         MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+
+                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        BindingSource.Position = pos;
+
                         HabilitarControles(false);                        
-                        CargarDatosComboBox(false, false, false);
-                        BindingSource.Position = BindingSource.Count - 1;
+                        CargarDatosComboBox(false, false, false);                        
                     }
                     else
                         MessageBox.Show("Ha habido un problema al guardar la factura", "Factura no Guardada", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (Convert.ToInt32(BtnModificarFactura.Tag) == 1)             // Modificamos los datos de la factura.
                 {
-                    factura = new Factura(1);
-                    factura.Id = int.Parse(TxtNumFactura.Text);
-                    factura.Fecha = DtFecha.Value;
-                    factura.EstaPagada = CkBoxPagada.Checked;
-                    factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
-                    factura.Iva = decimal.Parse(TxtIva.Text);
-                    factura.Total = decimal.Parse(TxtTotalFactura.Text);
-
                     if (factura.ModificarParaGaraje())
                     {
                         MessageBox.Show("Factura modificada", "Factura Modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+
+                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        BindingSource.Position = pos;
+
                         HabilitarControles(false);                        
-                        CargarDatosComboBox(false, false, false);
-                        BindingSource.Position = BindingSource.Count - 1;
+                        CargarDatosComboBox(false, false, false);                        
                     }
                     else
                         MessageBox.Show("Ha habido un problema al modificar la factura", "Factura no Modificada", MessageBoxButtons.OK, MessageBoxIcon.Error);
