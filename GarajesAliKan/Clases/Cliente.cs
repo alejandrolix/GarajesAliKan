@@ -42,10 +42,14 @@ namespace GarajesAliKan.Clases
         /// <returns>El número de clientes.</returns>
         public static bool HayClientesLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            int numClientes = conexion.ExecuteScalar<int>("SELECT COUNT(id) FROM clientes WHERE esClienteGaraje IS FALSE;");
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
+                                                      FROM   clientes
+                                                      WHERE esClienteGaraje IS FALSE;", conexion);
 
-            conexion.CloseSharedConnection();
+            int numClientes = Convert.ToInt32(comando.ExecuteScalar());
+            conexion.Close();
+
             return numClientes >= 1;
         }
 
@@ -65,7 +69,7 @@ namespace GarajesAliKan.Clases
                                                              JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
                                                              JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
                                                       WHERE   cli.esClienteGaraje IS TRUE
-                                                      ORDER BY cli.apellidos;", conexion);
+                                                      ORDER BY cli.apellidos;", conexion);            
 
             MySqlDataReader cursor = comando.ExecuteReader();
             List<Cliente> listaClientes = new List<Cliente>();
@@ -192,12 +196,23 @@ namespace GarajesAliKan.Clases
         /// <returns>Los apellidos de los clientes del lavadero.</returns>
         public static List<Cliente> ObtenerApellidosClientesLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Cliente> listaApellidos = conexion.Fetch<Cliente>(@"SELECT id, apellidos
-                                                                     FROM   clientes
-                                                                     WHERE esClienteGaraje IS FALSE
-                                                                     ORDER BY apellidos;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id, apellidos
+                                                      FROM   clientes
+                                                      WHERE esClienteGaraje IS FALSE
+                                                      ORDER BY apellidos;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Cliente> listaApellidos = new List<Cliente>();
+
+            while (cursor.Read())
+            {
+                Cliente cliente = new Cliente(cursor.GetInt32("id"), cursor.GetString("apellidos"));                             
+                listaApellidos.Add(cliente);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaApellidos;
         }
 
@@ -235,12 +250,25 @@ namespace GarajesAliKan.Clases
         /// <returns>Los NIFs de los clientes del lavadero.</returns>
         public static List<Cliente> ObtenerNifsClientesLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Cliente> listaNifs = conexion.Fetch<Cliente>(@"SELECT id, nif
-                                                                FROM   clientes
-                                                                WHERE  esClienteGaraje IS FALSE
-                                                                ORDER BY nif;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id, nif
+                                                      FROM   clientes
+                                                      WHERE  esClienteGaraje IS FALSE
+                                                      ORDER BY nif;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Cliente> listaNifs = new List<Cliente>();
+
+            while (cursor.Read())
+            {
+                Cliente cliente = new Cliente();
+                cliente.Id = cursor.GetInt32("id");                
+                cliente.Nif = cursor.GetString("nif");               
+                listaNifs.Add(cliente);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaNifs;
         }
 
@@ -391,26 +419,6 @@ namespace GarajesAliKan.Clases
         public Cliente(int id)          // Para buscar un cliente por su Id en la lista de clientes.
         {
             Id = id;
-        }
-
-        public Cliente(int id, string nombre, string apellidos, string nif, string direccion, string telefono)           // Para modificar los datos de un cliente del lavadero.
-        {
-            Id = id;
-            Nombre = nombre;
-            Apellidos = apellidos;
-            Nif = nif;
-            Direccion = direccion;
-            Telefono = telefono;
-        }
-
-        public Cliente(string nombre, string apellidos, string direccion, string nif, string telefono, bool esClienteGaraje)              // Para crear un cliente del lavadero.
-        {
-            Nombre = nombre;
-            Apellidos = apellidos;
-            Direccion = direccion;
-            Nif = nif;
-            Telefono = telefono;
-            EsClienteGaraje = esClienteGaraje;
         }
 
         public Cliente(int id, string apellidos)

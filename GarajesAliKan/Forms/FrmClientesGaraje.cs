@@ -13,9 +13,9 @@ namespace GarajesAliKan.Forms
         {
             InitializeComponent();
         }
-
+        
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
-        {
+        {            
             CargarDatosComboBox(true, true);
             if (Cliente.HayClientesGarajes())
             {
