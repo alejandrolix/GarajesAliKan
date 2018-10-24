@@ -34,12 +34,22 @@ namespace GarajesAliKan.Clases
         /// <returns>Los nombres de las empresas.</returns>
         public static List<Proveedor> ObtenerNombresEmpresas()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Proveedor> listaProveedores = conexion.Fetch<Proveedor>(@"SELECT id, empresa
-                                                                           FROM   proveedores
-                                                                           ORDER BY empresa;");
-            conexion.CloseSharedConnection();
-            return listaProveedores;
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id, empresa
+                                                      FROM   proveedores
+                                                      ORDER BY empresa;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Proveedor> listaNombres = new List<Proveedor>();
+
+            while (cursor.Read())
+            {                
+                listaNombres.Add(new Proveedor(cursor.GetInt32("id"), cursor.GetString("empresa")));
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return listaNombres;
         }
 
         /// <summary>
@@ -129,6 +139,12 @@ namespace GarajesAliKan.Clases
 
             conexion.Close();
             return numFila >= 1;
+        }
+
+        public Proveedor(int id, string empresa)
+        {
+            Id = id;
+            Empresa = empresa;
         }
 
         public Proveedor()

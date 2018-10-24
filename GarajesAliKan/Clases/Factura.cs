@@ -68,11 +68,14 @@ namespace GarajesAliKan.Clases
         /// <returns>El número de facturas.</returns>
         public static bool HayFacturasRecibidas()
         {
-            Database conexion = Foo.ConexionABd();
-            int numFacturas = conexion.ExecuteScalar<int>(@"SELECT COUNT(id)
-                                                            FROM   facturas
-                                                            WHERE  esFacturaRecibida IS TRUE;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
+                                                      FROM   facturas
+                                                      WHERE  esFacturaRecibida IS TRUE;", conexion);
+
+            int numFacturas = Convert.ToInt32(comando.ExecuteScalar());
+            conexion.Close();
+
             return numFacturas >= 1;
         }
 
@@ -158,14 +161,32 @@ namespace GarajesAliKan.Clases
         /// <returns>Las facturas recibidas.</returns>
         public static List<Factura> ObtenerFacturasRecibidas()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, prov.empresa, fact.baseImponible, fact.iva, fact.total
-                                                                    FROM   facturas fact
-                                                                           JOIN garajes gaj ON gaj.id = fact.idGaraje
-                                                                           JOIN proveedores prov ON prov.id = fact.idProveedor
-                                                                    WHERE  fact.esFacturaRecibida IS TRUE
-                                                                    ORDER BY fact.id;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, gaj.nombre, prov.empresa, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN garajes gaj ON gaj.id = fact.idGaraje
+                                                             JOIN proveedores prov ON prov.id = fact.idProveedor
+                                                      WHERE  fact.esFacturaRecibida IS TRUE
+                                                      ORDER BY fact.id;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Factura> listaFacturas = new List<Factura>();
+
+            while (cursor.Read())
+            {
+                Factura factura = new Factura(3);
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Garaje.Nombre = cursor.GetString("nombre");
+                factura.Proveedor.Empresa = cursor.GetString("empresa");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                listaFacturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFacturas;
         }
 
@@ -275,12 +296,22 @@ namespace GarajesAliKan.Clases
         /// <returns>Las fechas de las facturas recibidas.</returns>
         public static List<DateTime> ObtenerFechasRecibidas()
         {
-            Database conexion = Foo.ConexionABd();
-            List<DateTime> listaFechas = conexion.Fetch<DateTime>(@"SELECT fecha
-                                                                    FROM   facturas
-                                                                    WHERE  esFacturaRecibida IS TRUE
-                                                                    ORDER BY fecha;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fecha
+                                                      FROM   facturas
+                                                      WHERE  esFacturaRecibida IS TRUE
+                                                      ORDER BY fecha;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<DateTime> listaFechas = new List<DateTime>();
+
+            while (cursor.Read())
+            {
+                listaFechas.Add(cursor.GetDateTime("fecha"));
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFechas;
         }
 
@@ -621,13 +652,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@iva", Iva);
             comando.Parameters.AddWithValue("@total", Total);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;
@@ -700,13 +725,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@iva", Iva);
             comando.Parameters.AddWithValue("@total", Total);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;

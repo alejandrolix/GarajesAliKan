@@ -248,22 +248,25 @@ namespace GarajesAliKan.Forms
         {
             if (ComprobarDatosIntroducidos())
             {
-                Factura factura = null;
-                if (Convert.ToInt32(BtnAddFactura.Tag) == 1)                // Insertamos la nueva factura.
-                {
-                    factura = new Factura(3);
-                    factura.Id = int.Parse(TxtNumFactura.Text);
-                    factura.Fecha = DtFecha.Value;
-                    factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;                    
-                    factura.Proveedor.Id = ((Proveedor)CbEmpresas.SelectedItem).Id;
-                    factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
-                    factura.Iva = decimal.Parse(TxtIva.Text);
-                    factura.Total = decimal.Parse(TxtTotalFactura.Text);
+                Factura factura = new Factura(3);
+                factura.Id = int.Parse(TxtNumFactura.Text);
+                factura.Fecha = DtFecha.Value;
+                factura.Proveedor.Id = ((Proveedor)CbEmpresas.SelectedItem).Id;
+                factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
+                factura.Iva = decimal.Parse(TxtIva.Text);
+                factura.Total = decimal.Parse(TxtTotalFactura.Text);
 
+                if (Convert.ToInt32(BtnAddFactura.Tag) == 1)                // Insertamos la nueva factura.
+                {                                        
+                    factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;                                                            
                     if (factura.InsertarRecibida())
                     {
                         MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasRecibidas();
+
+                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        BindingSource.Position = pos;
+
                         HabilitarControles(false);
                         CargarDatosComboBox(true, true, false);
                         BindingSource.Position = BindingSource.Count - 1;
@@ -272,19 +275,15 @@ namespace GarajesAliKan.Forms
                         MessageBox.Show("Ha habido un problema al guardar la factura", "Factura no Guardada", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (Convert.ToInt32(BtnModificarFactura.Tag) == 1)             // Modificamos los datos de la factura.
-                {
-                    factura = new Factura(3);
-                    factura.Id = int.Parse(TxtNumFactura.Text);
-                    factura.Fecha = DtFecha.Value;
-                    factura.Proveedor.Id = ((Proveedor)CbEmpresas.SelectedItem).Id;
-                    factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
-                    factura.Iva = decimal.Parse(TxtIva.Text);
-                    factura.Total = decimal.Parse(TxtTotalFactura.Text);
-
+                {                    
                     if (factura.ModificarRecibida())
                     {
                         MessageBox.Show("Factura modificada", "Factura Modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasRecibidas();
+
+                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        BindingSource.Position = pos;
+
                         HabilitarControles(false);
                         CargarDatosComboBox(false, true, false);
                         BindingSource.Position = BindingSource.Count - 1;
