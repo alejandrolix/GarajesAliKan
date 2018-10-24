@@ -42,7 +42,7 @@ namespace GarajesAliKan.Clases
             int numFacturas = Convert.ToInt32(comando.ExecuteScalar());
             conexion.Close();
 
-            return numFacturas >= 1;                        
+            return numFacturas >= 1;
         }
 
         /// <summary>
@@ -51,11 +51,14 @@ namespace GarajesAliKan.Clases
         /// <returns>El número de facturas.</returns>
         public static bool HayFacturasLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            int numFacturas = conexion.ExecuteScalar<int>(@"SELECT COUNT(id)
-                                                            FROM   facturas
-                                                            WHERE  esFacturaLavadero IS TRUE;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
+                                                      FROM   facturas
+                                                      WHERE  esFacturaLavadero IS TRUE;", conexion);
+
+            int numFacturas = Convert.ToInt32(comando.ExecuteScalar());
+            conexion.Close();
+
             return numFacturas >= 1;
         }
 
@@ -120,13 +123,32 @@ namespace GarajesAliKan.Clases
         /// <returns>Las facturas del lavadero.</returns>
         public static List<Factura> ObtenerFacturasLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.concepto, fact.baseImponible, fact.iva, fact.total
-                                                                    FROM   facturas fact
-                                                                           JOIN clientes cli ON fact.idCliente = cli.id
-                                                                    WHERE  fact.esFacturaLavadero IS TRUE
-                                                                    ORDER BY fact.id;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.concepto, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                      WHERE  fact.esFacturaLavadero IS TRUE
+                                                      ORDER BY fact.id;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Factura> listaFacturas = new List<Factura>();
+
+            while (cursor.Read())
+            {
+                Factura factura = new Factura();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente = new Cliente(cursor.GetString("nif"), cursor.GetString("nombre"));
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Concepto = cursor.GetString("concepto");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                listaFacturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFacturas;
         }
 
@@ -163,7 +185,7 @@ namespace GarajesAliKan.Clases
             List<int> listaIds = new List<int>();
 
             while (cursor.Read())
-            {                
+            {
                 listaIds.Add(cursor.GetInt32("id"));
             }
             cursor.Close();
@@ -178,12 +200,22 @@ namespace GarajesAliKan.Clases
         /// <returns>Los Ids de las facturas del lavadero.</returns>
         public static List<int> ObtenerIdsFacturasLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            List<int> listaIds = conexion.Fetch<int>(@"SELECT id
-                                                       FROM   facturas
-                                                       WHERE  esFacturaLavadero IS TRUE
-                                                       ORDER BY id;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id
+                                                      FROM   facturas
+                                                      WHERE  esFacturaLavadero IS TRUE
+                                                      ORDER BY id;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<int> listaIds = new List<int>();
+
+            while (cursor.Read())
+            {
+                listaIds.Add(cursor.GetInt32("id"));
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaIds;
         }
 
@@ -203,7 +235,7 @@ namespace GarajesAliKan.Clases
             List<DateTime> listaFechas = new List<DateTime>();
 
             while (cursor.Read())
-            {                
+            {
                 listaFechas.Add(cursor.GetDateTime("fecha"));
             }
             cursor.Close();
@@ -218,12 +250,22 @@ namespace GarajesAliKan.Clases
         /// <returns>Las fechas de las facturas del lavadero.</returns>
         public static List<DateTime> ObtenerFechasLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            List<DateTime> listaFechas = conexion.Fetch<DateTime>(@"SELECT fecha
-                                                                    FROM   facturas
-                                                                    WHERE  esFacturaLavadero IS TRUE
-                                                                    ORDER BY fecha;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fecha
+                                                      FROM   facturas
+                                                      WHERE  esFacturaLavadero IS TRUE
+                                                      ORDER BY fecha;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<DateTime> listaFechas = new List<DateTime>();
+
+            while (cursor.Read())
+            {
+                listaFechas.Add(cursor.GetDateTime("fecha"));
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFechas;
         }
 
@@ -501,13 +543,7 @@ namespace GarajesAliKan.Clases
 
             comando.Parameters.AddWithValue("@id", Id);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;
@@ -562,13 +598,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@estaPagada", EstaPagada);
             comando.Parameters.AddWithValue("@concepto", Concepto);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;
@@ -621,13 +651,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@iva", Iva);
             comando.Parameters.AddWithValue("@total", Total);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;
@@ -652,13 +676,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@iva", Iva);
             comando.Parameters.AddWithValue("@total", Total);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;
@@ -692,7 +710,7 @@ namespace GarajesAliKan.Clases
 
             conexion.Close();
             return numFila >= 1;
-        }        
+        }
 
         public Factura(int tipoFactura)
         {
@@ -709,7 +727,7 @@ namespace GarajesAliKan.Clases
                     break;
 
                 case 3:         // Es una factura recibida.
-                    Garaje = new Garaje();     
+                    Garaje = new Garaje();
                     Proveedor = new Proveedor();
                     break;
 
