@@ -75,7 +75,7 @@ namespace GarajesAliKan.Forms
         }
 
         private void TxtNumFactura_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        {            
             int numPulsado = (int)char.GetNumericValue(e.KeyChar);
 
             if (numPulsado >= 0 && numPulsado <= 9 || char.IsControl(e.KeyChar))
@@ -239,6 +239,10 @@ namespace GarajesAliKan.Forms
                     {
                         MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasLavadero();
+
+                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        BindingSource.Position = pos;
+
                         HabilitarControles(false);
                         CargarDatosComboBox(true, true, false);
                         BindingSource.Position = BindingSource.Count - 1;
@@ -261,6 +265,10 @@ namespace GarajesAliKan.Forms
                     {
                         MessageBox.Show("Factura modificada", "Factura Modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Factura.ObtenerFacturasLavadero();
+
+                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        BindingSource.Position = pos;
+
                         HabilitarControles(false);
                         CargarDatosComboBox(false, true, false);
                         BindingSource.Position = BindingSource.Count - 1;
