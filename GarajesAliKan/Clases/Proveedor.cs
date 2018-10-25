@@ -21,10 +21,13 @@ namespace GarajesAliKan.Clases
         /// <returns>Si existen proveedores.</returns>
         public static bool ExistenProveedores()
         {
-            Database conexion = Foo.ConexionABd();
-            int numProveedores = conexion.ExecuteScalar<int>(@"SELECT COUNT(id)
-                                                               FROM   proveedores;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
+                                                      FROM   proveedores;", conexion);
+
+            int numProveedores = Convert.ToInt32(comando.ExecuteScalar());
+            conexion.Close();
+
             return numProveedores >= 1;
         }
 
@@ -43,7 +46,7 @@ namespace GarajesAliKan.Clases
             List<Proveedor> listaNombres = new List<Proveedor>();
 
             while (cursor.Read())
-            {                
+            {
                 listaNombres.Add(new Proveedor(cursor.GetInt32("id"), cursor.GetString("empresa")));
             }
             cursor.Close();
@@ -58,11 +61,26 @@ namespace GarajesAliKan.Clases
         /// <returns>Los proveedores.</returns>
         public static List<Proveedor> ObtenerProveedores()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Proveedor> listaProveedores = conexion.Fetch<Proveedor>(@"SELECT *
-                                                                           FROM   proveedores
-                                                                           ORDER BY empresa;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id, empresa, cif, concepto
+                                                      FROM   proveedores
+                                                      ORDER BY empresa;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Proveedor> listaProveedores = new List<Proveedor>();
+
+            while (cursor.Read())
+            {
+                Proveedor proveedor = new Proveedor();
+                proveedor.Id = cursor.GetInt32("id");
+                proveedor.Empresa = cursor.GetString("empresa");
+                proveedor.Cif = cursor.GetString("cif");
+                proveedor.Concepto = cursor.GetString("concepto");
+                listaProveedores.Add(proveedor);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaProveedores;
         }
 
@@ -77,13 +95,7 @@ namespace GarajesAliKan.Clases
 
             comando.Parameters.AddWithValue("@id", Id);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;
@@ -102,13 +114,8 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@cif", Cif);
             comando.Parameters.AddWithValue("@concepto", Concepto);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
+            Id = (int)comando.LastInsertedId;
 
             conexion.Close();
             return numFila >= 1;
@@ -129,22 +136,28 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@cif", Cif);
             comando.Parameters.AddWithValue("@concepto", Concepto);
 
-            int numFila = 0;
-            try
-            {
-                numFila = comando.ExecuteNonQuery();
-            }
-            catch (Exception)
-            { }
+            int numFila = comando.ExecuteNonQuery();
 
             conexion.Close();
             return numFila >= 1;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Proveedor proveedor = obj as Proveedor;
+            return proveedor != null &&
+                   Id == proveedor.Id;
         }
 
         public Proveedor(int id, string empresa)
         {
             Id = id;
             Empresa = empresa;
+        }
+
+        public Proveedor(int id)
+        {
+            Id = id;
         }
 
         public Proveedor()

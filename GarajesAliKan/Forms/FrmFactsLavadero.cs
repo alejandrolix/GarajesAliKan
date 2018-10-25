@@ -244,8 +244,7 @@ namespace GarajesAliKan.Forms
                         BindingSource.Position = pos;
 
                         HabilitarControles(false);
-                        CargarDatosComboBox(true, true, false);
-                        BindingSource.Position = BindingSource.Count - 1;
+                        CargarDatosComboBox(true, true, false);                        
                     }
                     else
                         MessageBox.Show("Ha habido un problema al guardar la factura", "Factura no Guardada", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -270,8 +269,7 @@ namespace GarajesAliKan.Forms
                         BindingSource.Position = pos;
 
                         HabilitarControles(false);
-                        CargarDatosComboBox(false, true, false);
-                        BindingSource.Position = BindingSource.Count - 1;
+                        CargarDatosComboBox(false, true, false);                        
                     }
                     else
                         MessageBox.Show("Ha habido un problema al modificar la factura", "Factura no Modificada", MessageBoxButtons.OK, MessageBoxIcon.Error);

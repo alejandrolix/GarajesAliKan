@@ -123,7 +123,6 @@ namespace GarajesAliKan.Forms
             if (MessageBox.Show("¿Está seguro de que desea eliminar el proveedor?", "¿Eliminar Proveedor?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Proveedor proveedor = (Proveedor)BindingSource.Current;
-
                 if (proveedor.Eliminar())
                 {
                     MessageBox.Show("Proveedor eliminado", "Proveedor Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -170,8 +169,11 @@ namespace GarajesAliKan.Forms
                     {
                         MessageBox.Show("Proveedor guardado", "Proveedor Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Proveedor.ObtenerProveedores();
-                        HabilitarControles(false);                        
-                        BindingSource.Position = BindingSource.Count - 1;
+
+                        int pos = ((List<Proveedor>)BindingSource.DataSource).IndexOf(new Proveedor(proveedor.Id));
+                        BindingSource.Position = pos;
+
+                        HabilitarControles(false);                                                
                     }
                     else
                         MessageBox.Show("Ha habido un problema al guardar el proveedor", "Proveedor no Guardado", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -183,8 +185,11 @@ namespace GarajesAliKan.Forms
                     {
                         MessageBox.Show("Proveedor modificado", "Proveedor Modificado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BindingSource.DataSource = Proveedor.ObtenerProveedores();
-                        HabilitarControles(false);                        
-                        BindingSource.Position = BindingSource.Count - 1;
+
+                        int pos = ((List<Proveedor>)BindingSource.DataSource).IndexOf(new Proveedor(proveedor.Id));
+                        BindingSource.Position = pos;
+
+                        HabilitarControles(false);                                                
                     }
                     else
                         MessageBox.Show("Ha habido un problema al modificar el proveedor", "Proveedor no Modificado", MessageBoxButtons.OK, MessageBoxIcon.Error);
