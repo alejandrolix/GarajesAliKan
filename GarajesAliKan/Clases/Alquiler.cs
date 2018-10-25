@@ -25,7 +25,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los conceptos.</returns>
         public static List<Alquiler> ObtenerConceptos()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, concepto
                                                       FROM   tiposAlquileres
                                                       ORDER BY concepto;", conexion);
@@ -51,7 +51,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos del alquiler se han insertado.</returns>
         public bool Insertar(int idGaraje)
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand("INSERT INTO alquilerPorCliente VALUES (@idCliente", conexion);
 
             if (IdVehiculo == 0)
@@ -89,7 +89,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos del alquiler se han modificado.</returns>
         public bool Modificar(int idCliente)
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"UPDATE alquilerPorCliente SET baseImponible = @baseImponible, iva = @iva, total = @total
                                                       WHERE  idCliente = @idCliente;", conexion);
 
@@ -111,7 +111,7 @@ namespace GarajesAliKan.Clases
         /// <returns>El alquiler del cliente se ha eliminado.</returns>
         public bool EliminarPorIdCliente(int idCliente)
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"DELETE FROM alquilerPorCliente
                                                       WHERE idCliente = @idCliente;", conexion);
 

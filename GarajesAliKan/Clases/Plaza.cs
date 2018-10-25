@@ -18,7 +18,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Las plazas de garajes y trasteros de los clientes.</returns>
         public static List<Plaza> ObtenerPlazas()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT idCliente, plaza
                                                       FROM   plazaCliente
                                                       ORDER BY plaza;", conexion);

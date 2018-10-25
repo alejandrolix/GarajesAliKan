@@ -16,7 +16,7 @@ namespace GarajesAliKan.Clases
         /// <returns>El vehículo se ha insertado.</returns>
         public bool Insertar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"INSERT INTO vehiculos (matricula, marca, modelo) VALUES (
                                                       @matricula, @marca, @modelo);", conexion);
 
@@ -25,23 +25,10 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@modelo", Modelo);
 
             int numFila = comando.ExecuteNonQuery();
-            Id = ObtenerUltimoId(comando);
+            Id = (int)comando.LastInsertedId;
             conexion.Close();
 
             return numFila >= 1;
-        }
-
-        /// <summary>
-        /// Obtiene el último Id insertado.
-        /// </summary>
-        /// <param name="comando">Un objeto de la clase MySqlCommand para obtener el último id.</param>
-        /// <returns>El último Id insertado.</returns>
-        private int ObtenerUltimoId(MySqlCommand comando)
-        {
-            comando.CommandText = "SELECT MAX(id) FROM vehiculos;";
-            int ultimoId = Convert.ToInt32(comando.ExecuteScalar());
-
-            return ultimoId;
         }
 
         /// <summary>
@@ -51,7 +38,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se ha eliminado el vehículo.</returns>
         public bool Eliminar(int idVehiculo)
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"DELETE FROM vehiculos
                                                       WHERE id = @id;", conexion);
 

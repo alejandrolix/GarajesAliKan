@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using NPoco;
 
 namespace GarajesAliKan.Clases
 {
@@ -21,7 +20,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Si existen proveedores.</returns>
         public static bool ExistenProveedores()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
                                                       FROM   proveedores;", conexion);
 
@@ -37,7 +36,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los nombres de las empresas.</returns>
         public static List<Proveedor> ObtenerNombresEmpresas()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, empresa
                                                       FROM   proveedores
                                                       ORDER BY empresa;", conexion);
@@ -61,7 +60,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los proveedores.</returns>
         public static List<Proveedor> ObtenerProveedores()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, empresa, cif, concepto
                                                       FROM   proveedores
                                                       ORDER BY empresa;", conexion);
@@ -90,7 +89,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se ha eliminado el proveedor.</returns>
         public bool Eliminar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand("DELETE FROM proveedores WHERE id = @id;", conexion);
 
             comando.Parameters.AddWithValue("@id", Id);
@@ -107,7 +106,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se ha insertado el proveedor.</returns>
         public bool Insertar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand("INSERT INTO proveedores (empresa, cif, concepto) VALUES (@empresa, @cif, @concepto);", conexion);
 
             comando.Parameters.AddWithValue("@empresa", Empresa);
@@ -127,7 +126,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se han modificado los datos del proveedor.</returns>
         public bool Modificar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"UPDATE proveedores SET empresa = @empresa, cif = @cif, concepto = @concepto
                                                       WHERE  id = @id;", conexion);
 
@@ -145,8 +144,7 @@ namespace GarajesAliKan.Clases
         public override bool Equals(object obj)
         {
             Proveedor proveedor = obj as Proveedor;
-            return proveedor != null &&
-                   Id == proveedor.Id;
+            return proveedor != null && Id == proveedor.Id;
         }
 
         public Proveedor(int id, string empresa)

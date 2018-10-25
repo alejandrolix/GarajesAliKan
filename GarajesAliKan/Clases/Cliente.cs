@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using NPoco;
 using System;
 using System.Collections.Generic;
 
@@ -25,7 +24,7 @@ namespace GarajesAliKan.Clases
         /// <returns>El número de clientes.</returns>
         public static bool HayClientesGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
                                                       FROM clientes
                                                       WHERE esClienteGaraje IS TRUE;", conexion);
@@ -42,7 +41,7 @@ namespace GarajesAliKan.Clases
         /// <returns>El número de clientes.</returns>
         public static bool HayClientesLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
                                                       FROM   clientes
                                                       WHERE esClienteGaraje IS FALSE;", conexion);
@@ -59,7 +58,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los clientes existentes de los garajes.</returns>
         public static List<Cliente> ObtenerClientesGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre AS garaje, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, 
                                                              alqPc.iva, alqPc.total, plzCli.plaza, alqPc.llave, tAlq.concepto
                                                       FROM   clientes cli
@@ -106,12 +105,29 @@ namespace GarajesAliKan.Clases
         /// <returns>Los clientes de todos los garajes.</returns>
         public static List<Cliente> ObtenerClientesGarajesInforme()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT plzCli.plaza, cli.nombre, cli.apellidos, cli.telefono, alqPc.total, cli.observaciones
-                                                                    FROM   plazaCliente plzCli
-		                                                                   JOIN clientes cli ON cli.id = plzCli.idCliente
-		                                                                   JOIN alquilerPorCliente alqPc ON cli.id = alqPc.idCliente;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT plzCli.plaza, cli.nombre, cli.apellidos, cli.telefono, alqPc.total, cli.observaciones
+                                                      FROM   plazaCliente plzCli
+		                                                     JOIN clientes cli ON cli.id = plzCli.idCliente
+		                                                     JOIN alquilerPorCliente alqPc ON cli.id = alqPc.idCliente;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Cliente> listaClientes = new List<Cliente>();
+
+            while (cursor.Read())
+            {
+                Cliente cliente = new Cliente();                
+                cliente.Nombre = cursor.GetString("nombre");
+                cliente.Apellidos = cursor.GetString("apellidos");                
+                cliente.Telefono = cursor.GetString("telefono");
+                cliente.Observaciones = cursor.GetString("observaciones");                                
+                cliente.Alquiler.Total = cursor.GetDecimal("total");
+                cliente.Alquiler.Plaza = cursor.GetString("plaza");                
+                listaClientes.Add(cliente);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaClientes;
         }
 
@@ -121,12 +137,29 @@ namespace GarajesAliKan.Clases
         /// <returns>Los clientes existentes del lavadero.</returns>
         public static List<Cliente> ObtenerClientesLavadero()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Cliente> listaClientes = conexion.Fetch<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono
-                                                                    FROM   clientes cli                                                                            
-                                                                    WHERE  cli.esClienteGaraje IS FALSE
-                                                                    ORDER BY cli.apellidos;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono
+                                                      FROM   clientes cli                                                                            
+                                                      WHERE  cli.esClienteGaraje IS FALSE
+                                                      ORDER BY cli.apellidos;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Cliente> listaClientes = new List<Cliente>();
+
+            while (cursor.Read())
+            {
+                Cliente cliente = new Cliente();
+                cliente.Id = cursor.GetInt32("id");
+                cliente.Nombre = cursor.GetString("nombre");
+                cliente.Apellidos = cursor.GetString("apellidos");
+                cliente.Nif = cursor.GetString("nif");
+                cliente.Direccion = cursor.GetString("direccion");
+                cliente.Telefono = cursor.GetString("telefono");                
+                listaClientes.Add(cliente);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaClientes;
         }
 
@@ -137,15 +170,41 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos del cliente del garaje.</returns>
         public static Cliente ObtenerClienteGarajePorId(int idCliente)
         {
-            Database conexion = Foo.ConexionABd();
-            Cliente cliente = conexion.Single<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
-                                                         FROM   clientes cli		 
-                                                                JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
-                                                                JOIN garajes gaj ON gaj.id = alqPc.idGaraje
-                                                                LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
-                                                                JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
-                                                         WHERE  cli.id = @0;", idCliente);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono, cli.observaciones, gaj.nombre, veh.matricula, veh.marca, veh.modelo, alqPc.baseImponible, alqPc.iva, alqPc.total, alqPc.plaza, alqPc.llave, tAlq.concepto
+                                                      FROM   clientes cli		 
+                                                             JOIN alquilerPorCliente alqPc ON alqPc.idCliente = cli.id
+                                                             JOIN garajes gaj ON gaj.id = alqPc.idGaraje
+                                                             LEFT JOIN vehiculos veh ON veh.id = alqPc.idVehiculo
+                                                             JOIN tiposAlquileres tAlq ON tAlq.id = alqPc.idTipoAlquiler
+                                                      WHERE  cli.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Cliente cliente = new Cliente();
+
+            while (cursor.Read())
+            {                
+                cliente.Id = cursor.GetInt32("id");
+                cliente.Nombre = cursor.GetString("nombre");
+                cliente.Apellidos = cursor.GetString("apellidos");
+                cliente.Nif = cursor.GetString("nif");
+                cliente.Direccion = cursor.GetString("direccion");
+                cliente.Telefono = cursor.GetString("telefono");
+                cliente.Observaciones = cursor.GetString("observaciones");
+                cliente.Garaje.Nombre = cursor.GetString("garaje");
+                cliente.Vehiculo = new Vehiculo(cursor.GetString("matricula"), cursor.GetString("marca"), cursor.GetString("modelo"));
+                cliente.Alquiler.BaseImponible = cursor.GetDecimal("baseImponible");
+                cliente.Alquiler.Iva = cursor.GetDecimal("iva");
+                cliente.Alquiler.Total = cursor.GetDecimal("total");
+                cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                cliente.Alquiler.Llave = cursor.GetInt32("llave");
+                cliente.Alquiler.Concepto = cursor.GetString("concepto");                
+            }
+            cursor.Close();
+            conexion.Close();
+
             return cliente;
         }
 
@@ -156,11 +215,28 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos del cliente del lavadero.</returns>
         public static Cliente ObtenerClienteLavaderoPorId(int idCliente)
         {
-            Database conexion = Foo.ConexionABd();
-            Cliente cliente = conexion.Single<Cliente>(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono
-                                                         FROM   clientes cli		                                                                 
-                                                         WHERE  cli.id = @0;", idCliente);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT cli.id, cli.nombre, cli.apellidos, cli.nif, cli.direccion, cli.telefono
+                                                      FROM   clientes cli		                                                                 
+                                                      WHERE  cli.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Cliente cliente = new Cliente();
+
+            while (cursor.Read())
+            {                
+                cliente.Id = cursor.GetInt32("id");
+                cliente.Nombre = cursor.GetString("nombre");
+                cliente.Apellidos = cursor.GetString("apellidos");
+                cliente.Nif = cursor.GetString("nif");
+                cliente.Direccion = cursor.GetString("direccion");
+                cliente.Telefono = cursor.GetString("telefono");                                
+            }
+            cursor.Close();
+            conexion.Close();
+
             return cliente;
         }
 
@@ -170,7 +246,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los apellidos de los clientes de los garajes.</returns>
         public static List<Cliente> ObtenerApellidosClientesGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, apellidos
                                                       FROM   clientes
                                                       WHERE esClienteGaraje IS TRUE
@@ -196,7 +272,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los apellidos de los clientes del lavadero.</returns>
         public static List<Cliente> ObtenerApellidosClientesLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, apellidos
                                                       FROM   clientes
                                                       WHERE esClienteGaraje IS FALSE
@@ -222,7 +298,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los NIFs de los clientes de los garajes.</returns>
         public static List<Cliente> ObtenerNifsClientesGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, nif
                                                       FROM   clientes
                                                       WHERE  esClienteGaraje IS TRUE
@@ -250,7 +326,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los NIFs de los clientes del lavadero.</returns>
         public static List<Cliente> ObtenerNifsClientesLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, nif
                                                       FROM   clientes
                                                       WHERE  esClienteGaraje IS FALSE
@@ -273,25 +349,12 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
-        /// Obtiene el último Id insertado.
-        /// </summary>
-        /// <param name="comando">Un objeto de la clase MySqlCommand para obtener el último id.</param>
-        /// <returns>El último Id insertado.</returns>
-        private int ObtenerUltimoId(MySqlCommand comando)
-        {
-            comando.CommandText = "SELECT MAX(id) FROM clientes;";
-            int ultimoId = Convert.ToInt32(comando.ExecuteScalar());
-
-            return ultimoId;
-        }
-
-        /// <summary>
         /// Obtiene todos los nombres y apellidos de los clientes de los garajes.
         /// </summary>
         /// <returns>La lista con los nombres y apellidos de los clientes de los garajes.</returns>
         public static List<Cliente> ObtenerNombresYApellidosGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, CONCAT(nombre, ' ', apellidos) AS nombre
                                                       FROM   clientes
                                                       WHERE  esClienteGaraje IS TRUE;", conexion);
@@ -318,7 +381,7 @@ namespace GarajesAliKan.Clases
         /// <returns>La lista con los nombres y apellidos de los clientes del lavadero.</returns>
         public static List<Cliente> ObtenerNombresYApellidosLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, CONCAT(nombre, ' ', apellidos) AS nombre
                                                       FROM   clientes
                                                       WHERE  esClienteGaraje IS FALSE;", conexion);
@@ -345,7 +408,7 @@ namespace GarajesAliKan.Clases
         /// <returns>El cliente se ha insertado.</returns>
         public bool Insertar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"INSERT INTO clientes (nombre, apellidos, nif, direccion, telefono, observaciones, esClienteGaraje) VALUES (
                                                       @nombre, @apellidos, @nif, @direccion, @telefono, @observaciones, @esClienteGaraje);", conexion);
 
@@ -360,7 +423,7 @@ namespace GarajesAliKan.Clases
             int numFila = comando.ExecuteNonQuery();
             if (EsClienteGaraje)
             {
-                Id = ObtenerUltimoId(comando);
+                Id = (int)comando.LastInsertedId;
             }
             conexion.Close();
 
@@ -373,7 +436,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos se han modificado.</returns>
         public bool Modificar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"UPDATE clientes SET nombre = @nombre, apellidos = @apellidos, nif = @nif, direccion = @direccion, telefono = @telefono, observaciones = @observaciones
                                                       WHERE  id = @idCliente;", conexion);
 
@@ -397,7 +460,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se ha eliminado el cliente.</returns>
         public bool Eliminar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand("DELETE FROM clientes WHERE id = @id;", conexion);
 
             comando.Parameters.AddWithValue("@id", Id);

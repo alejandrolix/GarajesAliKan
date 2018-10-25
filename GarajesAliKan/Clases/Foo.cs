@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using NPoco;
 using MySql.Data.MySqlClient;
 
 namespace GarajesAliKan.Clases
@@ -15,20 +14,10 @@ namespace GarajesAliKan.Clases
     class Foo
     {
         /// <summary>
-        /// Realiza una conexión a la base de datos usando el micro ORM NPoco.
-        /// </summary>
-        /// <returns>La conexión de la base de datos.</returns>
-        public static Database ConexionABd()
-        {
-            string datosConexion = LeerArchivoConexion();
-            return new Database(datosConexion, "MySql.Data.MySqlClient");             
-        }
-
-        /// <summary>
         /// Realiza una conexión a la base de datos usando el driver de MySQL.
         /// </summary>
         /// <returns>La conexión de la base de datos.</returns>
-        public static MySqlConnection ConexionABdMySQL()
+        public static MySqlConnection ConexionABd()
         {
             string datosConexion = LeerArchivoConexion();
             MySqlConnection conexion = new MySqlConnection(datosConexion);
@@ -79,7 +68,7 @@ namespace GarajesAliKan.Clases
         /// </summary>
         public static void InsertarFechaHoraBackup()
         {
-            MySqlConnection conexion = ConexionABdMySQL();
+            MySqlConnection conexion = ConexionABd();
             MySqlCommand comando = new MySqlCommand("INSERT INTO backupsBD (fechaHoraCopia) VALUES (@fecha);", conexion);
 
             comando.Parameters.AddWithValue("@fecha", DateTime.Now);

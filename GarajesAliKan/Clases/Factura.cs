@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NPoco;
 using MySql.Data.MySqlClient;
 
 namespace GarajesAliKan.Clases
@@ -34,7 +33,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Si existen facturas de todos los garajes.</returns>
         public static bool HayFacturasGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
                                                       FROM   facturas
                                                       WHERE  esFacturaGaraje IS TRUE;", conexion);
@@ -51,7 +50,7 @@ namespace GarajesAliKan.Clases
         /// <returns>El número de facturas.</returns>
         public static bool HayFacturasLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
                                                       FROM   facturas
                                                       WHERE  esFacturaLavadero IS TRUE;", conexion);
@@ -68,7 +67,7 @@ namespace GarajesAliKan.Clases
         /// <returns>El número de facturas.</returns>
         public static bool HayFacturasRecibidas()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(id)
                                                       FROM   facturas
                                                       WHERE  esFacturaRecibida IS TRUE;", conexion);
@@ -85,7 +84,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Las facturas de los garajes.</returns>
         public static List<Factura> ObtenerFacturasGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
     	                                                     plzCli.plaza, fact.baseImponible, fact.iva, fact.total
                                                       FROM   facturas fact
@@ -126,7 +125,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Las facturas del lavadero.</returns>
         public static List<Factura> ObtenerFacturasLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.concepto, fact.baseImponible, fact.iva, fact.total
                                                       FROM   facturas fact
                                                              JOIN clientes cli ON fact.idCliente = cli.id
@@ -161,7 +160,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Las facturas recibidas.</returns>
         public static List<Factura> ObtenerFacturasRecibidas()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, gaj.nombre, prov.empresa, fact.baseImponible, fact.iva, fact.total
                                                       FROM   facturas fact
                                                              JOIN garajes gaj ON gaj.id = fact.idGaraje
@@ -196,7 +195,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los Ids de las facturas de todos los garajes.</returns>
         public static List<int> ObtenerIdsFacturasGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id
                                                       FROM   facturas
                                                       WHERE  esFacturaGaraje IS TRUE
@@ -221,7 +220,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los Ids de las facturas del lavadero.</returns>
         public static List<int> ObtenerIdsFacturasLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id
                                                       FROM   facturas
                                                       WHERE  esFacturaLavadero IS TRUE
@@ -246,7 +245,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Las fechas de las facturas de todos los garajes.</returns>
         public static List<DateTime> ObtenerFechasGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT fecha
                                                       FROM   facturas
                                                       WHERE  esFacturaGaraje IS TRUE
@@ -271,7 +270,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Las fechas de las facturas del lavadero.</returns>
         public static List<DateTime> ObtenerFechasLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT fecha
                                                       FROM   facturas
                                                       WHERE  esFacturaLavadero IS TRUE
@@ -296,7 +295,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Las fechas de las facturas recibidas.</returns>
         public static List<DateTime> ObtenerFechasRecibidas()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT fecha
                                                       FROM   facturas
                                                       WHERE  esFacturaRecibida IS TRUE
@@ -322,16 +321,36 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerFacturaGarajePorId(int idFactura)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
-    	                                                        plzCli.plaza, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id
-                                                                JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
-                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
-                                                                JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
-                                                         WHERE  fact.id = @0;", idFactura);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
+    	                                                     plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                             JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                             JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                             JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                      WHERE  fact.id = @0;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(1);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");                
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -342,16 +361,39 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerDatosFacturaGarajePorId(int idFactura)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, cli.direccion, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
-    	                                                        plzCli.plaza, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id
-                                                                JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
-                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
-                                                                JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
-                                                         WHERE  fact.id = @0;", idFactura);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, cli.direccion, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
+    	                                                     plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                             JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                             JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                             JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                      WHERE  fact.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idFactura);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(1);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");
+                factura.Cliente.Direccion = cursor.GetString("direccion");
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -362,12 +404,33 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerFacturaLavaderoPorId(int idFactura)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.concepto, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id
-                                                         WHERE  fact.id = @0;", idFactura);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.concepto, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                      WHERE  fact.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idFactura);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(2);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");                
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Cliente.Alquiler = null;
+                factura.Concepto = cursor.GetString("concepto");                                
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -378,12 +441,33 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerDatosFacturaLavaderoPorId(int idFactura)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.direccion, fact.concepto, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id
-                                                         WHERE  fact.id = @0;", idFactura);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.direccion, fact.concepto, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                      WHERE  fact.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idFactura);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(2);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");
+                factura.Cliente.Direccion = cursor.GetString("direccion");
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.Cliente.Alquiler = null;
+                factura.Concepto = cursor.GetString("concepto");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -394,16 +478,38 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerFacturaGarajePorIdCliente(int idCliente)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
-    	                                                        plzCli.plaza, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id
-                                                                JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
-                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
-                                                                JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
-                                                         WHERE  cli.id = @0;", idCliente);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
+    	                                                     plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                             JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                             JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                             JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                      WHERE  cli.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(1);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");                
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -414,12 +520,31 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerFacturaLavaderoPorIdCliente(int idCliente)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id                                                                
-                                                         WHERE  cli.id = @0;", idCliente);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id                                                                
+                                                      WHERE  cli.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(2);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");                
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");                                
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -430,16 +555,38 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerFacturaGarajePorFecha(DateTime fecha)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
-    	                                                        plzCli.plaza, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id
-                                                                JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
-                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
-                                                                JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
-                                                         WHERE  fact.fecha = @0 AND fact.esFacturaGaraje IS TRUE;", fecha);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, tAlq.concepto, gaj.nombre,
+    	                                                     plzCli.plaza, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN clientes cli ON fact.idCliente = cli.id
+                                                             JOIN tiposAlquileres tAlq ON fact.idTipoAlquiler = tAlq.id
+                                                             JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                             JOIN plazaCliente plzCli ON cli.id = plzCli.idCliente
+                                                      WHERE  fact.fecha = @fecha AND fact.esFacturaGaraje IS TRUE;", conexion);
+
+            comando.Parameters.AddWithValue("@fecha", fecha);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(1);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");                
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -450,45 +597,31 @@ namespace GarajesAliKan.Clases
         /// <returns>Los datos de la factura.</returns>
         public static Factura ObtenerFacturaRecibidaPorFecha(DateTime fecha)
         {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, prov.empresa, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
-                                                                JOIN proveedores prov ON prov.id = fact.idProveedor
-                                                         WHERE  fact.fecha = @0 AND fact.esFacturaRecibida IS TRUE;", fecha);
-            conexion.CloseSharedConnection();
-            return factura;
-        }
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, gaj.nombre, prov.empresa, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+                                                             JOIN garajes gaj ON fact.idGaraje = gaj.id
+                                                             JOIN proveedores prov ON prov.id = fact.idProveedor
+                                                      WHERE  fact.fecha = @fecha AND fact.esFacturaRecibida IS TRUE;", conexion);
 
-        /// <summary>
-        /// Obtiene una factura del lavadero a partir de una fecha.
-        /// </summary>
-        /// <param name="fecha">La fecha.</param>
-        /// <returns>Los datos de la factura.</returns>
-        public static Factura ObtenerFacturaLavaderoPorFecha(DateTime fecha)
-        {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, cli.nif, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, fact.estaPagada, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN clientes cli ON fact.idCliente = cli.id                                                                
-                                                         WHERE  fact.fecha = @0 AND fact.esFacturaLavadero IS TRUE;", fecha);
-            conexion.CloseSharedConnection();
-            return factura;
-        }
+            comando.Parameters.AddWithValue("@fecha", fecha);
 
-        /// <summary>
-        /// Obtiene una factura del lavadero a partir de un Id de un garaje.
-        /// </summary>
-        /// <param name="fecha">La fecha.</param>
-        /// <returns>Los datos de la factura.</returns>
-        public static Factura ObtenerFacturaLavaderoPorIdGaraje(int idGaraje)
-        {
-            Database conexion = Foo.ConexionABd();
-            Factura factura = conexion.Single<Factura>(@"SELECT fact.id, fact.fecha, gaj.nombre, fact.nombreEmpresa, fact.baseImponible, fact.iva, fact.total
-                                                         FROM   facturas fact
-                                                                JOIN garajes gaj ON fact.idGaraje = gaj.id
-                                                         WHERE  gaj.id = @0 AND fact.esFacturaRecibida IS TRUE;", idGaraje);
-            conexion.CloseSharedConnection();
+            MySqlDataReader cursor = comando.ExecuteReader();
+            Factura factura = new Factura(3);
+
+            while (cursor.Read())
+            {
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");                                                
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Proveedor.Empresa = cursor.GetString("empresa");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
             return factura;
         }
 
@@ -498,15 +631,38 @@ namespace GarajesAliKan.Clases
         /// <returns>Todas las facturas de los garajes</returns>
         public static List<Factura> ObtenerFacturasGarajesPorFechasInforme(DateTime desde, DateTime hasta)
         {
-            Database conexion = Foo.ConexionABd();
-            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.nif, cli.direccion, gaj.nombre, fact.baseImponible,
-		                                                                   fact.iva, fact.total
-                                                                    FROM   facturas fact
-		                                                                   JOIN clientes cli ON cli.id = fact.idCliente
-		                                                                   JOIN garajes gaj ON gaj.id = fact.idGaraje
-                                                                    WHERE  fact.fecha BETWEEN @0 AND @1
-                                                                    ORDER BY fact.id;", desde, hasta);
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.nif, cli.direccion, gaj.nombre AS nombreGaraje, fact.baseImponible,
+		                                                     fact.iva, fact.total
+                                                      FROM   facturas fact
+		                                                     JOIN clientes cli ON cli.id = fact.idCliente
+		                                                     JOIN garajes gaj ON gaj.id = fact.idGaraje
+                                                      WHERE  fact.fecha BETWEEN @desde AND @hasta
+                                                      ORDER BY fact.id;", conexion);
+
+            comando.Parameters.AddWithValue("@desde", desde);
+            comando.Parameters.AddWithValue("@hasta", hasta);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Factura> listaFacturas = new List<Factura>();
+
+            while (cursor.Read())
+            {
+                Factura factura = new Factura(1);
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.Cliente.Nif = cursor.GetString("nif");
+                factura.Cliente.Direccion = cursor.GetString("nombre");
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                listaFacturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFacturas;
         }
 
@@ -516,13 +672,32 @@ namespace GarajesAliKan.Clases
         /// <returns>Todas las facturas del lavadero</returns>
         public static List<Factura> ObtenerFacturasLavaderoInforme()
         {
-            Database conexion = Foo.ConexionABd();
-            List<Factura> listaFacturas = conexion.Fetch<Factura>(@"SELECT fact.id, fact.fecha, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.direccion, cli.nif, fact.baseImponible, fact.iva, fact.total
-                                                                    FROM   facturas fact
-		                                                                   JOIN clientes cli ON cli.id = fact.idCliente
-                                                                    WHERE  fact.esFacturaLavadero IS TRUE
-                                                                    ORDER BY fact.id;");
-            conexion.CloseSharedConnection();
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, CONCAT(cli.nombre, ' ', cli.apellidos) AS nombre, cli.direccion, cli.nif, fact.baseImponible, fact.iva, fact.total
+                                                      FROM   facturas fact
+		                                                     JOIN clientes cli ON cli.id = fact.idCliente
+                                                      WHERE  fact.esFacturaLavadero IS TRUE
+                                                      ORDER BY fact.id;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Factura> listaFacturas = new List<Factura>();
+
+            while (cursor.Read())
+            {
+                Factura factura = new Factura(2);
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");
+                factura.Cliente.Direccion = cursor.GetString("direccion");
+                factura.Cliente.Nombre = cursor.GetString("nombre");                                                
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                listaFacturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
             return listaFacturas;
         }
 
@@ -532,7 +707,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Todas las facturas recibidas</returns>
         public static List<Factura> ObtenerFacturasRecibidasInforme()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT fact.id, fact.fecha, prov.empresa, prov.cif, gaj.nombre, fact.baseImponible, fact.iva, fact.total
                                                       FROM   facturas fact
                                                              JOIN proveedores prov ON prov.id = fact.idProveedor
@@ -569,7 +744,7 @@ namespace GarajesAliKan.Clases
         /// <returns>La factura se ha eliminado.</returns>
         public bool Eliminar()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand("DELETE FROM facturas WHERE id = @id;", conexion);
 
             comando.Parameters.AddWithValue("@id", Id);
@@ -586,7 +761,7 @@ namespace GarajesAliKan.Clases
         /// <returns>La factura se ha insertado.</returns>
         public bool InsertarParaGaraje()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"INSERT INTO facturas VALUES (@id, @fecha, @idCliente, @idTipoAlquiler, NULL, @idGaraje, @baseImponible, @iva, @total, @estaPagada,
                                                                                    TRUE, FALSE, FALSE, NULL);", conexion);
             comando.Parameters.AddWithValue("@id", Id);
@@ -617,7 +792,7 @@ namespace GarajesAliKan.Clases
         /// <returns>La factura se ha insertado.</returns>
         public bool InsertarParaLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"INSERT INTO facturas VALUES (@id, @fecha, @idCliente, NULL, NULL, NULL, @baseImponible, @iva, @total, @estaPagada,
                                                                                    FALSE, TRUE, FALSE, @concepto);", conexion);
             comando.Parameters.AddWithValue("@id", Id);
@@ -641,7 +816,7 @@ namespace GarajesAliKan.Clases
         /// <returns>La factura se ha insertado.</returns>
         public bool InsertarRecibida()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"INSERT INTO facturas VALUES (@id, @fecha, NULL, NULL, @idProveedor, @idGaraje, @baseImponible, @iva, @total, NULL,
                                                                                    FALSE, FALSE, TRUE, NULL);", conexion);
             comando.Parameters.AddWithValue("@id", Id);
@@ -664,7 +839,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se han modificado los datos de la factura.</returns>
         public bool ModificarParaGaraje()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"UPDATE facturas SET fecha = @fecha, estaPagada = @estaPagada, baseImponible = @baseImponible, iva = @iva,
                                                                           total = @total
                                                       WHERE  id = @id;", conexion);
@@ -688,7 +863,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se han modificado los datos de la factura.</returns>
         public bool ModificarParaLavadero()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"UPDATE facturas SET fecha = @fecha, estaPagada = @estaPagada, concepto = @concepto, baseImponible = @baseImponible, iva = @iva,
                                                                           total = @total
                                                       WHERE  id = @id;", conexion);
@@ -713,7 +888,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Se han modificado los datos de la factura.</returns>
         public bool ModificarRecibida()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"UPDATE facturas SET fecha = @fecha, idProveedor = @idProveedor, baseImponible = @baseImponible, iva = @iva,
                                                                           total = @total
                                                       WHERE  id = @id;", conexion);

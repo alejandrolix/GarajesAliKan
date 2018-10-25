@@ -15,7 +15,7 @@ namespace GarajesAliKan.Clases
         /// <returns>Los Garajes.</returns>
         public static List<Garaje> ObtenerGarajes()
         {
-            MySqlConnection conexion = Foo.ConexionABdMySQL();
+            MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, nombre
                                                       FROM   garajes
                                                       ORDER BY nombre;", conexion);
