@@ -22,10 +22,10 @@ namespace GarajesAliKan.Forms.FacturasEInformes
 
         private void FrmFacturasRecibidas_Load(object sender, EventArgs e)
         {
-            List<Factura> listaFacturas = Factura.ObtenerFacturasRecibidasInforme();
+            List<FacturaRecibida> listaFacturas = FacturaRecibida.ObtenerFacturasInforme();
             DtFacturasRecibidas dtFacturasRecibidas = new DtFacturasRecibidas();
 
-            foreach (Factura factura in listaFacturas)
+            foreach (FacturaRecibida factura in listaFacturas)
             {
                 dtFacturasRecibidas.Tables["facturas"].Rows.Add(factura.Id, factura.Fecha, factura.Proveedor.Empresa, factura.Proveedor.Cif, factura.Garaje.Nombre,
                                                                 factura.BaseImponible, factura.Iva, factura.Total);

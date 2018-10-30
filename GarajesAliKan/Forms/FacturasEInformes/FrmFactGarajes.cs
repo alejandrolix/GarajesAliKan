@@ -27,10 +27,10 @@ namespace GarajesAliKan.Forms.FacturasEInformes
 
         private void FrmFactGarajes_Load(object sender, EventArgs e)
         {
-            List<Factura> listaFacturas = Factura.ObtenerFacturasGarajesPorFechasInforme(Desde, Hasta);
+            List<FacturaGaraje> listaFacturas = FacturaGaraje.ObtenerFacturasPorFechasInforme(Desde, Hasta);
             DtFacturasGarajes dtFacturasGarajes = new DtFacturasGarajes();
 
-            foreach (Factura factura in listaFacturas)
+            foreach (FacturaGaraje factura in listaFacturas)
             {
                 dtFacturasGarajes.Tables["facturas"].Rows.Add(factura.Id, factura.Fecha, factura.Cliente.Nombre, factura.Cliente.Nif, factura.Cliente.Direccion, factura.Cliente.Garaje.Nombre,
                                                               factura.Cliente.Alquiler.BaseImponible, factura.Cliente.Alquiler.Iva, factura.Cliente.Alquiler.Total);

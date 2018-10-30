@@ -22,12 +22,12 @@ namespace GarajesAliKan.Forms.Informes
 
         private void FrmInfClientesGarajes_Load(object sender, EventArgs e)
         {
-            List<Cliente> listaClientes = Cliente.ObtenerClientesGarajesInforme();
+            List<ClienteGaraje> listaClientes = ClienteGaraje.ObtenerClientesParaInforme();            
             DtClientesGarajes dtClientesGarajes = new DtClientesGarajes();
 
-            foreach (Cliente cliente in listaClientes)
+            foreach (ClienteGaraje cliente in listaClientes)
             {
-                dtClientesGarajes.Tables["clientes"].Rows.Add(cliente.Alquiler.Plaza, cliente.Nombre, cliente.Apellidos, cliente.Telefono, cliente.Alquiler.Total, cliente.Observaciones);
+                // dtClientesGarajes.Tables["clientes"].Rows.Add(cliente.Alquiler.Plaza, cliente.Nombre, cliente.Apellidos, cliente.Telefono, cliente.Alquiler.Total, cliente.Observaciones);
             }
             ReportViewer.LocalReport.DataSources.Add(new ReportDataSource("DtClientesGarajes", dtClientesGarajes.Tables["clientes"]));
             ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);

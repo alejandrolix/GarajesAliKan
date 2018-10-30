@@ -17,10 +17,10 @@ namespace GarajesAliKan.Forms
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
         {            
             CargarDatosComboBox(true, true);
-            if (Cliente.HayClientesGarajes())
+            if (ClienteGaraje.HayClientes())
             {
-                BindingSource.DataSource = Cliente.ObtenerClientesGarajes();                
-                RellenarDatosCliente((Cliente)BindingSource.Current);
+                BindingSource.DataSource = ClienteGaraje.ObtenerClientes();                
+                RellenarDatosCliente((ClienteGaraje)BindingSource.Current);
             }
             else
             {
@@ -54,10 +54,10 @@ namespace GarajesAliKan.Forms
                 CbPlazas.ValueMember = "IdCliente";
             }
 
-            CbApellidos.DataSource = Cliente.ObtenerApellidosClientesGarajes();
+            CbApellidos.DataSource = ClienteGaraje.ObtenerApellidosClientes();
             CbApellidos.DisplayMember = "Apellidos";
             CbApellidos.ValueMember = "Id";
-            CbNifs.DataSource = Cliente.ObtenerNifsClientesGarajes();
+            CbNifs.DataSource = ClienteGaraje.ObtenerNifsClientes();
             CbNifs.DisplayMember = "Nif";
             CbNifs.ValueMember = "Id";
         }
@@ -67,7 +67,7 @@ namespace GarajesAliKan.Forms
             BtnAddCliente.Tag = 1;
             HabilitarControles(true);
             TxtNombre.Focus();
-            Cliente cliente = (Cliente)BindingSource.Current;
+            ClienteGaraje cliente = (ClienteGaraje)BindingSource.Current;
 
             if (cliente != null)
                 if (cliente.Id != 0)
@@ -146,15 +146,14 @@ namespace GarajesAliKan.Forms
                 alquiler.Llave = int.Parse(TxtLlave.Text);
 
                 Vehiculo vehiculo = null;
-                Cliente cliente = new Cliente();
+                ClienteGaraje cliente = new ClienteGaraje();
                 cliente.Nombre = TxtNombre.Text;
                 cliente.Apellidos = TxtApellidos.Text;
                 cliente.Nif = TxtNif.Text;
                 cliente.Direccion = TxtDireccion.Text;
                 cliente.Telefono = TxtTelefono.Text;
                 cliente.Observaciones = TxtObservaciones.Text;
-                cliente.Garaje = garaje;
-                cliente.EsClienteGaraje = true;
+                cliente.Garaje = garaje;                
                 cliente.Alquiler = alquiler;
 
                 if (TxtMarca.Text.Length != 0 && TxtModelo.Text.Length != 0 && TxtMatricula.Text.Length != 0 && TxtLlave.Text.Length != 0)      // Alquila una plaza de garaje.                       
@@ -177,10 +176,10 @@ namespace GarajesAliKan.Forms
                                 if (alquiler.Insertar(garaje.Id))
                                 {
                                     MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    BindingSource.DataSource = Cliente.ObtenerClientesGarajes();                                    
+                                    BindingSource.DataSource = ClienteGaraje.ObtenerClientes();                                    
                                     CargarDatosComboBox(false, true);
 
-                                    int pos = ((List<Cliente>)BindingSource.DataSource).IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
+                                    int pos = ((List<ClienteGaraje>)BindingSource.DataSource).IndexOf(new ClienteGaraje(cliente.Id));       // Buscamos la posición del cliente insertado.
                                     BindingSource.Position = pos;
 
                                     if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
@@ -199,10 +198,10 @@ namespace GarajesAliKan.Forms
                             if (alquiler.Insertar(garaje.Id))
                             {
                                 MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                BindingSource.DataSource = Cliente.ObtenerClientesGarajes();                                
+                                BindingSource.DataSource = ClienteGaraje.ObtenerClientes();                                
                                 CargarDatosComboBox(false, true);
 
-                                int pos = ((List<Cliente>)BindingSource.DataSource).IndexOf(new Cliente(cliente.Id));
+                                int pos = ((List<ClienteGaraje>)BindingSource.DataSource).IndexOf(new ClienteGaraje(cliente.Id));
                                 BindingSource.Position = pos;
 
                                 if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
@@ -218,7 +217,7 @@ namespace GarajesAliKan.Forms
                 }
                 else       // Modificamos los datos del cliente.       
                 {
-                    cliente.Id = ((Cliente)BindingSource.Current).Id;
+                    cliente.Id = ((ClienteGaraje)BindingSource.Current).Id;
                     if (cliente.Modificar())
                     {
                         if (alquiler.Modificar(cliente.Id))
@@ -387,7 +386,7 @@ namespace GarajesAliKan.Forms
         {
             HabilitarControles(false);
             LimpiarCampos();
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteGaraje)BindingSource.Current);
             RestaurarTagsBotones();
         }
 
@@ -416,7 +415,7 @@ namespace GarajesAliKan.Forms
         {
             if (MessageBox.Show("¿Está seguro de que desea eliminar el cliente?", "¿Eliminar Cliente?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Cliente cliente = (Cliente)BindingSource.Current;
+                ClienteGaraje cliente = (ClienteGaraje)BindingSource.Current;
                 if (CbConceptos.SelectedIndex == 0)         // Eliminamos la plaza de garaje.
                 {                    
                     if (cliente.Alquiler.EliminarPorIdCliente(cliente.Id))
@@ -424,7 +423,7 @@ namespace GarajesAliKan.Forms
                             if (cliente.Eliminar())
                             {
                                 MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                BindingSource.DataSource = Cliente.ObtenerClientesGarajes();
+                                BindingSource.DataSource = ClienteGaraje.ObtenerClientes();
                                 HabilitarControles(false);                                
                                 CargarDatosComboBox(false, true);
                                 BindingSource.Position = BindingSource.Count - 1;
@@ -442,7 +441,7 @@ namespace GarajesAliKan.Forms
                         if (cliente.Eliminar())
                         {
                             MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            BindingSource.DataSource = Cliente.ObtenerClientesGarajes();
+                            BindingSource.DataSource = ClienteGaraje.ObtenerClientes();
                             HabilitarControles(false);                            
                             CargarDatosComboBox(false, true);
                             BindingSource.Position = BindingSource.Count - 1;
@@ -457,13 +456,13 @@ namespace GarajesAliKan.Forms
 
         private void CbPlazas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Cliente cliente = Cliente.ObtenerClienteGarajePorId(((Plaza)CbPlazas.SelectedItem).IdCliente);
+            ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((Plaza)CbPlazas.SelectedItem).IdCliente);
             RellenarDatosCliente(cliente);
         }
 
         private void CbApellidos_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Cliente cliente = Cliente.ObtenerClienteGarajePorId(((Cliente)CbApellidos.SelectedItem).Id);
+            ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((ClienteGaraje)CbApellidos.SelectedItem).Id);
             RellenarDatosCliente(cliente);
         }
 
@@ -471,7 +470,7 @@ namespace GarajesAliKan.Forms
         /// Rellena los datos del cliente buscado a sus TextBoxs;
         /// </summary>
         /// <param name="cliente">Los datos del cliente.</param>
-        private void RellenarDatosCliente(Cliente cliente)
+        private void RellenarDatosCliente(ClienteGaraje cliente)
         {
             TxtNombre.Text = cliente.Nombre;
             TxtApellidos.Text = cliente.Apellidos;
@@ -493,7 +492,7 @@ namespace GarajesAliKan.Forms
 
         private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Cliente cliente = Cliente.ObtenerClienteGarajePorId(((Cliente)CbNifs.SelectedItem).Id);
+            ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((ClienteGaraje)CbNifs.SelectedItem).Id);
             RellenarDatosCliente(cliente);
         }
 
@@ -515,22 +514,22 @@ namespace GarajesAliKan.Forms
 
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteGaraje)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteGaraje)BindingSource.Current);
         }
 
         private void BindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteGaraje)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteGaraje)BindingSource.Current);
         }
 
         private void TxtNif_KeyPress(object sender, KeyPressEventArgs e)

@@ -22,10 +22,10 @@ namespace GarajesAliKan.Forms
         private void FrmFactsLavadero_Load(object sender, EventArgs e)
         {            
             CargarDatosComboBox(true, true, true);
-            if (Factura.HayFacturasLavadero())
+            if (FacturaLavadero.HayFacturas())
             {
-                BindingSource.DataSource = Factura.ObtenerFacturasLavadero();
-                RellenarDatosFactura((Factura)BindingSource.Current);
+                BindingSource.DataSource = FacturaLavadero.ObtenerFacturas();
+                RellenarDatosFactura((FacturaLavadero)BindingSource.Current);
             }
             else
             {
@@ -44,14 +44,14 @@ namespace GarajesAliKan.Forms
         private void CargarDatosComboBox(bool cargarNumsFacturas, bool cargarFechas, bool cargarClientes)
         {
             if (cargarNumsFacturas)            
-                CbNumsFacturas.DataSource = Factura.ObtenerIdsFacturasLavadero();                            
+                CbNumsFacturas.DataSource = FacturaLavadero.ObtenerIdsFacturas();                            
 
             if (cargarFechas)            
-                CbFechas.DataSource = Factura.ObtenerFechasLavadero();            
+                CbFechas.DataSource = FacturaLavadero.ObtenerFechas();            
 
             if (cargarClientes)
             {
-                CbCliBuscar.DataSource = Cliente.ObtenerNombresYApellidosLavadero();
+                CbCliBuscar.DataSource = ClienteLavadero.ObtenerNombresYApellidos();
                 CbCliBuscar.DisplayMember = "Nombre";
                 CbCliBuscar.ValueMember = "Id";                
             }                        
@@ -61,16 +61,16 @@ namespace GarajesAliKan.Forms
         /// Rellena los datos de la factura a su campo correspondiente.
         /// </summary>
         /// <param name="factura">Los datos de la factura.</param>
-        private void RellenarDatosFactura(Factura factura)
+        private void RellenarDatosFactura(FacturaLavadero factura)
         {
             TxtNumFactura.Text = factura.Id.ToString();
             DtFecha.Value = factura.Fecha;                      
             CbClientes.Text = factura.Cliente.Nombre;
-            TxtConcepto.Text = factura.Cliente.Alquiler.Concepto;
+            TxtConcepto.Text = factura.Concepto;
             
-            TxtBaseImponible.Text = factura.Cliente.Alquiler.BaseImponible.ToString();
-            TxtIva.Text = factura.Cliente.Alquiler.Iva.ToString();
-            TxtTotalFactura.Text = factura.Cliente.Alquiler.Total.ToString();
+            TxtBaseImponible.Text = factura.BaseImponible.ToString();
+            TxtIva.Text = factura.Iva.ToString();
+            TxtTotalFactura.Text = factura.Total.ToString();
             CkBoxPagada.Checked = factura.EstaPagada;
         }
 
@@ -148,13 +148,13 @@ namespace GarajesAliKan.Forms
         private void BtnAddFactura_Click(object sender, EventArgs e)
         {
             BtnAddFactura.Tag = 1;
-            CbClientes.DataSource = Cliente.ObtenerNombresYApellidosLavadero();
+            CbClientes.DataSource = ClienteGaraje.ObtenerNombresYApellidos();
             CbClientes.DisplayMember = "Nombre";
             CbClientes.ValueMember = "Id";
 
             HabilitarControles(true);
             TxtNumFactura.Focus();
-            Factura factura = (Factura)BindingSource.Current;
+            FacturaLavadero factura = (FacturaLavadero)BindingSource.Current;
 
             if (factura != null)
                 if (factura.Id != 0)
@@ -203,7 +203,7 @@ namespace GarajesAliKan.Forms
         {
             RestaurarTagsBotones();
             HabilitarControles(false);
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaLavadero)BindingSource.Current);
         }
 
         /// <summary>
@@ -222,25 +222,25 @@ namespace GarajesAliKan.Forms
         {
             if (ComprobarDatosIntroducidos())
             {
-                Factura factura = null;
+                FacturaLavadero factura = null;
                 if (Convert.ToInt32(BtnAddFactura.Tag) == 1)                // Insertamos la nueva factura.
                 {
-                    factura = new Factura(2);
+                    factura = new FacturaLavadero();
                     factura.Id = int.Parse(TxtNumFactura.Text);
                     factura.Fecha = DtFecha.Value;
-                    factura.Cliente.Id = ((Cliente)CbClientes.SelectedItem).Id;
+                    factura.Cliente.Id = ((ClienteLavadero)CbClientes.SelectedItem).Id;
                     factura.Concepto = TxtConcepto.Text;
                     factura.EstaPagada = CkBoxPagada.Checked;                    
                     factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
                     factura.Iva = decimal.Parse(TxtIva.Text);
                     factura.Total = decimal.Parse(TxtTotalFactura.Text);
 
-                    if (factura.InsertarParaLavadero())
+                    if (factura.Insertar())
                     {
                         MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BindingSource.DataSource = Factura.ObtenerFacturasLavadero();
+                        BindingSource.DataSource = FacturaLavadero.ObtenerFacturas();
 
-                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        int pos = ((List<FacturaLavadero>)BindingSource.DataSource).IndexOf(new FacturaLavadero(factura.Id));
                         BindingSource.Position = pos;
 
                         HabilitarControles(false);
@@ -251,7 +251,7 @@ namespace GarajesAliKan.Forms
                 }
                 else if (Convert.ToInt32(BtnModificarFactura.Tag) == 1)             // Modificamos los datos de la factura.
                 {
-                    factura = new Factura(2);
+                    factura = new FacturaLavadero();
                     factura.Id = int.Parse(TxtNumFactura.Text);
                     factura.Fecha = DtFecha.Value;
                     factura.Concepto = TxtConcepto.Text;
@@ -260,12 +260,12 @@ namespace GarajesAliKan.Forms
                     factura.Iva = decimal.Parse(TxtIva.Text);
                     factura.Total = decimal.Parse(TxtTotalFactura.Text);
 
-                    if (factura.ModificarParaLavadero())
+                    if (factura.Modificar())
                     {
                         MessageBox.Show("Factura modificada", "Factura Modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BindingSource.DataSource = Factura.ObtenerFacturasLavadero();
+                        BindingSource.DataSource = FacturaLavadero.ObtenerFacturas();
 
-                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        int pos = ((List<FacturaLavadero>)BindingSource.DataSource).IndexOf(new FacturaLavadero(factura.Id));
                         BindingSource.Position = pos;
 
                         HabilitarControles(false);
@@ -328,12 +328,12 @@ namespace GarajesAliKan.Forms
         {
             if (MessageBox.Show("¿Está seguro de que desea eliminar la factura?", "¿Eliminar Factura?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Factura factura = (Factura)BindingSource.Current;
+                FacturaLavadero factura = (FacturaLavadero)BindingSource.Current;
 
                 if (factura.Eliminar())
                 {
                     MessageBox.Show("Factura eliminada", "Factura Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    BindingSource.DataSource = Factura.ObtenerFacturasLavadero();
+                    BindingSource.DataSource = FacturaLavadero.ObtenerFacturas();
                     HabilitarControles(false);
                     CargarDatosComboBox(true, true, false);
                     BindingSource.Position = BindingSource.Count - 1;
@@ -345,45 +345,45 @@ namespace GarajesAliKan.Forms
 
         private void BtnImprimirFactura_Click(object sender, EventArgs e)
         {
-            FrmInfFactLavadero frmInfFactLavadero = new FrmInfFactLavadero(((Factura)BindingSource.Current).Id);
+            FrmInfFactLavadero frmInfFactLavadero = new FrmInfFactLavadero(((FacturaLavadero)BindingSource.Current).Id);
             frmInfFactLavadero.ShowDialog();
         }
 
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaLavadero)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaLavadero)BindingSource.Current);
         }
 
         private void BindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaLavadero)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaLavadero)BindingSource.Current);
         }
 
         private void CbNumsFacturas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaLavaderoPorId((int)CbNumsFacturas.SelectedItem);
+            FacturaLavadero factura = FacturaLavadero.ObtenerFacturaPorId((int)CbNumsFacturas.SelectedItem);
             RellenarDatosFactura(factura);
         }
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaGarajePorFecha((DateTime)CbNumsFacturas.SelectedItem);
+            FacturaLavadero factura = FacturaLavadero.ObtenerFacturaPorFecha((DateTime)CbNumsFacturas.SelectedItem);
             RellenarDatosFactura(factura);
         }
 
         private void CbCliBuscar_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaLavaderoPorIdCliente(((Cliente)CbCliBuscar.SelectedItem).Id);
+            FacturaLavadero factura = FacturaLavadero.ObtenerFacturaPorIdCliente(((ClienteLavadero)CbCliBuscar.SelectedItem).Id);
             RellenarDatosFactura(factura);
         }
     }

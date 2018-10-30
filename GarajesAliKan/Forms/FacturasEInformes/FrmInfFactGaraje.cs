@@ -26,7 +26,7 @@ namespace GarajesAliKan.Forms.Facturas
         /// Establece los datos al informe del garaje.
         /// </summary>        
         /// <param name="factura">Los datos de la factura.</param>
-        private void EstablecerParametrosInforme(Factura factura)
+        private void EstablecerParametrosInforme(FacturaGaraje factura)
         {
             ReportParameterCollection listaParametros = new ReportParameterCollection();
             listaParametros.Add(new ReportParameter("numFactura", factura.Id.ToString()));
@@ -45,7 +45,7 @@ namespace GarajesAliKan.Forms.Facturas
 
         private void FrmInfFactGaraje_Load(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerDatosFacturaGarajePorId(IdFactura);            
+            FacturaGaraje factura = FacturaGaraje.ObtenerDatosFacturaPorId(IdFactura);            
             EstablecerParametrosInforme(factura);                        
             ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);            
             ReportViewer.RefreshReport();            

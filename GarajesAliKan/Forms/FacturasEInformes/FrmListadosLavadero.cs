@@ -22,13 +22,13 @@ namespace GarajesAliKan.Forms.FacturasEInformes
 
         private void FrmListadosLavaderos_Load(object sender, EventArgs e)
         {
-            List<Factura> listaFacturas = Factura.ObtenerFacturasLavaderoInforme();
+            List<FacturaLavadero> listaFacturas = FacturaLavadero.ObtenerFacturasInforme();
             DtFacturasLavadero dtFacturasLavadero = new DtFacturasLavadero();
 
-            foreach (Factura factura in listaFacturas)
+            foreach (FacturaLavadero factura in listaFacturas)
             {
                 dtFacturasLavadero.Tables["facturas"].Rows.Add(factura.Id, factura.Fecha, factura.Cliente.Nombre, factura.Cliente.Direccion, factura.Cliente.Nif,
-                                                               factura.Cliente.Alquiler.BaseImponible, factura.Cliente.Alquiler.Iva, factura.Cliente.Alquiler.Total);
+                                                               factura.BaseImponible, factura.Iva, factura.Total);
             }
             ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
             ReportViewer.LocalReport.DataSources.Add(new ReportDataSource("DtFacturasLavadero", dtFacturasLavadero.Tables["facturas"]));

@@ -22,10 +22,10 @@ namespace GarajesAliKan.Forms
         private void FrmFactsGaraje_Load(object sender, EventArgs e)
         {            
             CargarDatosComboBox(true, true, true);
-            if (Factura.HayFacturasGarajes())
+            if (FacturaGaraje.HayFacturas())
             {
-                BindingSource.DataSource = Factura.ObtenerFacturasGarajes();                
-                RellenarDatosFactura((Factura)BindingSource.Current);
+                BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();                
+                RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
             }
             else
             {
@@ -50,7 +50,7 @@ namespace GarajesAliKan.Forms
         {
             if (cargarNombresYApellidos)
             {
-                CbClientes.DataSource = Cliente.ObtenerNombresYApellidosGarajes();
+                CbClientes.DataSource = ClienteGaraje.ObtenerNombresYApellidos();
                 CbClientes.DisplayMember = "Nombre";
                 CbClientes.ValueMember = "Id";
             }
@@ -69,19 +69,19 @@ namespace GarajesAliKan.Forms
                 CbGarajes.ValueMember = "Id";
             }
 
-            CbNumsFacturas.DataSource = Factura.ObtenerIdsFacturasGarajes();
-            CbNifs.DataSource = Cliente.ObtenerNifsClientesGarajes();
+            CbNumsFacturas.DataSource = FacturaGaraje.ObtenerIdsFacturas();
+            CbNifs.DataSource = ClienteGaraje.ObtenerNifsClientes();
             CbNifs.DisplayMember = "Nif";
             CbNifs.ValueMember = "Id";
 
-            CbFechas.DataSource = Factura.ObtenerFechasGarajes();
+            CbFechas.DataSource = FacturaGaraje.ObtenerFechas();
         }
 
         /// <summary>
         /// Rellena los datos de la factura a su campo correspondiente.
         /// </summary>
         /// <param name="factura">Los datos de la factura.</param>
-        private void RellenarDatosFactura(Factura factura)
+        private void RellenarDatosFactura(FacturaGaraje factura)
         {
             TxtNumFactura.Text = factura.Id.ToString();
             DtFecha.Value = factura.Fecha;
@@ -108,7 +108,7 @@ namespace GarajesAliKan.Forms
 
         private void BtnImprimirFactura_Click(object sender, EventArgs e)
         {
-            FrmInfFactGaraje frmInfFactGaraje = new FrmInfFactGaraje(((Factura)BindingSource.Current).Id);
+            FrmInfFactGaraje frmInfFactGaraje = new FrmInfFactGaraje(((FacturaGaraje)BindingSource.Current).Id);
             frmInfFactGaraje.ShowDialog();
         }
 
@@ -117,7 +117,7 @@ namespace GarajesAliKan.Forms
             BtnAddFactura.Tag = 1;
             HabilitarControles(true);
             TxtNumFactura.Focus();
-            Factura factura = (Factura)BindingSource.Current;
+            FacturaGaraje factura = (FacturaGaraje)BindingSource.Current;
 
             if (factura != null)
                 if (factura.Id != 0)
@@ -191,7 +191,7 @@ namespace GarajesAliKan.Forms
         {
             RestaurarTagsBotones();
             HabilitarControles(false);
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
         }
 
         /// <summary>
@@ -210,12 +210,12 @@ namespace GarajesAliKan.Forms
         {
             if (MessageBox.Show("¿Está seguro de que desea eliminar la factura?", "¿Eliminar Factura?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Factura factura = (Factura)BindingSource.Current;
+                FacturaGaraje factura = (FacturaGaraje)BindingSource.Current;
 
                 if (factura.Eliminar())
                 {
                     MessageBox.Show("Factura eliminada", "Factura Eliminada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+                    BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
                     HabilitarControles(false);                    
                     CargarDatosComboBox(false, false, false);
                     BindingSource.Position = BindingSource.Count - 1;
@@ -229,7 +229,7 @@ namespace GarajesAliKan.Forms
         {
             if (ComprobarDatosIntroducidos())
             {
-                Factura factura = new Factura(1);
+                FacturaGaraje factura = new FacturaGaraje();
                 factura.Id = int.Parse(TxtNumFactura.Text);
                 factura.Fecha = DtFecha.Value;
                 factura.EstaPagada = CkBoxPagada.Checked;
@@ -239,16 +239,16 @@ namespace GarajesAliKan.Forms
 
                 if (Convert.ToInt32(BtnAddFactura.Tag) == 1)                // Insertamos la nueva factura.
                 {                                        
-                    factura.Cliente.Id = ((Cliente)CbClientes.SelectedItem).Id;                    
+                    factura.Cliente.Id = ((ClienteGaraje)CbClientes.SelectedItem).Id;                    
                     factura.Cliente.Alquiler.IdTipoAlquiler = ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler;
                     factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;
                     
-                    if (factura.InsertarParaGaraje())
+                    if (factura.Insertar())
                     {
                         MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+                        BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
 
-                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje(factura.Id));
                         BindingSource.Position = pos;
 
                         HabilitarControles(false);                        
@@ -259,12 +259,12 @@ namespace GarajesAliKan.Forms
                 }
                 else if (Convert.ToInt32(BtnModificarFactura.Tag) == 1)             // Modificamos los datos de la factura.
                 {
-                    if (factura.ModificarParaGaraje())
+                    if (factura.Modificar())
                     {
                         MessageBox.Show("Factura modificada", "Factura Modificada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BindingSource.DataSource = Factura.ObtenerFacturasGarajes();
+                        BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
 
-                        int pos = ((List<Factura>)BindingSource.DataSource).IndexOf(new Factura(factura.Id));
+                        int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje(factura.Id));
                         BindingSource.Position = pos;
 
                         HabilitarControles(false);                        
@@ -368,39 +368,39 @@ namespace GarajesAliKan.Forms
 
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
         }
 
         private void BindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosFactura((Factura)BindingSource.Current);
+            RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
         }
 
         private void CbNumsFacturas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaGarajePorId((int)CbNumsFacturas.SelectedItem);
+            FacturaGaraje factura = FacturaGaraje.ObtenerDatosFacturaPorId((int)CbNumsFacturas.SelectedItem);
             RellenarDatosFactura(factura);
         }
 
         private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaGarajePorIdCliente(((Cliente)CbNifs.SelectedItem).Id);
+            FacturaGaraje factura = FacturaGaraje.ObtenerFacturaPorIdCliente(((ClienteGaraje)CbNifs.SelectedItem).Id);
             RellenarDatosFactura(factura);
         }
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Factura factura = Factura.ObtenerFacturaGarajePorFecha((DateTime)CbFechas.SelectedItem);
+            FacturaGaraje factura = FacturaGaraje.ObtenerFacturaPorFecha((DateTime)CbFechas.SelectedItem);
             RellenarDatosFactura(factura);
         }
 

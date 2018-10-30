@@ -22,10 +22,10 @@ namespace GarajesAliKan.Forms
         private void FrmClientesLavadero_Load(object sender, EventArgs e)
         {
             CargarDatosComboBox();
-            if (Cliente.HayClientesLavadero())
+            if (ClienteLavadero.HayClientes())
             {
-                BindingSource.DataSource = Cliente.ObtenerClientesLavadero();                
-                RellenarDatosCliente((Cliente)BindingSource.Current);
+                BindingSource.DataSource = ClienteLavadero.ObtenerClientes();                
+                RellenarDatosCliente((ClienteLavadero)BindingSource.Current);
             }
             else
             {
@@ -40,10 +40,10 @@ namespace GarajesAliKan.Forms
         /// </summary>
         private void CargarDatosComboBox()
         {
-            CbApellidos.DataSource = Cliente.ObtenerApellidosClientesLavadero();
+            CbApellidos.DataSource = ClienteLavadero.ObtenerApellidosClientes();
             CbApellidos.DisplayMember = "Apellidos";
             CbApellidos.ValueMember = "Id";
-            CbNifs.DataSource = Cliente.ObtenerNifsClientesLavadero();
+            CbNifs.DataSource = ClienteLavadero.ObtenerNifsClientesLavadero();
             CbNifs.DisplayMember = "Nif";
             CbNifs.ValueMember = "Id";
         }
@@ -52,7 +52,7 @@ namespace GarajesAliKan.Forms
         /// Rellena los datos del cliente buscado a sus TextBoxs;
         /// </summary>
         /// <param name="cliente">Los datos del cliente.</param>
-        private void RellenarDatosCliente(Cliente cliente)
+        private void RellenarDatosCliente(ClienteLavadero cliente)
         {
             TxtNombre.Text = cliente.Nombre;
             TxtApellidos.Text = cliente.Apellidos;
@@ -63,22 +63,22 @@ namespace GarajesAliKan.Forms
 
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteLavadero)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteLavadero)BindingSource.Current);
         }
 
         private void BindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteLavadero)BindingSource.Current);
         }
 
         private void BindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
         {
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteLavadero)BindingSource.Current);
         }
 
         private void TxtNif_KeyPress(object sender, KeyPressEventArgs e)
@@ -104,7 +104,7 @@ namespace GarajesAliKan.Forms
             BtnAddCliente.Tag = 1;
             HabilitarControles(true);
             TxtNombre.Focus();
-            Cliente cliente = (Cliente)BindingSource.Current;
+            ClienteLavadero cliente = (ClienteLavadero)BindingSource.Current;
 
             if (cliente != null)
                 if (cliente.Id != 0)
@@ -143,22 +143,21 @@ namespace GarajesAliKan.Forms
             if (ComprobarDatosIntroducidos())
             {
                 HabilitarControles(false);
-                Cliente cliente = new Cliente();
+                ClienteLavadero cliente = new ClienteLavadero();
                 cliente.Nombre = TxtNombre.Text;
                 cliente.Apellidos = TxtApellidos.Text;
                 cliente.Direccion = TxtDireccion.Text;
                 cliente.Nif = TxtNif.Text;
-                cliente.Telefono = TxtTelefono.Text;
-                cliente.EsClienteGaraje = false;
+                cliente.Telefono = TxtTelefono.Text;                
 
                 if (Convert.ToInt32(BtnAddCliente.Tag) == 1)            // Guardamos el cliente.
                 {                    
                     if (cliente.Insertar())
                     {
                         MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BindingSource.DataSource = Cliente.ObtenerClientesLavadero();                        
+                        BindingSource.DataSource = ClienteLavadero.ObtenerClientes();                        
 
-                        int pos = ((List<Cliente>)BindingSource.DataSource).IndexOf(new Cliente(cliente.Id));       // Buscamos la posición del cliente insertado.
+                        int pos = ((List<ClienteLavadero>)BindingSource.DataSource).IndexOf(new ClienteLavadero(cliente.Id));       // Buscamos la posición del cliente insertado.
                         BindingSource.Position = pos;
 
                         if (!BtnModificarCliente.Enabled && !BtnEliminarCliente.Enabled)
@@ -172,7 +171,7 @@ namespace GarajesAliKan.Forms
                 }
                 else if (Convert.ToInt32(BtnModificarCliente.Tag) == 1)             // Modificamos sus datos.
                 {
-                    cliente.Id = ((Cliente)BindingSource.DataSource).Id;                    
+                    cliente.Id = ((ClienteLavadero)BindingSource.DataSource).Id;                    
                     if (cliente.Modificar())
                         MessageBox.Show("Datos del cliente modificados", "Datos Modificados", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
@@ -258,11 +257,11 @@ namespace GarajesAliKan.Forms
         {
             if (MessageBox.Show("¿Está seguro de que desea eliminar el cliente?", "¿Eliminar Cliente?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Cliente cliente = (Cliente)BindingSource.Current;
+                ClienteLavadero cliente = (ClienteLavadero)BindingSource.Current;
                 if (cliente.Eliminar())
                 {
                     MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    BindingSource.DataSource = Cliente.ObtenerClientesLavadero();
+                    BindingSource.DataSource = ClienteLavadero.ObtenerClientes();
                     HabilitarControles(false);                    
                     BindingSource.Position = BindingSource.Count - 1;
                 }
@@ -275,19 +274,19 @@ namespace GarajesAliKan.Forms
         {
             HabilitarControles(false);
             LimpiarCampos();
-            RellenarDatosCliente((Cliente)BindingSource.Current);
+            RellenarDatosCliente((ClienteLavadero)BindingSource.Current);
             RestaurarTagsBotones();
         }
 
         private void CbApellidos_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Cliente cliente = Cliente.ObtenerClienteLavaderoPorId(((Cliente)CbApellidos.SelectedItem).Id);
+            ClienteLavadero cliente = ClienteLavadero.ObtenerClientePorId(((ClienteLavadero)CbApellidos.SelectedItem).Id);
             RellenarDatosCliente(cliente);
         }
 
         private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Cliente cliente = Cliente.ObtenerClienteLavaderoPorId(((Cliente)CbNifs.SelectedItem).Id);
+            ClienteLavadero cliente = ClienteLavadero.ObtenerClientePorId(((ClienteLavadero)CbNifs.SelectedItem).Id);
             RellenarDatosCliente(cliente);
         }
 
