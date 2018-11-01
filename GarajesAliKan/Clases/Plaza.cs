@@ -20,7 +20,7 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT idCliente, plaza
-                                                      FROM   plazaCliente
+                                                      FROM   plazaClientes
                                                       ORDER BY plaza;", conexion);
 
             MySqlDataReader cursor = comando.ExecuteReader();

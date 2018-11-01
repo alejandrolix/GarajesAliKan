@@ -59,7 +59,12 @@ namespace GarajesAliKan.Clases
                 cliente.Nif = cursor.GetString("nif");
                 cliente.Direccion = cursor.GetString("direccion");
                 cliente.Telefono = cursor.GetString("telefono");
-                cliente.Observaciones = cursor.GetString("observaciones");
+
+                if (cursor.IsDBNull(6))                
+                    cliente.Observaciones = "";
+                else
+                    cliente.Observaciones = cursor.GetString("observaciones");
+                          
                 cliente.Garaje = new Garaje();
                 cliente.Garaje.Nombre = cursor.GetString("garaje");
                 cliente.Vehiculo = new Vehiculo(cursor.GetString("matricula"), cursor.GetString("marca"), cursor.GetString("modelo"));
@@ -169,7 +174,7 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT id, apellidos
-                                                      FROM   clientes                                                      
+                                                      FROM   clientesGarajes                                                      
                                                       ORDER BY apellidos;", conexion);
 
             MySqlDataReader cursor = comando.ExecuteReader();

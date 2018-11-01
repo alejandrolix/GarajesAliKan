@@ -141,12 +141,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Alquiler.cs" />
-    <Compile Include="Clases\ClienteGaraje.cs" />
-    <Compile Include="Clases\ClienteLavadero.cs" />
-    <Compile Include="Clases\Factura.cs" />
-    <Compile Include="Clases\FacturaGaraje.cs" />
-    <Compile Include="Clases\FacturaLavadero.cs" />
-    <Compile Include="Clases\FacturaRecibida.cs" />
+    <Compile Include="Clases\Clientes\ClienteGaraje.cs" />
+    <Compile Include="Clases\Clientes\ClienteLavadero.cs" />
+    <Compile Include="Clases\Facturas\Factura.cs" />
+    <Compile Include="Clases\Facturas\FacturaGaraje.cs" />
+    <Compile Include="Clases\Facturas\FacturaLavadero.cs" />
+    <Compile Include="Clases\Facturas\FacturaRecibida.cs" />
     <Compile Include="Clases\Foo.cs" />
     <Compile Include="Clases\Plaza.cs" />
     <Compile Include="Clases\Proveedor.cs" />
@@ -243,7 +243,7 @@
     <Compile Include="Forms\FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Clases\Cliente.cs" />
+    <Compile Include="Clases\Clientes\Cliente.cs" />
     <Compile Include="Clases\Garaje.cs" />
     <Compile Include="Forms\FrmFactsRecibidas.cs">
       <SubType>Form</SubType>
