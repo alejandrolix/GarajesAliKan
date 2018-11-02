@@ -60,8 +60,8 @@ namespace GarajesAliKan.Clases
                 cliente.Direccion = cursor.GetString("direccion");
                 cliente.Telefono = cursor.GetString("telefono");
 
-                if (cursor.IsDBNull(6))                
-                    cliente.Observaciones = "";
+                if (cursor.IsDBNull(6))
+                    cliente.Observaciones = null;
                 else
                     cliente.Observaciones = cursor.GetString("observaciones");
                           
@@ -105,7 +105,12 @@ namespace GarajesAliKan.Clases
                 cliente.Nombre = cursor.GetString("nombre");
                 cliente.Apellidos = cursor.GetString("apellidos");
                 cliente.Telefono = cursor.GetString("telefono");
-                cliente.Observaciones = cursor.GetString("observaciones");
+
+                if (cursor.IsDBNull(5))
+                    cliente.Observaciones = null;
+                else
+                    cliente.Observaciones = cursor.GetString("observaciones");
+                
                 cliente.Alquiler = new Alquiler();
                 cliente.Alquiler.Total = cursor.GetDecimal("total");
                 cliente.Alquiler.Plaza = cursor.GetString("plaza");
@@ -148,7 +153,12 @@ namespace GarajesAliKan.Clases
                 cliente.Nif = cursor.GetString("nif");
                 cliente.Direccion = cursor.GetString("direccion");
                 cliente.Telefono = cursor.GetString("telefono");
-                cliente.Observaciones = cursor.GetString("observaciones");
+
+                if (cursor.IsDBNull(7))
+                    cliente.Observaciones = null;
+                else
+                    cliente.Observaciones = cursor.GetString("observaciones");
+
                 cliente.Garaje = new Garaje();
                 cliente.Garaje.Nombre = cursor.GetString("garaje");
                 cliente.Vehiculo = new Vehiculo(cursor.GetString("matricula"), cursor.GetString("marca"), cursor.GetString("modelo"));
@@ -319,7 +329,7 @@ namespace GarajesAliKan.Clases
         {            
         }
 
-        public ClienteGaraje(int id) : base(id)          // Para buscar un cliente por su Id en la lista de clientes.
+        public ClienteGaraje(int id) : base(id)          
         {            
         }
 
