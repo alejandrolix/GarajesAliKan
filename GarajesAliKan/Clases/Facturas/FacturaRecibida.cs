@@ -103,11 +103,12 @@ namespace GarajesAliKan.Clases
         public static FacturaRecibida ObtenerFacturaPorFecha(DateTime fecha)
         {
             MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand(@"SELECT factRec.id, factRec.fecha, gaj.nombre, prov.empresa, factRec.baseImponible, factRec.iva, factRec.total
+            MySqlCommand comando = new MySqlCommand(@"SELECT factRec.id, factRec.fecha, prov.empresa, prov.cif, gaj.nombre, factRec.baseImponible, factRec.iva, factRec.total
                                                       FROM   facturasRecibidas factRec
-                                                             JOIN garajes gaj ON fact.idGaraje = gaj.id
                                                              JOIN proveedores prov ON prov.id = fact.idProveedor
-                                                      WHERE  factRec.fecha = @fecha;", conexion);
+                                                             JOIN garajes gaj ON gaj.id = fact.idGaraje
+                                                      WHERE  factRec.fecha BETWEEN @desde AND @hasta
+                                                      ORDER BY fact.id;", conexion);
 
             comando.Parameters.AddWithValue("@fecha", fecha);
 
@@ -133,18 +134,22 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
-        /// Obtiene todas las facturas recibidas para realizar un informe.
+        /// Obtiene todas las facturas recibidas entre una fecha de inicio y fin para realizar un informe.
         /// </summary>
+        /// <param name="desde"></param>
         /// <returns>Todas las facturas recibidas</returns>
-        public static List<FacturaRecibida> ObtenerFacturasInforme()
+        public static List<FacturaRecibida> ObtenerFacturasPorFechasInforme(DateTime desde, DateTime hasta)
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factRec.id, factRec.fecha, prov.empresa, prov.cif, gaj.nombre, factRec.baseImponible, factRec.iva, factRec.total
                                                       FROM   facturasRecibidas factRec
-                                                             JOIN proveedores prov ON prov.id = fact.idProveedor
-                                                             JOIN garajes gaj ON gaj.id = fact.idGaraje
-                                                      WHERE fact.esFacturaRecibida IS TRUE
-                                                      ORDER BY fact.id;", conexion);
+                                                             JOIN proveedores prov ON prov.id = factRec.idProveedor
+                                                             JOIN garajes gaj ON gaj.id = factRec.idGaraje
+                                                      WHERE  factRec.fecha BETWEEN @desde AND @hasta
+                                                      ORDER BY factRec.id;", conexion);
+
+            comando.Parameters.AddWithValue("@desde", desde);
+            comando.Parameters.AddWithValue("@hasta", hasta);
 
             MySqlDataReader cursor = comando.ExecuteReader();
             List<FacturaRecibida> listaFacturas = new List<FacturaRecibida>();

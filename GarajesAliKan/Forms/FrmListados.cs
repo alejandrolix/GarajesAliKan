@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GarajesAliKan.Clases;
 using GarajesAliKan.Forms.FacturasEInformes;
 using GarajesAliKan.Forms.Informes;
 
@@ -33,20 +34,38 @@ namespace GarajesAliKan.Forms
 
         private void BtnImprFactGaraje_Click(object sender, EventArgs e)
         {
-            FrmFactGarajes frmFactGarajes = new FrmFactGarajes(DtFechaInicio.Value, DtFechaFin.Value);
-            frmFactGarajes.ShowDialog();
+            List<FacturaGaraje> listaFacturas = FacturaGaraje.ObtenerFacturasPorFechasInforme(DtFechaInicio.Value, DtFechaFin.Value);
+            if (listaFacturas.Count == 0)            
+                MessageBox.Show("No hay facturas de los garajes para mostrar a partir de la fecha de inicio y de fin escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);            
+            else
+            {
+                FrmFactGarajes frmFactGarajes = new FrmFactGarajes(listaFacturas, DtFechaInicio.Value, DtFechaFin.Value);
+                frmFactGarajes.ShowDialog();
+            }            
         }
 
         private void BtnImprFactLavadero_Click(object sender, EventArgs e)
         {
-            FrmListadosLavadero frmListadosLavadero = new FrmListadosLavadero();
-            frmListadosLavadero.ShowDialog();
+            List<FacturaLavadero> listaFacturas = FacturaLavadero.ObtenerFacturasPorFechasInforme(DtFechaInicio.Value, DtFechaFin.Value);
+            if (listaFacturas.Count == 0)
+                MessageBox.Show("No hay facturas del lavadero para mostrar a partir de la fecha de inicio y de fin escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                FrmListadosLavadero frmListadosLavadero = new FrmListadosLavadero(listaFacturas, DtFechaInicio.Value, DtFechaFin.Value);
+                frmListadosLavadero.ShowDialog();
+            }            
         }
 
         private void BtnImprFactRecibida_Click(object sender, EventArgs e)
         {
-            FrmFacturasRecibidas frmFacturasRecibidas = new FrmFacturasRecibidas();
-            frmFacturasRecibidas.ShowDialog();
+            List<FacturaRecibida> listaFacturas = FacturaRecibida.ObtenerFacturasPorFechasInforme(DtFechaInicio.Value, DtFechaFin.Value);
+            if (listaFacturas.Count == 0)            
+                MessageBox.Show("No hay facturas recibidas para mostrar a partir de la fecha de inicio y de fin escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);            
+            else
+            {
+                FrmFacturasRecibidas frmFacturasRecibidas = new FrmFacturasRecibidas(listaFacturas, DtFechaInicio.Value, DtFechaFin.Value);
+                frmFacturasRecibidas.ShowDialog();
+            }            
         }
     }
 }

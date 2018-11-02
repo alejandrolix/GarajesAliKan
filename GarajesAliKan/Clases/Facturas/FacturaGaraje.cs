@@ -13,7 +13,7 @@ namespace GarajesAliKan.Clases
         public bool EstaPagada { get; set; }
         public ClienteGaraje Cliente { get; set; }
         public Garaje Garaje { get; set; }
-        private Alquiler Alquiler { get; set; }
+        public Alquiler Alquiler { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -63,9 +63,9 @@ namespace GarajesAliKan.Clases
                 factura.Fecha = cursor.GetDateTime("fecha");
                 factura.Cliente.Nombre = cursor.GetString("nombre");
                 factura.EstaPagada = cursor.GetBoolean("estaPagada");
-                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
-                factura.Cliente.Garaje.Nombre = cursor.GetString("nombreGaraje");
-                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Plaza = cursor.GetString("plaza");
                 factura.BaseImponible = cursor.GetDecimal("baseImponible");
                 factura.Iva = cursor.GetDecimal("iva");
                 factura.Total = cursor.GetDecimal("total");
@@ -133,7 +133,7 @@ namespace GarajesAliKan.Clases
         public static FacturaGaraje ObtenerDatosFacturaPorId(int idFactura)
         {
             MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
+            MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, cliGaj.direccion, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
     	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
                                                              JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
@@ -155,9 +155,9 @@ namespace GarajesAliKan.Clases
                 factura.Cliente.Direccion = cursor.GetString("direccion");
                 factura.Cliente.Nombre = cursor.GetString("nombre");
                 factura.EstaPagada = cursor.GetBoolean("estaPagada");
-                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Alquiler.Concepto = cursor.GetString("concepto");
                 factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
-                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.Plaza = cursor.GetString("plaza");
                 factura.BaseImponible = cursor.GetDecimal("baseImponible");
                 factura.Iva = cursor.GetDecimal("iva");
                 factura.Total = cursor.GetDecimal("total");
@@ -360,7 +360,7 @@ namespace GarajesAliKan.Clases
         public FacturaGaraje() : base()
         {
             Cliente = new ClienteGaraje();
-            Cliente.Alquiler = new Alquiler();
+            Alquiler = new Alquiler();
             Garaje = new Garaje();
         }
 

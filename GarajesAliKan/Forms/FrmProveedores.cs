@@ -207,7 +207,7 @@ namespace GarajesAliKan.Forms
             bool hayEmpresa = false;
             bool hayCif = false;
             bool hayConcepto = false;
-            Regex exprRegCif = new Regex("^[0-9]{8}[A-Z]{1}$");
+            Regex exprRegCif = new Regex("^[0-9]{8}[A-Z]{1}|[A-Z]{1}[0-9]{8}$");
 
             if (TxtEmpresa.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir un nombre de empresa", "Nombre de Empresa Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -124,6 +124,10 @@ namespace GarajesAliKan.Forms
             TxtDireccion.Enabled = habilitar;
             TxtTelefono.Enabled = habilitar;
             PBuscarPor.Enabled = !habilitar;
+
+            BtnAddCliente.Enabled = !habilitar;
+            BtnModificarCliente.Enabled = !habilitar;
+            BtnEliminarCliente.Enabled = !habilitar;
         }
 
         /// <summary>
@@ -205,7 +209,7 @@ namespace GarajesAliKan.Forms
             bool hayDireccion = false;
             bool hayTelefono = false;
             Regex exprRegTelefono = new Regex("^[0-9]{9}$");
-            Regex exprRegNif = new Regex("^[0-9]{8}[A-Z]$");
+            Regex exprRegNif = new Regex("^[0-9]{8}[A-Z]{1}|[A-Z]{1}[0-9]{8}$");
 
             if (TxtNombre.Text.Length == 0)
                 MessageBox.Show("Tiene que introducir un nombre", "Nombre Vacío", MessageBoxButtons.OK, MessageBoxIcon.Error);

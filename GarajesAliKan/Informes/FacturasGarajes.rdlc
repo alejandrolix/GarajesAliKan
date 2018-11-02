@@ -128,10 +128,10 @@
                   <Width>5.39127cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.73813cm</Width>
+                  <Width>2.72672cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.87989cm</Width>
+                  <Width>5.17458cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3.0584cm</Width>
@@ -143,7 +143,7 @@
                   <Width>2.07667cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.26188cm</Width>
+                  <Width>1.94438cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -776,7 +776,6 @@
                             <rd:FormatSymbolCulture>ast-ES</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -808,9 +807,9 @@
             </TablixRowHierarchy>
             <DataSetName>DtFacturasGarajes</DataSetName>
             <Top>2.51037cm</Top>
-            <Left>0.08303cm</Left>
+            <Left>0.10014cm</Left>
             <Height>1.33229cm</Height>
-            <Width>27.50937cm</Width>
+            <Width>27.47515cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>

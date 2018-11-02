@@ -271,16 +271,20 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
-        /// Obtiene todas las facturas del lavadero para realizar un informe.
+        /// Obtiene todas las facturas del lavadero entre una fecha de inicio y fin para realizar un informe.
         /// </summary>
         /// <returns>Todas las facturas del lavadero</returns>
-        public static List<FacturaLavadero> ObtenerFacturasInforme()
+        public static List<FacturaLavadero> ObtenerFacturasPorFechasInforme(DateTime desde, DateTime hasta)
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factLav.id, factLav.fecha, CONCAT(cliLav.nombre, ' ', cliLav.apellidos) AS nombre, cliLav.direccion, cliLav.nif, factLav.baseImponible, factLav.iva, factLav.total
                                                       FROM   facturasLavadero factLav
 		                                                     JOIN clientesLavadero cliLav ON cliLav.id = factLav.idCliente
+		                                              WHERE factLav.fecha BETWEEN @desde AND @hasta
                                                       ORDER BY factLav.id;", conexion);
+
+            comando.Parameters.AddWithValue("@desde", desde);
+            comando.Parameters.AddWithValue("@hasta", hasta);
 
             MySqlDataReader cursor = comando.ExecuteReader();
             List<FacturaLavadero> listaFacturas = new List<FacturaLavadero>();

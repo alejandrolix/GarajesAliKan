@@ -13,23 +13,31 @@ using Microsoft.Reporting.WinForms;
 
 namespace GarajesAliKan.Forms.FacturasEInformes
 {
-    public partial class FrmListadosLavadero : Form
+    partial class FrmListadosLavadero : Form
     {
-        public FrmListadosLavadero()
+        private List<FacturaLavadero> ListaFacturas;
+        private DateTime Desde;
+        private DateTime Hasta;
+
+        public FrmListadosLavadero(List<FacturaLavadero> listaFacturas, DateTime desde, DateTime hasta)
         {
             InitializeComponent();
+            ListaFacturas = listaFacturas;
+            Desde = desde;
+            Hasta = hasta;
         }
 
         private void FrmListadosLavaderos_Load(object sender, EventArgs e)
-        {
-            List<FacturaLavadero> listaFacturas = FacturaLavadero.ObtenerFacturasInforme();
+        {            
             DtFacturasLavadero dtFacturasLavadero = new DtFacturasLavadero();
-
-            foreach (FacturaLavadero factura in listaFacturas)
+            foreach (FacturaLavadero factura in ListaFacturas)
             {
                 dtFacturasLavadero.Tables["facturas"].Rows.Add(factura.Id, factura.Fecha, factura.Cliente.Nombre, factura.Cliente.Direccion, factura.Cliente.Nif,
                                                                factura.BaseImponible, factura.Iva, factura.Total);
             }
+            ReportViewer.LocalReport.SetParameters(new ReportParameter("desde", Desde.ToString()));
+            ReportViewer.LocalReport.SetParameters(new ReportParameter("hasta", Hasta.ToString()));
+
             ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
             ReportViewer.LocalReport.DataSources.Add(new ReportDataSource("DtFacturasLavadero", dtFacturasLavadero.Tables["facturas"]));
             ReportViewer.RefreshReport();

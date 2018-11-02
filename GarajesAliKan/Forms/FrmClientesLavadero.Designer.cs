@@ -104,8 +104,8 @@
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 24);
-            this.bindingNavigatorCountItem.Text = "of {0}";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(48, 24);
+            this.bindingNavigatorCountItem.Text = "de {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Número total de elementos";
             // 
             // bindingNavigatorMoveFirstItem
@@ -202,10 +202,11 @@
             // 
             // BtnCancelar
             // 
+            this.BtnCancelar.Enabled = false;
             this.BtnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.BtnCancelar.Location = new System.Drawing.Point(103, 162);
             this.BtnCancelar.Name = "BtnCancelar";
-            this.BtnCancelar.Size = new System.Drawing.Size(75, 26);
+            this.BtnCancelar.Size = new System.Drawing.Size(75, 28);
             this.BtnCancelar.TabIndex = 12;
             this.BtnCancelar.Text = "Cancelar";
             this.BtnCancelar.UseVisualStyleBackColor = true;
@@ -224,10 +225,11 @@
             // 
             // BtnGuardar
             // 
+            this.BtnGuardar.Enabled = false;
             this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.BtnGuardar.Location = new System.Drawing.Point(7, 162);
             this.BtnGuardar.Name = "BtnGuardar";
-            this.BtnGuardar.Size = new System.Drawing.Size(75, 26);
+            this.BtnGuardar.Size = new System.Drawing.Size(75, 28);
             this.BtnGuardar.TabIndex = 11;
             this.BtnGuardar.Text = "Guardar";
             this.BtnGuardar.UseVisualStyleBackColor = true;

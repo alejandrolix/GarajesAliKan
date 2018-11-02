@@ -112,8 +112,8 @@
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 24);
-            this.bindingNavigatorCountItem.Text = "of {0}";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(48, 24);
+            this.bindingNavigatorCountItem.Text = "de {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Número total de elementos";
             // 
             // bindingNavigatorMoveFirstItem
@@ -315,7 +315,7 @@
             this.panel1.Location = new System.Drawing.Point(12, 45);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(936, 375);
-            this.panel1.TabIndex = 28;
+            this.panel1.TabIndex = 28;            
             // 
             // TxtConcepto
             // 

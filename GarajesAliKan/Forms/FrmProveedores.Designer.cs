@@ -91,8 +91,8 @@
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 24);
-            this.bindingNavigatorCountItem.Text = "of {0}";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(48, 24);
+            this.bindingNavigatorCountItem.Text = "de {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Número total de elementos";
             // 
             // bindingNavigatorMoveFirstItem
@@ -226,7 +226,7 @@
             // 
             this.LEmpresa.AutoSize = true;
             this.LEmpresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LEmpresa.Location = new System.Drawing.Point(294, 45);
+            this.LEmpresa.Location = new System.Drawing.Point(294, 37);
             this.LEmpresa.Name = "LEmpresa";
             this.LEmpresa.Size = new System.Drawing.Size(76, 18);
             this.LEmpresa.TabIndex = 37;
@@ -236,7 +236,7 @@
             // 
             this.lCif.AutoSize = true;
             this.lCif.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.lCif.Location = new System.Drawing.Point(294, 96);
+            this.lCif.Location = new System.Drawing.Point(294, 88);
             this.lCif.Name = "lCif";
             this.lCif.Size = new System.Drawing.Size(51, 18);
             this.lCif.TabIndex = 38;
@@ -246,7 +246,7 @@
             // 
             this.LConcepto.AutoSize = true;
             this.LConcepto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.LConcepto.Location = new System.Drawing.Point(294, 147);
+            this.LConcepto.Location = new System.Drawing.Point(294, 139);
             this.LConcepto.Name = "LConcepto";
             this.LConcepto.Size = new System.Drawing.Size(81, 18);
             this.LConcepto.TabIndex = 39;
@@ -274,9 +274,11 @@
             this.TxtConcepto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtConcepto.Enabled = false;
             this.TxtConcepto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtConcepto.Location = new System.Drawing.Point(403, 146);
+            this.TxtConcepto.Location = new System.Drawing.Point(403, 138);
+            this.TxtConcepto.MaxLength = 60;
+            this.TxtConcepto.Multiline = true;
             this.TxtConcepto.Name = "TxtConcepto";
-            this.TxtConcepto.Size = new System.Drawing.Size(189, 24);
+            this.TxtConcepto.Size = new System.Drawing.Size(234, 60);
             this.TxtConcepto.TabIndex = 3;
             // 
             // TxtCif
@@ -284,7 +286,7 @@
             this.TxtCif.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtCif.Enabled = false;
             this.TxtCif.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtCif.Location = new System.Drawing.Point(403, 94);
+            this.TxtCif.Location = new System.Drawing.Point(403, 86);
             this.TxtCif.Name = "TxtCif";
             this.TxtCif.Size = new System.Drawing.Size(121, 24);
             this.TxtCif.TabIndex = 2;
@@ -295,7 +297,7 @@
             this.TxtEmpresa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TxtEmpresa.Enabled = false;
             this.TxtEmpresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.TxtEmpresa.Location = new System.Drawing.Point(403, 42);
+            this.TxtEmpresa.Location = new System.Drawing.Point(403, 34);
             this.TxtEmpresa.Name = "TxtEmpresa";
             this.TxtEmpresa.Size = new System.Drawing.Size(189, 24);
             this.TxtEmpresa.TabIndex = 1;

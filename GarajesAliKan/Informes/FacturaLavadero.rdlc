@@ -7,9 +7,9 @@
         <ReportItems>
           <Rectangle Name="Rectangle3">
             <KeepTogether>true</KeepTogether>
-            <Top>5.93937cm</Top>
+            <Top>5.62187cm</Top>
             <Left>1.39065cm</Left>
-            <Height>5cm</Height>
+            <Height>5.04cm</Height>
             <Width>15.39cm</Width>
             <Style>
               <Border>
@@ -27,7 +27,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>Garajes Alí-Kan SL</Value>
+                        <Value>Garajes Alí-Kan, S.L.</Value>
                         <Style>
                           <FontSize>22pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -41,9 +41,9 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox1</rd:DefaultName>
                 <Top>0.42016cm</Top>
-                <Left>4.17724cm</Left>
+                <Left>3.85974cm</Left>
                 <Height>1.04979cm</Height>
-                <Width>7.58cm</Width>
+                <Width>8.34697cm</Width>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -61,7 +61,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>C/ Garbinet, 120 Alicante</Value>
+                        <Value>C/ Garbinet, 120 Alicante, 03012</Value>
                         <Style>
                           <FontSize>14pt</FontSize>
                         </Style>
@@ -74,9 +74,9 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox2</rd:DefaultName>
                 <Top>1.57578cm</Top>
-                <Left>5.07683cm</Left>
+                <Left>4.30954cm</Left>
                 <Height>0.73229cm</Height>
-                <Width>6.28354cm</Width>
+                <Width>7.44738cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
@@ -108,7 +108,7 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox2</rd:DefaultName>
                 <Top>2.5575cm</Top>
-                <Left>5.65891cm</Left>
+                <Left>5.5926cm</Left>
                 <Height>0.74111cm</Height>
                 <Width>4.88125cm</Width>
                 <ZIndex>2</ZIndex>
@@ -142,7 +142,7 @@
                 </Paragraphs>
                 <rd:DefaultName>Textbox2</rd:DefaultName>
                 <Top>3.29861cm</Top>
-                <Left>5.65891cm</Left>
+                <Left>5.5926cm</Left>
                 <Height>0.70583cm</Height>
                 <Width>4.88125cm</Width>
                 <ZIndex>3</ZIndex>
@@ -317,7 +317,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Cliente</Value>
+                            <Value>Nombre o Razón Social</Value>
                             <Style>
                               <FontSize>16pt</FontSize>
                               <FontWeight>Bold</FontWeight>
@@ -331,9 +331,9 @@
                     </Paragraphs>
                     <rd:DefaultName>Textbox18</rd:DefaultName>
                     <Top>0.16801cm</Top>
-                    <Left>6.0525cm</Left>
+                    <Left>4.0525cm</Left>
                     <Height>0.70583cm</Height>
-                    <Width>2.5cm</Width>
+                    <Width>6.5cm</Width>
                     <Style>
                       <Border>
                         <Style>None</Style>
@@ -391,39 +391,6 @@
                   <PaddingBottom>2pt</PaddingBottom>
                 </Style>
               </Textbox>
-              <Textbox Name="Textbox20">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>N.I.F.:</Value>
-                        <Style>
-                          <FontSize>13pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>Textbox20</rd:DefaultName>
-                <Top>3.95287cm</Top>
-                <Left>0.30268cm</Left>
-                <Height>0.6cm</Height>
-                <Width>1.49458cm</Width>
-                <ZIndex>2</ZIndex>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
               <Textbox Name="nif">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
@@ -437,15 +404,17 @@
                         </Style>
                       </TextRun>
                     </TextRuns>
-                    <Style />
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>nif</rd:DefaultName>
-                <Top>3.95287cm</Top>
-                <Left>1.79727cm</Left>
-                <Height>0.6cm</Height>
-                <Width>2.71167cm</Width>
-                <ZIndex>3</ZIndex>
+                <Top>4.04812cm</Top>
+                <Left>0.30268cm</Left>
+                <Height>0.67938cm</Height>
+                <Width>14.60182cm</Width>
+                <ZIndex>2</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -469,48 +438,17 @@
                         </Style>
                       </TextRun>
                     </TextRuns>
-                    <Style />
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>direccion</rd:DefaultName>
-                <Top>3.95287cm</Top>
-                <Left>7.93242cm</Left>
-                <Height>0.6cm</Height>
-                <Width>6.97208cm</Width>
-                <ZIndex>4</ZIndex>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
-              <Textbox Name="Textbox23">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>Dirección:</Value>
-                        <Style>
-                          <FontSize>13pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>Textbox23</rd:DefaultName>
-                <Top>3.95287cm</Top>
-                <Left>5.43242cm</Left>
-                <Height>0.6cm</Height>
-                <Width>2.5cm</Width>
-                <ZIndex>5</ZIndex>
+                <Top>2.87602cm</Top>
+                <Left>0.30268cm</Left>
+                <Height>0.65292cm</Height>
+                <Width>14.60182cm</Width>
+                <ZIndex>3</ZIndex>
                 <Style>
                   <Border>
                     <Style>None</Style>
@@ -523,9 +461,9 @@
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>5.80708cm</Top>
+            <Top>5.48958cm</Top>
             <Left>1.39065cm</Left>
-            <Height>4.94917cm</Height>
+            <Height>4.9825cm</Height>
             <Width>15.214cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -538,9 +476,9 @@
           </Rectangle>
           <Rectangle Name="Rectangle5">
             <KeepTogether>true</KeepTogether>
-            <Top>12.84499cm</Top>
+            <Top>12.20999cm</Top>
             <Left>1.39065cm</Left>
-            <Height>3cm</Height>
+            <Height>3.35cm</Height>
             <Width>15.39cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -601,14 +539,14 @@
                   <BackgroundColor>#00b7ef</BackgroundColor>
                 </Style>
               </Rectangle>
-              <Textbox Name="tipoAlquiler">
+              <Textbox Name="concepto">
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Parameters!tipoAlquiler.Value</Value>
+                        <Value>=Parameters!concepto.Value</Value>
                         <Style>
                           <FontSize>13pt</FontSize>
                         </Style>
@@ -619,10 +557,10 @@
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <rd:DefaultName>tipoAlquiler</rd:DefaultName>
-                <Top>1.651cm</Top>
+                <rd:DefaultName>concepto</rd:DefaultName>
+                <Top>2.02142cm</Top>
                 <Left>0.30268cm</Left>
-                <Height>0.65292cm</Height>
+                <Height>0.67938cm</Height>
                 <Width>14.60182cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
@@ -637,9 +575,9 @@
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>12.58041cm</Top>
+            <Top>11.94541cm</Top>
             <Left>1.39065cm</Left>
-            <Height>3.04475cm</Height>
+            <Height>3.42417cm</Height>
             <Width>15.214cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
@@ -650,79 +588,13 @@
               <BackgroundColor>White</BackgroundColor>
             </Style>
           </Rectangle>
-          <Textbox Name="Textbox10">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Base Imponible:</Value>
-                    <Style>
-                      <FontSize>13pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox10</rd:DefaultName>
-            <Top>17.16828cm</Top>
-            <Left>8.19584cm</Left>
-            <Height>0.6cm</Height>
-            <Width>4.39452cm</Width>
-            <ZIndex>5</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox11">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>I.V.A. 21%:</Value>
-                    <Style>
-                      <FontSize>13pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox10</rd:DefaultName>
-            <Top>18.7855cm</Top>
-            <Left>8.19584cm</Left>
-            <Height>0.6cm</Height>
-            <Width>4.39452cm</Width>
-            <ZIndex>6</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
           <Rectangle Name="Rectangle10">
             <KeepTogether>true</KeepTogether>
-            <Top>18.61677cm</Top>
+            <Top>19.66065cm</Top>
             <Left>12.88819cm</Left>
-            <Height>1.13104cm</Height>
+            <Height>0.91cm</Height>
             <Width>3.66cm</Width>
-            <ZIndex>7</ZIndex>
+            <ZIndex>5</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -730,91 +602,13 @@
               <BackgroundColor>#00b7ef</BackgroundColor>
             </Style>
           </Rectangle>
-          <Textbox Name="baseImponible2">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Parameters!iva.Value</Value>
-                    <Style>
-                      <FontSize>13pt</FontSize>
-                      <Format>0.00;(0.00)</Format>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value> €</Value>
-                    <Style>
-                      <FontSize>13pt</FontSize>
-                      <Format>0.00;(0.00)</Format>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>baseImponible</rd:DefaultName>
-            <Top>18.47125cm</Top>
-            <Left>12.88819cm</Left>
-            <Height>0.99104cm</Height>
-            <Width>3.5cm</Width>
-            <ZIndex>8</ZIndex>
-            <Style>
-              <Border>
-                <Color>#00b7ef</Color>
-                <Style>Solid</Style>
-              </Border>
-              <BackgroundColor>White</BackgroundColor>
-              <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox12">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Total Factura:</Value>
-                    <Style>
-                      <FontSize>13pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox10</rd:DefaultName>
-            <Top>20.40271cm</Top>
-            <Left>8.19584cm</Left>
-            <Height>0.6cm</Height>
-            <Width>4.39452cm</Width>
-            <ZIndex>9</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
           <Rectangle Name="Rectangle11">
             <KeepTogether>true</KeepTogether>
-            <Top>20.40271cm</Top>
+            <Top>21.35521cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.84cm</Height>
             <Width>3.66cm</Width>
-            <ZIndex>10</ZIndex>
+            <ZIndex>6</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -849,11 +643,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>baseImponible</rd:DefaultName>
-            <Top>20.11167cm</Top>
+            <Top>21.06417cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.99104cm</Height>
             <Width>3.5cm</Width>
-            <ZIndex>11</ZIndex>
+            <ZIndex>7</ZIndex>
             <Style>
               <Border>
                 <Color>#00b7ef</Color>
@@ -869,11 +663,11 @@
           </Textbox>
           <Rectangle Name="Rectangle12">
             <KeepTogether>true</KeepTogether>
-            <Top>17.16828cm</Top>
+            <Top>18.12078cm</Top>
             <Left>12.88819cm</Left>
-            <Height>0.84cm</Height>
+            <Height>0.82cm</Height>
             <Width>3.66cm</Width>
-            <ZIndex>12</ZIndex>
+            <ZIndex>8</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -908,11 +702,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>baseImponible</rd:DefaultName>
-            <Top>16.87724cm</Top>
+            <Top>17.82974cm</Top>
             <Left>12.88819cm</Left>
             <Height>0.99104cm</Height>
             <Width>3.5cm</Width>
-            <ZIndex>13</ZIndex>
+            <ZIndex>9</ZIndex>
             <Style>
               <Border>
                 <Color>#00b7ef</Color>
@@ -926,14 +720,158 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="baseImponible5">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!iva.Value</Value>
+                    <Style>
+                      <FontSize>13pt</FontSize>
+                      <Format>0.00;(0.00)</Format>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value> €</Value>
+                    <Style>
+                      <FontSize>13pt</FontSize>
+                      <Format>0.00;(0.00)</Format>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>baseImponible</rd:DefaultName>
+            <Top>19.45786cm</Top>
+            <Left>12.88819cm</Left>
+            <Height>0.99104cm</Height>
+            <Width>3.5cm</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Color>#00b7ef</Color>
+                <Style>Solid</Style>
+              </Border>
+              <BackgroundColor>White</BackgroundColor>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox10">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Base Imponible:</Value>
+                    <Style>
+                      <FontSize>13pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox10</rd:DefaultName>
+            <Top>17.95674cm</Top>
+            <Left>8.27828cm</Left>
+            <Height>0.62062cm</Height>
+            <Width>3.99458cm</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox11">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>I.V.A. 21%:</Value>
+                    <Style>
+                      <FontSize>13pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox10</rd:DefaultName>
+            <Top>19.62891cm</Top>
+            <Left>8.27829cm</Left>
+            <Height>0.62062cm</Height>
+            <Width>3.99457cm</Width>
+            <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox12">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Total Factura:</Value>
+                    <Style>
+                      <FontSize>13pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox10</rd:DefaultName>
+            <Top>21.22821cm</Top>
+            <Left>8.27828cm</Left>
+            <Height>0.62062cm</Height>
+            <Width>3.99458cm</Width>
+            <ZIndex>13</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>22.38041cm</Height>
+        <Height>24.28541cm</Height>
         <Style />
       </Body>
       <Width>17.99167cm</Width>
       <Page>
         <PageFooter>
-          <Height>3.41312cm</Height>
+          <Height>2.35479cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -946,7 +884,7 @@
                     <TextRun>
                       <Value>El responsable del tratamiento de sus datos es GARAJES ALI-KAN SL. Sus datos serán tratados con la finalidad de gestionar los servicios administrativos y facturar nuestros servicios. La legitimación para el uso de sus datos está basada en la ejecución de un contrato o prestación de servicios. No se cederán datos a terceros, salvo obligación legal. Los datos serán destruidos una vez comunique su baja y/o finalizados los períodos legales de conservación. No se llevarán a cabo transferencias internacionales de datos ni análisis de perfiles. Los interesados podrán ejercitar sus derechos de acceso, rectificación, supresión, o limitación del tratamiento, dirigiéndose a GARAJES ALI-KAN SL en la siguiente dirección: garajes-ali-kan@hotmail.com. Igualmente, puede presentar una reclamación ante la Agencia Española de Protección de Datos si considera que sus derechos han sido vulnerados.</Value>
                       <Style>
-                        <FontSize>9pt</FontSize>
+                        <FontSize>7pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -954,9 +892,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.10583cm</Top>
+              <Top>0.14287cm</Top>
               <Left>0.06615cm</Left>
-              <Height>3.27201cm</Height>
+              <Height>2.02847cm</Height>
               <Width>17.85937cm</Width>
               <Style>
                 <Border>
@@ -1006,10 +944,6 @@
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="tipoAlquiler">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
     <ReportParameter Name="baseImponible">
       <DataType>Float</DataType>
       <Prompt>ReportParameter1</Prompt>
@@ -1020,6 +954,10 @@
     </ReportParameter>
     <ReportParameter Name="totalFactura">
       <DataType>Float</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="concepto">
+      <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
@@ -1054,11 +992,6 @@
           <ParameterName>direccion</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>1</RowIndex>
-          <ParameterName>tipoAlquiler</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>2</RowIndex>
           <ParameterName>baseImponible</ParameterName>
@@ -1072,6 +1005,11 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>2</RowIndex>
           <ParameterName>totalFactura</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>concepto</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

@@ -87,7 +87,7 @@ namespace GarajesAliKan.Forms
             DtFecha.Value = factura.Fecha;
             CbClientes.Text = factura.Cliente.Nombre;
 
-            CbConceptos.Text = factura.Cliente.Alquiler.Concepto;
+            CbConceptos.Text = factura.Alquiler.Concepto;
             CbGarajes.Text = factura.Garaje.Nombre;
             TxtPlaza.Text = factura.Plaza;
             TxtBaseImponible.Text = factura.BaseImponible.ToString();

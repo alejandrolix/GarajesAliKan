@@ -34,7 +34,7 @@ namespace GarajesAliKan.Forms.Facturas
             listaParametros.Add(new ReportParameter("nombre", factura.Cliente.Nombre));
             listaParametros.Add(new ReportParameter("nif", factura.Cliente.Nif));
             listaParametros.Add(new ReportParameter("direccion", factura.Cliente.Direccion));
-            listaParametros.Add(new ReportParameter("tipoAlquiler", factura.Cliente.Alquiler.Concepto));
+            listaParametros.Add(new ReportParameter("tipoAlquiler", factura.Alquiler.Concepto));
             listaParametros.Add(new ReportParameter("garaje", factura.Garaje.Nombre));
             listaParametros.Add(new ReportParameter("plaza", factura.Plaza));
             listaParametros.Add(new ReportParameter("baseImponible", factura.BaseImponible.ToString()));
