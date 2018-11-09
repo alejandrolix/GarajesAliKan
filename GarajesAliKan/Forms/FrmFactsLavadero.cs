@@ -345,7 +345,7 @@ namespace GarajesAliKan.Forms
 
         private void BtnImprimirFactura_Click(object sender, EventArgs e)
         {
-            FrmInfFactLavadero frmInfFactLavadero = new FrmInfFactLavadero(((FacturaLavadero)BindingSource.Current).Id);
+            FrmFactLavadero frmInfFactLavadero = new FrmFactLavadero(((FacturaLavadero)BindingSource.Current).Id);
             frmInfFactLavadero.ShowDialog();
         }
 

@@ -13,9 +13,9 @@ using System.Windows.Forms;
 
 namespace GarajesAliKan.Forms.Informes
 {
-    public partial class FrmInfClientesGarajes : Form
+    public partial class FrmClientesGarajes : Form
     {
-        public FrmInfClientesGarajes()
+        public FrmClientesGarajes()
         {
             InitializeComponent();
         }

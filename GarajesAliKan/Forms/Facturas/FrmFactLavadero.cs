@@ -12,11 +12,11 @@ using System.Windows.Forms;
 
 namespace GarajesAliKan.Forms.Facturas
 {
-    public partial class FrmInfFactLavadero : Form
+    public partial class FrmFactLavadero : Form
     {
         private int IdFactura;
 
-        public FrmInfFactLavadero(int idFactura)
+        public FrmFactLavadero(int idFactura)
         {
             InitializeComponent();
             IdFactura = idFactura;

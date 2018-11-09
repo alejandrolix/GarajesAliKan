@@ -28,7 +28,7 @@ namespace GarajesAliKan.Forms
 
         private void BtnImprimirClientes_Click(object sender, EventArgs e)
         {
-            FrmInfClientesGarajes frmInfClientesGarajes = new FrmInfClientesGarajes();
+            FrmClientesGarajes frmInfClientesGarajes = new FrmClientesGarajes();
             frmInfClientesGarajes.ShowDialog();
         }
 

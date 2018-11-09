@@ -164,40 +164,40 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtFacturasRecibidas.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmFactClienteGaraje.cs">
+    <Compile Include="Forms\Facturas\FrmFactClienteGaraje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmFactClienteGaraje.Designer.cs">
+    <Compile Include="Forms\Facturas\FrmFactClienteGaraje.Designer.cs">
       <DependentUpon>FrmFactClienteGaraje.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmFactGarajes.cs">
+    <Compile Include="Forms\Facturas\FrmFactGarajes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmFactGarajes.Designer.cs">
+    <Compile Include="Forms\Facturas\FrmFactGarajes.Designer.cs">
       <DependentUpon>FrmFactGarajes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmFacturasRecibidas.cs">
+    <Compile Include="Forms\Facturas\FrmFacturasRecibidas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmFacturasRecibidas.Designer.cs">
+    <Compile Include="Forms\Facturas\FrmFacturasRecibidas.Designer.cs">
       <DependentUpon>FrmFacturasRecibidas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmInfFactGaraje.cs">
+    <Compile Include="Forms\Facturas\FrmFactGaraje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmInfFactGaraje.Designer.cs">
-      <DependentUpon>FrmInfFactGaraje.cs</DependentUpon>
+    <Compile Include="Forms\Facturas\FrmFactGaraje.Designer.cs">
+      <DependentUpon>FrmFactGaraje.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmInfFactLavadero.cs">
+    <Compile Include="Forms\Facturas\FrmFactLavadero.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmInfFactLavadero.Designer.cs">
-      <DependentUpon>FrmInfFactLavadero.cs</DependentUpon>
+    <Compile Include="Forms\Facturas\FrmFactLavadero.Designer.cs">
+      <DependentUpon>FrmFactLavadero.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmListadosLavadero.cs">
+    <Compile Include="Forms\Informes\FrmListadosLavadero.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmListadosLavadero.Designer.cs">
+    <Compile Include="Forms\Informes\FrmListadosLavadero.Designer.cs">
       <DependentUpon>FrmListadosLavadero.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmClientesGaraje.cs">
@@ -250,30 +250,30 @@
     <Compile Include="Forms\FrmProveedores.Designer.cs">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmInfClientesGarajes.cs">
+    <Compile Include="Forms\Informes\FrmClientesGarajes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FacturasEInformes\FrmInfClientesGarajes.Designer.cs">
-      <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
+    <Compile Include="Forms\Informes\FrmClientesGarajes.Designer.cs">
+      <DependentUpon>FrmClientesGarajes.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\FacturasEInformes\FrmFactClienteGaraje.resx">
+    <EmbeddedResource Include="Forms\Facturas\FrmFactClienteGaraje.resx">
       <DependentUpon>FrmFactClienteGaraje.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FacturasEInformes\FrmFactGarajes.resx">
+    <EmbeddedResource Include="Forms\Facturas\FrmFactGarajes.resx">
       <DependentUpon>FrmFactGarajes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FacturasEInformes\FrmFacturasRecibidas.resx">
+    <EmbeddedResource Include="Forms\Facturas\FrmFacturasRecibidas.resx">
       <DependentUpon>FrmFacturasRecibidas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FacturasEInformes\FrmInfFactGaraje.resx">
-      <DependentUpon>FrmInfFactGaraje.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Facturas\FrmFactGaraje.resx">
+      <DependentUpon>FrmFactGaraje.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FacturasEInformes\FrmInfFactLavadero.resx">
-      <DependentUpon>FrmInfFactLavadero.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Facturas\FrmFactLavadero.resx">
+      <DependentUpon>FrmFactLavadero.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FacturasEInformes\FrmListadosLavadero.resx">
+    <EmbeddedResource Include="Forms\Informes\FrmListadosLavadero.resx">
       <DependentUpon>FrmListadosLavadero.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmClientesGaraje.resx">
@@ -300,8 +300,8 @@
     <EmbeddedResource Include="Forms\FrmProveedores.resx">
       <DependentUpon>FrmProveedores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FacturasEInformes\FrmInfClientesGarajes.resx">
-      <DependentUpon>FrmInfClientesGarajes.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Informes\FrmClientesGarajes.resx">
+      <DependentUpon>FrmClientesGarajes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes\FacturaClienteGaraje.rdlc" />
     <EmbeddedResource Include="Informes\FacturaLavadero.rdlc" />
