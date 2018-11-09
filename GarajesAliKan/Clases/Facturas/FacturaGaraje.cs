@@ -294,6 +294,22 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene el número para hacer una factura.
+        /// </summary>
+        /// <returns>El nuevo Id.</returns>
+        public static int ObtenerNumFactura()
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT MAX(id) + 1
+                                                      FROM   facturasGarajes;", conexion);
+
+            int nuevoId = Convert.ToInt32(comando.ExecuteScalar());
+            conexion.Close();
+
+            return nuevoId;
+        }
+
+        /// <summary>
         /// Inserta una factura para un garaje.
         /// </summary>        
         /// <returns>La factura se ha insertado.</returns>

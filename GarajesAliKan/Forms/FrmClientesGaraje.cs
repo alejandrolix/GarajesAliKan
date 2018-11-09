@@ -1,25 +1,25 @@
 ﻿using GarajesAliKan.Clases;
+using GarajesAliKan.Forms.FacturasEInformes;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Data;
 
 namespace GarajesAliKan.Forms
 {
     public partial class FrmClientesGaraje : Form
-    {        
+    {
         public FrmClientesGaraje()
         {
             InitializeComponent();
         }
-        
+
         private void FrmClientesGaraje_Load(object sender, EventArgs e)
-        {            
+        {
             CargarDatosComboBox(true, true);
             if (ClienteGaraje.HayClientes())
             {
-                BindingSource.DataSource = ClienteGaraje.ObtenerClientes();                
+                BindingSource.DataSource = ClienteGaraje.ObtenerClientes();
                 RellenarDatosCliente((ClienteGaraje)BindingSource.Current);
             }
             else
@@ -27,6 +27,7 @@ namespace GarajesAliKan.Forms
                 MessageBox.Show("No hay clientes para mostrar. Introduzca uno.", "No hay Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 BtnModificarCliente.Enabled = false;
                 BtnEliminarCliente.Enabled = false;
+                BtnFacturarMes.Enabled = false;
             }
         }
 
@@ -153,13 +154,13 @@ namespace GarajesAliKan.Forms
                 cliente.Direccion = TxtDireccion.Text;
                 cliente.Telefono = TxtTelefono.Text;
                 cliente.Observaciones = TxtObservaciones.Text;
-                cliente.Garaje = garaje;                
+                cliente.Garaje = garaje;
                 cliente.Alquiler = alquiler;
 
                 if (TxtMarca.Text.Length != 0 && TxtModelo.Text.Length != 0 && TxtMatricula.Text.Length != 0 && TxtLlave.Text.Length != 0)      // Alquila una plaza de garaje.                       
                 {
-                    vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text);                    
-                    cliente.Vehiculo = vehiculo;                    
+                    vehiculo = new Vehiculo(TxtMatricula.Text, TxtMarca.Text, TxtModelo.Text);
+                    cliente.Vehiculo = vehiculo;
                 }
                 HabilitarControles(false);
 
@@ -176,7 +177,7 @@ namespace GarajesAliKan.Forms
                                 if (alquiler.Insertar(garaje.Id))
                                 {
                                     MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    BindingSource.DataSource = ClienteGaraje.ObtenerClientes();                                    
+                                    BindingSource.DataSource = ClienteGaraje.ObtenerClientes();
                                     CargarDatosComboBox(false, true);
 
                                     int pos = ((List<ClienteGaraje>)BindingSource.DataSource).IndexOf(new ClienteGaraje(cliente.Id));       // Buscamos la posición del cliente insertado.
@@ -198,7 +199,7 @@ namespace GarajesAliKan.Forms
                             if (alquiler.Insertar(garaje.Id))
                             {
                                 MessageBox.Show("Cliente Guardado", "Cliente Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                BindingSource.DataSource = ClienteGaraje.ObtenerClientes();                                
+                                BindingSource.DataSource = ClienteGaraje.ObtenerClientes();
                                 CargarDatosComboBox(false, true);
 
                                 int pos = ((List<ClienteGaraje>)BindingSource.DataSource).IndexOf(new ClienteGaraje(cliente.Id));
@@ -417,14 +418,14 @@ namespace GarajesAliKan.Forms
             {
                 ClienteGaraje cliente = (ClienteGaraje)BindingSource.Current;
                 if (CbConceptos.SelectedIndex == 0)         // Eliminamos la plaza de garaje.
-                {                    
+                {
                     if (cliente.Alquiler.EliminarPorIdCliente(cliente.Id))
                         if (cliente.Vehiculo.Eliminar(cliente.Vehiculo.Id))
                             if (cliente.Eliminar())
                             {
                                 MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 BindingSource.DataSource = ClienteGaraje.ObtenerClientes();
-                                HabilitarControles(false);                                
+                                HabilitarControles(false);
                                 CargarDatosComboBox(false, true);
                                 BindingSource.Position = BindingSource.Count - 1;
                             }
@@ -442,7 +443,7 @@ namespace GarajesAliKan.Forms
                         {
                             MessageBox.Show("Cliente eliminado", "Cliente Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             BindingSource.DataSource = ClienteGaraje.ObtenerClientes();
-                            HabilitarControles(false);                            
+                            HabilitarControles(false);
                             CargarDatosComboBox(false, true);
                             BindingSource.Position = BindingSource.Count - 1;
                         }
@@ -498,8 +499,8 @@ namespace GarajesAliKan.Forms
 
         private void BtnFacturarMes_Click(object sender, EventArgs e)
         {
-            // Preguntar.
-            // Implementar.
+            FrmFactClienteGaraje frmFactClienteGaraje = new FrmFactClienteGaraje();
+            frmFactClienteGaraje.ShowDialog();
         }
 
         private void TxtTelefono_KeyPress(object sender, KeyPressEventArgs e)
@@ -565,10 +566,10 @@ namespace GarajesAliKan.Forms
 
         private void TxtPlaza_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (char.IsLetterOrDigit(e.KeyChar) || e.KeyChar == ' ' || char.IsControl(e.KeyChar))            
-                e.Handled = false;            
+            if (char.IsLetterOrDigit(e.KeyChar) || e.KeyChar == ' ' || char.IsControl(e.KeyChar))
+                e.Handled = false;
             else
                 e.Handled = true;
-        }        
+        }
     }
 }

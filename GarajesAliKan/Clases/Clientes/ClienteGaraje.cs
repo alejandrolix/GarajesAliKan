@@ -29,7 +29,7 @@ namespace GarajesAliKan.Clases
 
             return numClientes >= 1;
         }
-
+        
         /// <summary>
         /// Obtiene todos los clientes de los garajes.
         /// </summary>
@@ -252,7 +252,7 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaClientes;
-        }
+        }        
 
         /// <summary>
         /// Inserta un cliente.
