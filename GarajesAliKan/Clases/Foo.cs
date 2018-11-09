@@ -82,5 +82,31 @@ namespace GarajesAliKan.Clases
             }
             conexion.Close();
         }
+
+        /// <summary>
+        /// Obtiene todos los nombres de las columnas de una tabla a partir de su nombre.
+        /// </summary>
+        /// <param name="nombreTabla">El nombre de una tabla.</param>
+        /// <returns>Los nombres de las columnas.</returns>
+        public static List<string> ObtenerNombresColumnasPorNombreTabla(string nombreTabla)
+        {
+            MySqlConnection conexion = ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT Column_Name AS columna
+                                                      FROM   information_schema.COLUMNS
+                                                      WHERE  Table_Schema = 'garajesalikan' AND TABLE_NAME = @tabla;", conexion);
+
+            comando.Parameters.AddWithValue("@tabla", nombreTabla);
+            List<string> nombresColumnas = new List<string>();
+            MySqlDataReader cursor = comando.ExecuteReader();
+
+            while (cursor.Read())
+            {
+                nombresColumnas.Add(cursor.GetString("columna"));
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return nombresColumnas;
+        }
     }
 }

@@ -154,7 +154,7 @@ namespace GarajesAliKan.Clases
                 cliente.Direccion = cursor.GetString("direccion");
                 cliente.Telefono = cursor.GetString("telefono");
 
-                if (cursor.IsDBNull(7))
+                if (cursor.IsDBNull(6))
                     cliente.Observaciones = null;
                 else
                     cliente.Observaciones = cursor.GetString("observaciones");

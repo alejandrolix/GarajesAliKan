@@ -457,8 +457,13 @@ namespace GarajesAliKan.Forms
 
         private void CbPlazas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((Plaza)CbPlazas.SelectedItem).IdCliente);
-            RellenarDatosCliente(cliente);
+            FrmBuscar frmBuscar = new FrmBuscar(1, ((Plaza)CbPlazas.SelectedItem).IdCliente);
+            frmBuscar.ShowDialog();
+
+
+
+            //ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((Plaza)CbPlazas.SelectedItem).IdCliente);
+            //RellenarDatosCliente(cliente);
         }
 
         private void CbApellidos_SelectionChangeCommitted(object sender, EventArgs e)
