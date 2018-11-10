@@ -456,20 +456,17 @@ namespace GarajesAliKan.Forms
         }
 
         private void CbPlazas_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            FrmBuscar frmBuscar = new FrmBuscar(1, ((Plaza)CbPlazas.SelectedItem).IdCliente);
-            frmBuscar.ShowDialog();
-
-
-
-            //ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((Plaza)CbPlazas.SelectedItem).IdCliente);
-            //RellenarDatosCliente(cliente);
+        {            
+            int pos = ((List<ClienteGaraje>)BindingSource.DataSource).IndexOf(new ClienteGaraje(((Plaza)CbPlazas.SelectedItem).IdCliente));
+            BindingSource.Position = pos;
+            RellenarDatosCliente(((List<ClienteGaraje>)BindingSource.DataSource)[pos]);
         }
 
         private void CbApellidos_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((ClienteGaraje)CbApellidos.SelectedItem).Id);
-            RellenarDatosCliente(cliente);
+            int pos = ((List<ClienteGaraje>)BindingSource.DataSource).IndexOf(new ClienteGaraje(((ClienteGaraje)CbApellidos.SelectedItem).Id));
+            BindingSource.Position = pos;
+            RellenarDatosCliente(((List<ClienteGaraje>)BindingSource.DataSource)[pos]);            
         }
 
         /// <summary>
@@ -498,13 +495,14 @@ namespace GarajesAliKan.Forms
 
         private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ClienteGaraje cliente = ClienteGaraje.ObtenerClientePorId(((ClienteGaraje)CbNifs.SelectedItem).Id);
-            RellenarDatosCliente(cliente);
+            int pos = ((List<ClienteGaraje>)BindingSource.DataSource).IndexOf(new ClienteGaraje(((ClienteGaraje)CbNifs.SelectedItem).Id));
+            BindingSource.Position = pos;
+            RellenarDatosCliente(((List<ClienteGaraje>)BindingSource.DataSource)[pos]);
         }
 
         private void BtnFacturarMes_Click(object sender, EventArgs e)
         {
-            FrmFactClienteGaraje frmFactClienteGaraje = new FrmFactClienteGaraje();
+            FrmFactClienteGaraje frmFactClienteGaraje = new FrmFactClienteGaraje(((ClienteGaraje)BindingSource.Current).Id);
             frmFactClienteGaraje.ShowDialog();
         }
 

@@ -131,7 +131,7 @@ namespace GarajesAliKan.Forms
         private void HabilitarControles(bool habilitar)
         {
             BindingNavigator.Enabled = !habilitar;
-            TxtNumFactura.Enabled = habilitar;
+            TxtNumFactura.Enabled = Convert.ToInt32(BtnAddFactura.Tag) == 1;
             DtFecha.Enabled = habilitar;
             CbClientes.Enabled = BtnModificarFactura.Tag is null ? habilitar : !habilitar;
 
@@ -188,7 +188,7 @@ namespace GarajesAliKan.Forms
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
-        {
+        {            
             RestaurarTagsBotones();
             HabilitarControles(false);
             RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
@@ -388,20 +388,23 @@ namespace GarajesAliKan.Forms
 
         private void CbNumsFacturas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            FacturaGaraje factura = FacturaGaraje.ObtenerDatosFacturaPorId((int)CbNumsFacturas.SelectedItem);
-            RellenarDatosFactura(factura);
+            int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje((int)CbNumsFacturas.SelectedItem));
+            BindingSource.Position = pos;
+            RellenarDatosFactura(((List<FacturaGaraje>)BindingSource.DataSource)[pos]);
         }
 
         private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            FacturaGaraje factura = FacturaGaraje.ObtenerFacturaPorIdCliente(((ClienteGaraje)CbNifs.SelectedItem).Id);
-            RellenarDatosFactura(factura);
+            int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje(((ClienteGaraje)CbNifs.SelectedItem).Id));
+            BindingSource.Position = pos;
+            RellenarDatosFactura(((List<FacturaGaraje>)BindingSource.DataSource)[pos]);
         }
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            FacturaGaraje factura = FacturaGaraje.ObtenerFacturaPorFecha((DateTime)CbFechas.SelectedItem);
-            RellenarDatosFactura(factura);
+            int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje((DateTime)CbFechas.SelectedItem));
+            BindingSource.Position = pos;            
+            RellenarDatosFactura(((List<FacturaGaraje>)BindingSource.DataSource)[pos]);
         }
 
         private void TxtNumFactura_KeyPress(object sender, KeyPressEventArgs e)

@@ -60,7 +60,7 @@ namespace GarajesAliKan.Clases
             {
                 FacturaGaraje factura = new FacturaGaraje();
                 factura.Id = cursor.GetInt32("id");
-                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Fecha = cursor.GetDateTime("fecha");                
                 factura.Cliente.Nombre = cursor.GetString("nombre");
                 factura.EstaPagada = cursor.GetBoolean("estaPagada");
                 factura.Alquiler.Concepto = cursor.GetString("concepto");
@@ -380,8 +380,14 @@ namespace GarajesAliKan.Clases
             Garaje = new Garaje();
         }
 
-        public FacturaGaraje(int id) : base(id)
+        public FacturaGaraje(DateTime fecha)
         {
+            Fecha = fecha;
+        }
+
+        public FacturaGaraje(int id)
+        {
+            Id = id;              
         }
     }
 }

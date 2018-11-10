@@ -177,6 +177,44 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene los datos de un cliente de un garaje a partir de su Id para realizar una factura.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los datos del cliente del garaje.</returns>
+        public static ClienteGaraje ObtenerDatosClientePorIdParaFactura(int idCliente)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, cliGaj.nif, cliGaj.direccion, cliGaj.telefono, veh.matricula, veh.marca, veh.modelo,
+                                                             alqCli.baseImponible, alqCli.iva, alqCli.total
+                                                      FROM   clientesGarajes cliGaj		 
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
+                                                             JOIN vehiculos veh ON veh.id = alqCli.idVehiculo
+                                                      WHERE  cliGaj.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            ClienteGaraje cliente = new ClienteGaraje();
+
+            while (cursor.Read())
+            {                
+                cliente.Nombre = cursor.GetString("nombre");                
+                cliente.Nif = cursor.GetString("nif");
+                cliente.Direccion = cursor.GetString("direccion");
+                cliente.Telefono = cursor.GetString("telefono");                
+                cliente.Vehiculo = new Vehiculo(cursor.GetString("matricula"), cursor.GetString("marca"), cursor.GetString("modelo"));
+                cliente.Alquiler = new Alquiler();
+                cliente.Alquiler.BaseImponible = cursor.GetDecimal("baseImponible");
+                cliente.Alquiler.Iva = cursor.GetDecimal("iva");
+                cliente.Alquiler.Total = cursor.GetDecimal("total");                
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return cliente;
+        }
+
+        /// <summary>
         /// Obtiene todos los apellidos de los clientes de los garajes.
         /// </summary>
         /// <returns>Los apellidos de los clientes de los garajes.</returns>

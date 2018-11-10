@@ -44,8 +44,8 @@ namespace GarajesAliKan.Clases
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factRec.id, factRec.fecha, gaj.nombre, prov.empresa, factRec.baseImponible, factRec.iva, factRec.total
                                                       FROM   facturasRecibidas factRec
-                                                             JOIN garajes gaj ON gaj.id = fact.idGaraje
-                                                             JOIN proveedores prov ON prov.id = fact.idProveedor                                                      
+                                                             JOIN garajes gaj ON gaj.id = factRec.idGaraje
+                                                             JOIN proveedores prov ON prov.id = factRec.idProveedor                                                      
                                                       ORDER BY factRec.id;", conexion);
 
             MySqlDataReader cursor = comando.ExecuteReader();

@@ -270,7 +270,9 @@
                         </Style>
                       </TextRun>
                     </TextRuns>
-                    <Style />
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>numFactura</rd:DefaultName>
@@ -374,9 +376,9 @@
                 </Paragraphs>
                 <rd:DefaultName>nombre</rd:DefaultName>
                 <Top>1.75684cm</Top>
-                <Left>3.05844cm</Left>
+                <Left>3.32302cm</Left>
                 <Height>0.6cm</Height>
-                <Width>6.33982cm</Width>
+                <Width>11.58149cm</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
@@ -408,9 +410,9 @@
                 </Paragraphs>
                 <rd:DefaultName>nif</rd:DefaultName>
                 <Top>2.90265cm</Top>
-                <Left>3.05844cm</Left>
+                <Left>3.32302cm</Left>
                 <Height>0.6cm</Height>
-                <Width>6.33982cm</Width>
+                <Width>7.55919cm</Width>
                 <ZIndex>2</ZIndex>
                 <Style>
                   <Border>
@@ -442,9 +444,9 @@
                 </Paragraphs>
                 <rd:DefaultName>direccion</rd:DefaultName>
                 <Top>4.04846cm</Top>
-                <Left>3.05844cm</Left>
+                <Left>3.32302cm</Left>
                 <Height>0.6cm</Height>
-                <Width>11.84606cm</Width>
+                <Width>11.58148cm</Width>
                 <ZIndex>3</ZIndex>
                 <Style>
                   <Border>
@@ -476,7 +478,7 @@
                 <Top>1.75684cm</Top>
                 <Left>0.30268cm</Left>
                 <Height>0.6cm</Height>
-                <Width>2.57938cm</Width>
+                <Width>2.84395cm</Width>
                 <ZIndex>4</ZIndex>
                 <Style>
                   <Border>
@@ -508,7 +510,7 @@
                 <Top>2.90265cm</Top>
                 <Left>0.30268cm</Left>
                 <Height>0.6cm</Height>
-                <Width>2.57937cm</Width>
+                <Width>2.84395cm</Width>
                 <ZIndex>5</ZIndex>
                 <Style>
                   <Border>
@@ -540,7 +542,7 @@
                 <Top>4.04846cm</Top>
                 <Left>0.30268cm</Left>
                 <Height>0.6cm</Height>
-                <Width>2.57937cm</Width>
+                <Width>2.84395cm</Width>
                 <ZIndex>6</ZIndex>
                 <Style>
                   <Border>
@@ -572,7 +574,7 @@
                 <Top>5.19427cm</Top>
                 <Left>0.30268cm</Left>
                 <Height>0.6cm</Height>
-                <Width>2.57937cm</Width>
+                <Width>2.84395cm</Width>
                 <ZIndex>7</ZIndex>
                 <Style>
                   <Border>
@@ -602,9 +604,9 @@
                 </Paragraphs>
                 <rd:DefaultName>telefono</rd:DefaultName>
                 <Top>5.19427cm</Top>
-                <Left>3.05844cm</Left>
+                <Left>3.32302cm</Left>
                 <Height>0.6cm</Height>
-                <Width>6.33982cm</Width>
+                <Width>6.07524cm</Width>
                 <ZIndex>8</ZIndex>
                 <Style>
                   <Border>
@@ -1192,7 +1194,7 @@
       <Width>17.99167cm</Width>
       <Page>
         <PageFooter>
-          <Height>2.35479cm</Height>
+          <Height>2.24896cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>

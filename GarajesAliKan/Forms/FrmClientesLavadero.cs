@@ -284,14 +284,16 @@ namespace GarajesAliKan.Forms
 
         private void CbApellidos_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ClienteLavadero cliente = ClienteLavadero.ObtenerClientePorId(((ClienteLavadero)CbApellidos.SelectedItem).Id);
-            RellenarDatosCliente(cliente);
+            int pos = ((List<ClienteLavadero>)BindingSource.DataSource).IndexOf(new ClienteLavadero(((ClienteLavadero)CbApellidos.SelectedItem).Id));
+            BindingSource.Position = pos;            
+            RellenarDatosCliente(((List<ClienteLavadero>)BindingSource.DataSource)[pos]);
         }
 
         private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ClienteLavadero cliente = ClienteLavadero.ObtenerClientePorId(((ClienteLavadero)CbNifs.SelectedItem).Id);
-            RellenarDatosCliente(cliente);
+            int pos = ((List<ClienteLavadero>)BindingSource.DataSource).IndexOf(new ClienteLavadero(((ClienteLavadero)CbNifs.SelectedItem).Id));
+            BindingSource.Position = pos;
+            RellenarDatosCliente(((List<ClienteLavadero>)BindingSource.DataSource)[pos]);
         }
 
         private void CbApellidos_KeyPress(object sender, KeyPressEventArgs e)

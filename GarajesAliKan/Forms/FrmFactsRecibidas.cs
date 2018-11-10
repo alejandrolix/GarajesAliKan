@@ -67,7 +67,7 @@ namespace GarajesAliKan.Forms
         {
             TxtNumFactura.Text = factura.Id.ToString();
             DtFecha.Value = factura.Fecha;
-            CbGarajes.Text = factura.Cliente.Nombre;            
+            CbGarajes.Text = factura.Garaje.Nombre;            
             CbEmpresas.Text = factura.Proveedor.Empresa;
 
             TxtBaseImponible.Text = factura.BaseImponible.ToString();
@@ -173,9 +173,9 @@ namespace GarajesAliKan.Forms
         private void HabilitarControles(bool habilitar)
         {
             BindingNavigator.Enabled = !habilitar;
-            TxtNumFactura.Enabled = habilitar;            
+            TxtNumFactura.Enabled = Convert.ToInt32(BtnAddFactura.Tag) == 1;
             DtFecha.Enabled = habilitar;
-            CbGarajes.Enabled = habilitar;            
+            CbGarajes.Enabled = Convert.ToInt32(BtnAddFactura.Tag) == 1;            
             CbEmpresas.Enabled = habilitar;
 
             TxtBaseImponible.Enabled = habilitar;
@@ -202,6 +202,10 @@ namespace GarajesAliKan.Forms
 
         private void BtnModificarFactura_Click(object sender, EventArgs e)
         {
+            CbEmpresas.DataSource = Proveedor.ObtenerNombresEmpresas();
+            CbEmpresas.ValueMember = "id";
+            CbEmpresas.DisplayMember = "empresa";
+
             BtnModificarFactura.Tag = 1;
             HabilitarControles(true);
         }
