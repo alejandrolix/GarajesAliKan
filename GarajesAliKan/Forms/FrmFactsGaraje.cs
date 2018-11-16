@@ -395,9 +395,8 @@ namespace GarajesAliKan.Forms
 
         private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje(((ClienteGaraje)CbNifs.SelectedItem).Id));
-            BindingSource.Position = pos;
-            RellenarDatosFactura(((List<FacturaGaraje>)BindingSource.DataSource)[pos]);
+            FrmBuscarFactsGarajes frmBuscarFactsGarajes = new FrmBuscarFactsGarajes(((ClienteGaraje)CbNifs.SelectedItem).Id);
+            frmBuscarFactsGarajes.ShowDialog();
         }
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)

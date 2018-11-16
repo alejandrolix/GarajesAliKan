@@ -232,8 +232,8 @@
             // 
             this.bindingNavigatorCountItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(45, 24);
-            this.bindingNavigatorCountItem.Text = "of {0}";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(48, 24);
+            this.bindingNavigatorCountItem.Text = "de {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Número total de elementos";
             // 
             // bindingNavigatorMoveFirstItem
@@ -743,7 +743,7 @@
             // 
             this.BtnFacturarMes.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.BtnFacturarMes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnFacturarMes.Location = new System.Drawing.Point(825, 465);
+            this.BtnFacturarMes.Location = new System.Drawing.Point(822, 465);
             this.BtnFacturarMes.Name = "BtnFacturarMes";
             this.BtnFacturarMes.Size = new System.Drawing.Size(108, 53);
             this.BtnFacturarMes.TabIndex = 25;
