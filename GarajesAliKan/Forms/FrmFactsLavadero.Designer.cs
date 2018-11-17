@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmFactsLavadero));
             this.BindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-            this.BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -72,13 +71,14 @@
             this.TxtNumFactura = new System.Windows.Forms.TextBox();
             this.LFecha = new System.Windows.Forms.Label();
             this.LNumFactura = new System.Windows.Forms.Label();
+            this.BindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
             this.PBuscarPor.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.PBotonesControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // BindingNavigator
@@ -315,7 +315,7 @@
             this.panel1.Location = new System.Drawing.Point(12, 45);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(936, 375);
-            this.panel1.TabIndex = 28;            
+            this.panel1.TabIndex = 28;
             // 
             // TxtConcepto
             // 
@@ -327,7 +327,7 @@
             this.TxtConcepto.Multiline = true;
             this.TxtConcepto.Name = "TxtConcepto";
             this.TxtConcepto.Size = new System.Drawing.Size(288, 108);
-            this.TxtConcepto.TabIndex = 5;
+            this.TxtConcepto.TabIndex = 5;            
             // 
             // CbClientes
             // 
@@ -563,7 +563,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).EndInit();
             this.BindingNavigator.ResumeLayout(false);
             this.BindingNavigator.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).EndInit();
             this.PBuscarPor.ResumeLayout(false);
             this.PBuscarPor.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -571,6 +570,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.PBotonesControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

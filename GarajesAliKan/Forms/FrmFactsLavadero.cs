@@ -1,5 +1,4 @@
-﻿using GarajesAliKan.Clases;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GarajesAliKan.Clases;
 using System.Windows.Forms;
 using GarajesAliKan.Forms.Facturas;
+using GarajesAliKan.Forms.Buscadores;
 
 namespace GarajesAliKan.Forms
 {
@@ -377,14 +378,22 @@ namespace GarajesAliKan.Forms
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            FacturaLavadero factura = FacturaLavadero.ObtenerFacturaPorFecha((DateTime)CbNumsFacturas.SelectedItem);
-            RellenarDatosFactura(factura);
+            FrmBuscarFactsRecibidas frmBuscarFactsLavadero = new FrmBuscarFactsRecibidas((DateTime)CbFechas.SelectedItem);
+            frmBuscarFactsLavadero.ShowDialog();
+
+            int posicion = BindingSource.Position;
+            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
+            BindingSource.Position = posicion;
         }
 
         private void CbCliBuscar_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            FacturaLavadero factura = FacturaLavadero.ObtenerFacturaPorIdCliente(((ClienteLavadero)CbCliBuscar.SelectedItem).Id);
-            RellenarDatosFactura(factura);
+            FrmBuscarFactsRecibidas frmBuscarFactsLavadero = new FrmBuscarFactsRecibidas(((ClienteLavadero)CbCliBuscar.SelectedItem).Id);
+            frmBuscarFactsLavadero.ShowDialog();
+
+            int posicion = BindingSource.Position;
+            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
+            BindingSource.Position = posicion;
         }
     }
 }

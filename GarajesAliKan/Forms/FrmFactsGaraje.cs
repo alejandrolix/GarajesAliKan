@@ -405,7 +405,7 @@ namespace GarajesAliKan.Forms
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            FrmBuscarFactsGarajes frmBuscarFactsGarajes = new FrmBuscarFactsGarajes(((ClienteGaraje)CbNifs.SelectedItem).Id);
+            FrmBuscarFactsGarajes frmBuscarFactsGarajes = new FrmBuscarFactsGarajes((DateTime)CbFechas.SelectedItem);
             frmBuscarFactsGarajes.ShowDialog();
 
             int posicion = BindingSource.Position;

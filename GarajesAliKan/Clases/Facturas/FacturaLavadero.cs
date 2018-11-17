@@ -234,6 +234,46 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todas las facturas del lavadero a partir de su fecha.
+        /// </summary>
+        /// <param name="fecha">La fecha de una factura-</param>
+        /// <returns>Los datos de la facturas.</returns>
+        public static List<FacturaLavadero> ObtenerFacturasPorFecha(DateTime fecha)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT factLav.id, factLav.fecha, cliLav.nif, CONCAT(cliLav.nombre, ' ', cliLav.apellidos) AS nombre, cliLav.direccion,
+                                                             factLav.concepto, factLav.baseImponible, factLav.iva, factLav.total
+                                                      FROM   facturasLavadero factLav
+                                                             JOIN clientesLavadero cliLav ON factLav.idCliente = cliLav.id
+                                                      WHERE  factLav.fecha = @fecha;", conexion);
+
+            comando.Parameters.AddWithValue("@fecha", fecha);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<FacturaLavadero> facturas = new List<FacturaLavadero>();            
+
+            while (cursor.Read())
+            {
+                FacturaLavadero factura = new FacturaLavadero();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente = new ClienteLavadero();
+                factura.Cliente.Nif = cursor.GetString("nif");
+                factura.Cliente.Direccion = cursor.GetString("direccion");
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.Concepto = cursor.GetString("concepto");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                facturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return facturas;
+        }
+
+        /// <summary>
         /// Obtiene una factura del lavadero a partir de un Id de un cliente.
         /// </summary>
         /// <param name="idCliente">El Id de un cliente.</param>
@@ -268,6 +308,45 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return factura;
+        }
+
+        /// <summary>
+        /// Obtiene todas las facturas del lavadero a partir de un Id de un cliente.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los datos de la facturas.</returns>
+        public static List<FacturaLavadero> ObtenerFacturasPorIdCliente(int idCliente)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT factLav.id, factLav.fecha, cliLav.nif, CONCAT(cliLav.nombre, ' ', cliLav.apellidos) AS nombre, factLav.estaPagada,
+                                                             factLav.baseImponible, factLav.iva, factLav.total
+                                                      FROM   facturasLavadero factLav
+                                                             JOIN clientesLavadero cliLav ON factLav.idCliente = cliLav.id                                                                
+                                                      WHERE  cliLav.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<FacturaLavadero> facturas = new List<FacturaLavadero>();            
+
+            while (cursor.Read())
+            {
+                FacturaLavadero factura = new FacturaLavadero();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente = new ClienteLavadero();
+                factura.Cliente.Nif = cursor.GetString("nif");
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                facturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return facturas;
         }
 
         /// <summary>
