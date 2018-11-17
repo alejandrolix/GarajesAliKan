@@ -397,13 +397,20 @@ namespace GarajesAliKan.Forms
         {
             FrmBuscarFactsGarajes frmBuscarFactsGarajes = new FrmBuscarFactsGarajes(((ClienteGaraje)CbNifs.SelectedItem).Id);
             frmBuscarFactsGarajes.ShowDialog();
+
+            int posicion = BindingSource.Position;
+            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();            
+            BindingSource.Position = posicion;
         }
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje((DateTime)CbFechas.SelectedItem));
-            BindingSource.Position = pos;            
-            RellenarDatosFactura(((List<FacturaGaraje>)BindingSource.DataSource)[pos]);
+            FrmBuscarFactsGarajes frmBuscarFactsGarajes = new FrmBuscarFactsGarajes(((ClienteGaraje)CbNifs.SelectedItem).Id);
+            frmBuscarFactsGarajes.ShowDialog();
+
+            int posicion = BindingSource.Position;
+            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
+            BindingSource.Position = posicion;
         }
 
         private void TxtNumFactura_KeyPress(object sender, KeyPressEventArgs e)

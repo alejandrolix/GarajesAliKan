@@ -297,6 +297,50 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todas las facturas a partir de una fecha.
+        /// </summary>
+        /// <param name="fecha">La fecha.</param>
+        /// <returns>Los datos de la facturas.</returns>
+        public static List<FacturaGaraje> ObtenerFacturasPorFecha(DateTime fecha)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
+    	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
+                                                      FROM   facturasGarajes factGaj
+                                                             JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
+                                                             JOIN tiposAlquileres tAlq ON factGaj.idTipoAlquiler = tAlq.id
+                                                             JOIN garajes gaj ON factGaj.idGaraje = gaj.id
+                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                      WHERE  factGaj.fecha = @fecha;", conexion);
+
+            comando.Parameters.AddWithValue("@fecha", fecha);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<FacturaGaraje> facturas = new List<FacturaGaraje>();            
+
+            while (cursor.Read())
+            {
+                FacturaGaraje factura = new FacturaGaraje();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Cliente.Nif = cursor.GetString("nif");
+                factura.Cliente.Nombre = cursor.GetString("nombre");
+                factura.EstaPagada = cursor.GetBoolean("estaPagada");
+                factura.Cliente.Alquiler.Concepto = cursor.GetString("concepto");
+                factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
+                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                facturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return facturas;
+        }
+
+        /// <summary>
         /// Obtiene todas las facturas a partir de dos fechas para realizar un informe.
         /// </summary>
         /// <returns>Todas las facturas.</returns>

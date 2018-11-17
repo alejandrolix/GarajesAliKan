@@ -14,6 +14,7 @@ namespace GarajesAliKan.Forms
     public partial class FrmBuscarFactsGarajes : Form
     {
         public int IdCliente { get; set; }
+        public DateTime Fecha { get; set; }
 
         public FrmBuscarFactsGarajes(int idCliente)
         {
@@ -21,13 +22,25 @@ namespace GarajesAliKan.Forms
             IdCliente = idCliente;
         }
 
+        public FrmBuscarFactsGarajes(DateTime fecha)
+        {
+            InitializeComponent();
+            Fecha = fecha;
+        }
+
         /// <summary>
         /// Carga las facturas encontradas a partir del Id de un cliente.
         /// </summary>
-        private void CargarFacturas()
+        /// <param name="cargarPorIdCliente">Indica si hay que buscar por el Id del cliente.</param>
+        private void CargarFacturas(bool cargarPorIdCliente)
         {
-            List<FacturaGaraje> facturas = FacturaGaraje.ObtenerFacturasPorIdCliente(IdCliente);
-            if (DgvFactsGarajes.Rows.Count >= 1)            
+            List<FacturaGaraje> facturas = null;
+            if (cargarPorIdCliente)
+                facturas = FacturaGaraje.ObtenerFacturasPorIdCliente(IdCliente);
+            else
+                facturas = FacturaGaraje.ObtenerFacturasPorFecha(Fecha);
+            
+            if (DgvFactsGarajes.Rows.Count >= 1)        // Si hubiesen filas en el DataGridView, las eliminamos.    
                 DgvFactsGarajes.Rows.Clear();            
 
             foreach (FacturaGaraje factura in facturas)
@@ -48,7 +61,11 @@ namespace GarajesAliKan.Forms
 
         private void FrmBuscar_Load(object sender, EventArgs e)
         {
-            CargarFacturas();
+            if (IdCliente >= 1)            
+                CargarFacturas(true);            
+            else
+                CargarFacturas(false);
+            
             CompletarDetallesFactura(0);
         }
 
@@ -127,7 +144,12 @@ namespace GarajesAliKan.Forms
 
                 if (factura.Modificar())
                 {
-                    CargarFacturas();
+                    if (IdCliente >= 1)
+                        CargarFacturas(true);
+                    else
+                        CargarFacturas(false);
+
+                    CompletarDetallesFactura(0);
                     MessageBox.Show("Factura Actualizada", "Factura Actualizada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
