@@ -27,7 +27,7 @@ namespace GarajesAliKan.Forms.Informes
 
             foreach (ClienteGaraje cliente in listaClientes)
             {
-                // dtClientesGarajes.Tables["clientes"].Rows.Add(cliente.Alquiler.Plaza, cliente.Nombre, cliente.Apellidos, cliente.Telefono, cliente.Alquiler.Total, cliente.Observaciones);
+                dtClientesGarajes.Tables["clientes"].Rows.Add(cliente.Alquiler.Plaza, cliente.Nombre, cliente.Apellidos, cliente.Telefono, cliente.Alquiler.Total, cliente.Observaciones);
             }
             ReportViewer.LocalReport.DataSources.Add(new ReportDataSource("DtClientesGarajes", dtClientesGarajes.Tables["clientes"]));
             ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);

@@ -104,7 +104,7 @@ namespace GarajesAliKan.Clases
                 ClienteGaraje cliente = new ClienteGaraje();
                 cliente.Nombre = cursor.GetString("nombre");
                 cliente.Apellidos = cursor.GetString("apellidos");
-                cliente.Telefono = cursor.GetString("telefono");
+                cliente.Telefono = cursor.GetString("telefono");                
 
                 if (cursor.IsDBNull(5))
                     cliente.Observaciones = null;
