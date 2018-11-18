@@ -1,5 +1,4 @@
-﻿using GarajesAliKan.Clases;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GarajesAliKan.Clases;
+using GarajesAliKan.Forms.Buscadores;
 
 namespace GarajesAliKan.Forms
 {
@@ -359,15 +360,22 @@ namespace GarajesAliKan.Forms
 
         private void CbEmpresas_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            // Preguntar.
+            FrmBuscarFactsRecibida frmBuscarFactsRecibida = new FrmBuscarFactsRecibida(((Proveedor)CbEmpBuscar.SelectedItem).Id, 0);
+            frmBuscarFactsRecibida.ShowDialog();
 
-            //Factura factura = Factura.ObtenerFacturaGarajePorFecha((string)CbEmpresas.SelectedItem);
-            //RellenarDatosFactura(factura);
+            int posicion = BindingSource.Position;
+            BindingSource.DataSource = FacturaRecibida.ObtenerFacturas();
+            BindingSource.Position = posicion;
         }
 
         private void CbGjBuscar_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            // Preguntar.
+            FrmBuscarFactsRecibida frmBuscarFactsRecibida = new FrmBuscarFactsRecibida(0, ((Garaje)CbGjBuscar.SelectedItem).Id);
+            frmBuscarFactsRecibida.ShowDialog();
+
+            int posicion = BindingSource.Position;
+            BindingSource.DataSource = FacturaRecibida.ObtenerFacturas();
+            BindingSource.Position = posicion;
         }
 
         private void CbEmpresas_KeyPress_1(object sender, KeyPressEventArgs e)

@@ -134,6 +134,86 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todas las facturas recibidas a partir del Id de un proveedor.
+        /// </summary>
+        /// <param name="idProveedor">El Id de un proveedor.</param>
+        /// <returns>Los datos de las facturas.</returns>
+        public static List<FacturaRecibida> ObtenerFacturasPorIdProveedor(int idProveedor)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT factRec.id, factRec.fecha, gaj.nombre, prov.empresa, factRec.baseImponible, factRec.iva, factRec.total
+                                                      FROM   facturasRecibidas factRec
+                                                             JOIN proveedores prov ON prov.id = factRec.idProveedor
+                                                             JOIN garajes gaj ON gaj.id = factRec.idGaraje
+                                                      WHERE  prov.id = @id
+                                                      ORDER BY factRec.id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idProveedor);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<FacturaRecibida> facturas = new List<FacturaRecibida>();            
+
+            while (cursor.Read())
+            {
+                FacturaRecibida factura = new FacturaRecibida();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Garaje = new Garaje();
+                factura.Garaje.Nombre = cursor.GetString("nombre");
+                factura.Proveedor = new Proveedor();
+                factura.Proveedor.Empresa = cursor.GetString("empresa");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                facturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return facturas;
+        }
+
+        /// <summary>
+        /// Obtiene todas las facturas recibidas a partir del Id de un garaje.
+        /// </summary>
+        /// <param name="idGaraje">El Id de un garaje.</param>
+        /// <returns>Los datos de las facturas.</returns>
+        public static List<FacturaRecibida> ObtenerFacturasPorIdGaraje(int idGaraje)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT factRec.id, factRec.fecha, gaj.nombre, prov.empresa, factRec.baseImponible, factRec.iva, factRec.total
+                                                      FROM   facturasRecibidas factRec
+                                                             JOIN proveedores prov ON prov.id = factRec.idProveedor
+                                                             JOIN garajes gaj ON gaj.id = factRec.idGaraje
+                                                      WHERE  gaj.id = @id
+                                                      ORDER BY factRec.id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idGaraje);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<FacturaRecibida> facturas = new List<FacturaRecibida>();
+
+            while (cursor.Read())
+            {
+                FacturaRecibida factura = new FacturaRecibida();
+                factura.Id = cursor.GetInt32("id");
+                factura.Fecha = cursor.GetDateTime("fecha");
+                factura.Garaje = new Garaje();
+                factura.Garaje.Nombre = cursor.GetString("nombre");
+                factura.Proveedor = new Proveedor();
+                factura.Proveedor.Empresa = cursor.GetString("empresa");
+                factura.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Iva = cursor.GetDecimal("iva");
+                factura.Total = cursor.GetDecimal("total");
+                facturas.Add(factura);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return facturas;
+        }
+
+        /// <summary>
         /// Obtiene todas las facturas recibidas entre una fecha de inicio y fin para realizar un informe.
         /// </summary>
         /// <param name="desde"></param>

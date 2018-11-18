@@ -382,7 +382,7 @@ namespace GarajesAliKan.Forms
             frmBuscarFactsLavadero.ShowDialog();
 
             int posicion = BindingSource.Position;
-            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
+            BindingSource.DataSource = FacturaLavadero.ObtenerFacturas();
             BindingSource.Position = posicion;
         }
 
@@ -392,7 +392,7 @@ namespace GarajesAliKan.Forms
             frmBuscarFactsLavadero.ShowDialog();
 
             int posicion = BindingSource.Position;
-            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
+            BindingSource.DataSource = FacturaLavadero.ObtenerFacturas();
             BindingSource.Position = posicion;
         }
     }
