@@ -10,9 +10,9 @@ namespace GarajesAliKan.Clases
     class Alquiler
     {
         public int IdCliente { get; set; }
-        public int IdVehiculo { get; set; }
-        public int IdTipoAlquiler { get; set; }
+        public int IdVehiculo { get; set; }        
         public decimal BaseImponible { get; set; }
+        public int IdTipoAlquiler { get; set; }
         public decimal Iva { get; set; }
         public decimal Total { get; set; }
         public string Plaza { get; set; }
@@ -35,7 +35,7 @@ namespace GarajesAliKan.Clases
 
             while (cursor.Read())
             {
-                Alquiler alquiler = new Alquiler(cursor.GetInt32("id"), cursor.GetString("concepto"));
+                Alquiler alquiler = new Alquiler(cursor.GetInt32("id"), cursor.GetString("concepto"));                
                 listaConceptos.Add(alquiler);
             }
             cursor.Close();
@@ -52,29 +52,33 @@ namespace GarajesAliKan.Clases
         public bool Insertar(int idGaraje)
         {
             MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand("INSERT INTO alquilerPorCliente VALUES (@idCliente", conexion);
+            MySqlCommand comando = new MySqlCommand("INSERT INTO alquilerClientesGarajes VALUES (@idCliente", conexion);
 
             if (IdVehiculo == 0)
                 comando.CommandText += ", NULL, ";
             else
+            {
                 comando.CommandText += ", @idVehiculo, ";
+                comando.Parameters.AddWithValue("@idVehiculo", IdVehiculo);
+            }
 
             comando.CommandText += "@idTipoAlquiler, @idGaraje, @baseImponible, @iva, @total, @plaza";
 
             if (Llave == 0)
                 comando.CommandText += ", NULL);";
             else
+            {
                 comando.CommandText += ", @llave);";
+                comando.Parameters.AddWithValue("@llave", Llave);
+            }            
 
-            comando.Parameters.AddWithValue("@idCliente", IdCliente);
-            comando.Parameters.AddWithValue("@idVehiculo", IdVehiculo);
-            comando.Parameters.AddWithValue("@idTipoAlquiler", IdTipoAlquiler);
+            comando.Parameters.AddWithValue("@idCliente", IdCliente);                        
             comando.Parameters.AddWithValue("@idGaraje", idGaraje);
+            comando.Parameters.AddWithValue("@idTipoAlquiler", IdTipoAlquiler);
             comando.Parameters.AddWithValue("@baseImponible", BaseImponible);
             comando.Parameters.AddWithValue("@iva", Iva);
-            comando.Parameters.AddWithValue("@total", Total);
-            comando.Parameters.AddWithValue("@plaza", Plaza);
-            comando.Parameters.AddWithValue("@llave", Llave);
+            comando.Parameters.AddWithValue("@total", Total);            
+            comando.Parameters.AddWithValue("@plaza", Plaza);            
 
             int numFila = comando.ExecuteNonQuery();
             conexion.Close();

@@ -21,10 +21,11 @@ namespace GarajesAliKan
 
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
-            DateTime fecha = Foo.ObtenerFechaActual();
+            DateTime fecha = Foo.ObtenerFechaGuardada();
 
             if ((DateTime.Now.Date - fecha.Date).Days == 14)
             {
+                Foo.ExportarBD();
                 Foo.InsertarFechaHoraBackup();
                 Foo.GuardarFechaActual();
             }

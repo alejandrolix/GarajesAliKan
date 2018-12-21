@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -233,16 +234,16 @@ namespace GarajesAliKan.Forms
                 factura.Id = int.Parse(TxtNumFactura.Text);
                 factura.Fecha = DtFecha.Value;
                 factura.EstaPagada = CkBoxPagada.Checked;
-                factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text);
-                factura.Iva = decimal.Parse(TxtIva.Text);
-                factura.Total = decimal.Parse(TxtTotalFactura.Text);
+                factura.BaseImponible = decimal.Parse(TxtBaseImponible.Text, CultureInfo.InvariantCulture.NumberFormat);
+                factura.Iva = decimal.Parse(TxtIva.Text, CultureInfo.InvariantCulture.NumberFormat);
+                factura.Total = decimal.Parse(TxtTotalFactura.Text, CultureInfo.InvariantCulture.NumberFormat);
 
                 if (Convert.ToInt32(BtnAddFactura.Tag) == 1)                // Insertamos la nueva factura.
                 {                                        
-                    factura.Cliente.Id = ((ClienteGaraje)CbClientes.SelectedItem).Id;                    
-                    factura.Cliente.Alquiler.IdTipoAlquiler = ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler;
+                    factura.Cliente.Id = ((ClienteGaraje)CbClientes.SelectedItem).Id;                                        
                     factura.Garaje.Id = ((Garaje)CbGarajes.SelectedItem).Id;
-                    
+                    factura.Cliente.Alquiler.IdTipoAlquiler = ((Alquiler)CbConceptos.SelectedItem).IdTipoAlquiler;
+
                     if (factura.Insertar())
                     {
                         MessageBox.Show("Factura guardada", "Factura Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information);

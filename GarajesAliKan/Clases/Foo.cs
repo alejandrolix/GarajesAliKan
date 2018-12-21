@@ -40,7 +40,7 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
-        /// Guarda la fecha actual para realizar el backup de la base de datos.
+        /// Guarda la fecha de hoy para realizar el backup de la base de datos.
         /// </summary>
         public static void GuardarFechaActual()
         {
@@ -51,10 +51,10 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
-        /// Lee la fecha guardada para compararla con la actual.
+        /// Lee la fecha guardada para compararla con la de hoy.
         /// </summary>
         /// <returns>La fecha guardada</returns>
-        public static DateTime ObtenerFechaActual()
+        public static DateTime ObtenerFechaGuardada()
         {
             StreamReader leer = new StreamReader(@"..\..\..\FechaBackupBD.txt", Encoding.UTF8);
             DateTime fecha = DateTime.Parse(leer.ReadLine());
@@ -74,6 +74,21 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@fecha", DateTime.Now);
 
             comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        /// <summary>
+        /// Exporta la base de datos a un fichero SQL.
+        /// </summary>
+        public static void ExportarBD()
+        {
+            MySqlConnection conexion = ConexionABd();
+            MySqlCommand comando = new MySqlCommand();
+            comando.Connection = conexion;
+
+            MySqlBackup mySqlBackup = new MySqlBackup(comando);
+            mySqlBackup.ExportToFile(@"C:\BdGarajes\bd.sql");
+
             conexion.Close();
         }
     }
