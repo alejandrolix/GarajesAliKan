@@ -141,7 +141,6 @@
     <Compile Include="Clases\Foo.cs" />
     <Compile Include="Clases\Plaza.cs" />
     <Compile Include="Clases\Proveedor.cs" />
-    <Compile Include="Clases\Trastero.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
     <Compile Include="DataSets\DtClientesGarajes.Designer.cs">
       <AutoGen>True</AutoGen>
