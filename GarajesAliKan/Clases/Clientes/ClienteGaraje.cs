@@ -206,7 +206,7 @@ namespace GarajesAliKan.Clases
         public static ClienteGaraje ObtenerDatosClientePorIdParaFactura(int idCliente)
         {
             MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand(@"SELECT CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, cliGaj.nif, cliGaj.direccion, cliGaj.telefono, veh.matricula, veh.marca, veh.modelo,
+            MySqlCommand comando = new MySqlCommand(@"SELECT IF (cliGaj.apellidos IS NOT NULL, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos), cliGaj.nombre) AS nombre, cliGaj.nif, cliGaj.direccion, cliGaj.telefono, veh.matricula, veh.marca, veh.modelo,
                                                              alqCli.baseImponible, alqCli.iva, alqCli.total
                                                       FROM   clientesGarajes cliGaj		 
                                                              JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
@@ -220,10 +220,20 @@ namespace GarajesAliKan.Clases
 
             while (cursor.Read())
             {                
-                cliente.Nombre = cursor.GetString("nombre");                
-                cliente.Nif = cursor.GetString("nif");
+                cliente.Nombre = cursor.GetString("nombre");
+
+                if (cursor.IsDBNull(1))
+                    cliente.Nif = null;
+                else
+                    cliente.Nif = cursor.GetString("nif");
+
                 cliente.Direccion = cursor.GetString("direccion");
-                cliente.Telefono = cursor.GetString("telefono");                
+
+                if (cursor.IsDBNull(3))
+                    cliente.Telefono = null;
+                else
+                    cliente.Telefono = cursor.GetString("telefono");
+
                 cliente.Vehiculo = new Vehiculo(cursor.GetString("matricula"), cursor.GetString("marca"), cursor.GetString("modelo"));
                 cliente.Alquiler = new Alquiler();
                 cliente.Alquiler.BaseImponible = cursor.GetDecimal("baseImponible");

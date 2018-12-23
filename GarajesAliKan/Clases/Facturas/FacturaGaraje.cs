@@ -393,7 +393,7 @@ namespace GarajesAliKan.Clases
         public static int ObtenerNumFactura()
         {
             MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand(@"SELECT MAX(id) + 1
+            MySqlCommand comando = new MySqlCommand(@"SELECT IF (MAX(id) + 1 IS NULL, 1, MAX(id) + 1)
                                                       FROM   facturasGarajes;", conexion);
 
             int nuevoId = Convert.ToInt32(comando.ExecuteScalar());

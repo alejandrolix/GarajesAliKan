@@ -42,7 +42,7 @@
             this.ReportViewer.Size = new System.Drawing.Size(800, 450);
             this.ReportViewer.TabIndex = 0;
             // 
-            // FrmInfClientesGarajes
+            // FrmClientesGarajes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -50,8 +50,7 @@
             this.Controls.Add(this.ReportViewer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimizeBox = false;
-            this.Name = "FrmInfClientesGarajes";
+            this.Name = "FrmClientesGarajes";
             this.ShowInTaskbar = false;
             this.Text = "Informe Clientes";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
