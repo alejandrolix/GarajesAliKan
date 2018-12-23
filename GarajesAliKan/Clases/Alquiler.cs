@@ -12,7 +12,7 @@ namespace GarajesAliKan.Clases
         public int IdCliente { get; set; }
         public int IdVehiculo { get; set; }        
         public decimal BaseImponible { get; set; }
-        public int IdTipoAlquiler { get; set; }
+        public int IdTipoAlquiler { get; set; }        
         public decimal Iva { get; set; }
         public decimal Total { get; set; }
         public string Plaza { get; set; }

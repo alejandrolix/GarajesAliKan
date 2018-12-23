@@ -481,8 +481,20 @@ namespace GarajesAliKan.Forms
 
         private void BtnFacturarMes_Click(object sender, EventArgs e)
         {
-            FrmFactClienteGaraje frmFactClienteGaraje = new FrmFactClienteGaraje(((ClienteGaraje)BindingSource.Current).Id);
-            frmFactClienteGaraje.ShowDialog();
+            int idCliente = ((ClienteGaraje)BindingSource.Current).Id;
+            List<Alquiler> listaAlquileres = ClienteGaraje.ObtenerIdTipoAlquileresPorIdCliente(idCliente);
+            foreach (Alquiler alquiler in listaAlquileres)
+            {
+                if (alquiler.IdTipoAlquiler == 1)           // Creamos una factura de una plaza de garaje.
+                {
+                    FrmFactClienteGaraje frmFactClienteGaraje = new FrmFactClienteGaraje(idCliente);
+                    frmFactClienteGaraje.ShowDialog();
+                }
+                else                // Creamos una factura de una plaza de trastero.
+                {
+
+                }
+            }            
         }
 
         private void TxtTelefono_KeyPress(object sender, KeyPressEventArgs e)

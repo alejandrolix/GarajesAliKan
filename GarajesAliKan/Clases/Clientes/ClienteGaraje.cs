@@ -332,7 +332,31 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaClientes;
-        }        
+        }   
+        
+        public static List<Alquiler> ObtenerIdTipoAlquileresPorIdCliente(int idCliente)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT idTipoAlquiler
+                                                      FROM   alquilerClientesGarajes
+                                                      WHERE  idCliente = @id", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<Alquiler> listaAlquileres = new List<Alquiler>();
+
+            while (cursor.Read())
+            {
+                Alquiler alquiler = new Alquiler();                
+                alquiler.IdTipoAlquiler = cursor.GetInt32("idTipoAlquiler");                                
+                listaAlquileres.Add(alquiler);
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return listaAlquileres;
+        }
 
         /// <summary>
         /// Inserta un cliente.

@@ -42,7 +42,8 @@ namespace GarajesAliKan.Forms.FacturasEInformes
             listaParametros.Add(new ReportParameter("totalFactura", cliente.Alquiler.Total.ToString()));
 
             ReportViewer.SetDisplayMode(DisplayMode.PrintLayout);
-            ReportViewer.LocalReport.SetParameters(listaParametros);
+            ReportViewer.LocalReport.SetParameters(listaParametros);            
+
             ReportViewer.RefreshReport();
         }
     }
