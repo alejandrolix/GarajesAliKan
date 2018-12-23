@@ -69,7 +69,7 @@ namespace GarajesAliKan.Clases
         public static void InsertarFechaHoraBackup()
         {
             MySqlConnection conexion = ConexionABd();
-            MySqlCommand comando = new MySqlCommand("INSERT INTO backupsBD (fechaHoraCopia) VALUES (@fecha);", conexion);
+            MySqlCommand comando = new MySqlCommand("INSERT INTO backupsBD (fechaHora) VALUES (@fecha);", conexion);
 
             comando.Parameters.AddWithValue("@fecha", DateTime.Now);
 

@@ -23,7 +23,7 @@ namespace GarajesAliKan
         {
             DateTime fecha = Foo.ObtenerFechaGuardada();
 
-            if ((DateTime.Now.Date - fecha.Date).Days == 14)
+            if ((DateTime.Now.Date - fecha.Date).Days >= 14)
             {
                 Foo.ExportarBD();
                 Foo.InsertarFechaHoraBackup();
