@@ -288,7 +288,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.7114cm</Height>
+              <Height>0.87015cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -529,8 +529,8 @@
         <DataSetName>DtClientesGarajes</DataSetName>
         <Top>2.29157cm</Top>
         <Left>0.0853cm</Left>
-        <Height>1.47851cm</Height>
-        <Width>26.44649cm</Width>
+        <Height>1.63726cm</Height>
+        <Width>26.4465cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>

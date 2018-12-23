@@ -347,7 +347,7 @@ namespace GarajesAliKan.Clases
         public static List<FacturaGaraje> ObtenerFacturasPorFechasInforme(DateTime desde, DateTime hasta)
         {
             MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, cliGaj.nif, cliGaj.direccion, gaj.nombre AS nombreGaraje, factGaj.baseImponible,
+            MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, IF (cliGaj.apellidos IS NOT NULL, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos), cliGaj.nombre) AS nombre, cliGaj.nif, cliGaj.direccion, gaj.nombre AS nombreGaraje, factGaj.baseImponible,
 		                                                     factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
 		                                                     JOIN clientesGarajes cliGaj ON cli.id = factGaj.idCliente
@@ -367,7 +367,12 @@ namespace GarajesAliKan.Clases
                 factura.Id = cursor.GetInt32("id");
                 factura.Fecha = cursor.GetDateTime("fecha");
                 factura.Cliente.Nombre = cursor.GetString("nombre");
-                factura.Cliente.Nif = cursor.GetString("nif");
+
+                if (cursor.IsDBNull(3))                
+                    factura.Cliente.Nif = null;                
+                else                
+                    factura.Cliente.Nif = cursor.GetString("nif");                
+
                 factura.Cliente.Direccion = cursor.GetString("nombre");
                 factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
                 factura.BaseImponible = cursor.GetDecimal("baseImponible");

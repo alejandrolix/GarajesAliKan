@@ -105,10 +105,9 @@ namespace GarajesAliKan.Clases
         public static List<ClienteGaraje> ObtenerClientesParaInforme()
         {
             MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand(@"SELECT plzCli.plaza, cliGaj.nombre, cliGaj.apellidos, cliGaj.telefono, alqCli.total, cliGaj.observaciones
-                                                      FROM   plazaClientes plzCli
-  	                                                         JOIN clientesGarajes cliGaj ON cliGaj.id = plzCli.idCliente
-  		                                                     JOIN alquilerClientesGarajes alqCli ON cliGaj.id = alqCli.idCliente
+            MySqlCommand comando = new MySqlCommand(@"SELECT alqCli.plaza, cliGaj.nombre, cliGaj.apellidos, cliGaj.telefono, alqCli.total, cliGaj.observaciones
+                                                      FROM   alquilerClientesGarajes alqCli	
+   	                                                         JOIN clientesGarajes cliGaj ON cliGaj.id = alqCli.idCliente
                                                       ORDER BY cliGaj.apellidos;", conexion);
 
             MySqlDataReader cursor = comando.ExecuteReader();
@@ -118,8 +117,16 @@ namespace GarajesAliKan.Clases
             {
                 ClienteGaraje cliente = new ClienteGaraje();
                 cliente.Nombre = cursor.GetString("nombre");
-                cliente.Apellidos = cursor.GetString("apellidos");
-                cliente.Telefono = cursor.GetString("telefono");                
+
+                if (cursor.IsDBNull(2))
+                    cliente.Apellidos = null;
+                else
+                    cliente.Apellidos = cursor.GetString("apellidos");
+
+                if (cursor.IsDBNull(3))
+                    cliente.Telefono = null;
+                else
+                    cliente.Telefono = cursor.GetString("telefono");
 
                 if (cursor.IsDBNull(5))
                     cliente.Observaciones = null;
