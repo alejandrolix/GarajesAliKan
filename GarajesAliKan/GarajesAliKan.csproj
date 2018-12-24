@@ -191,6 +191,12 @@
     <Compile Include="Forms\Facturas\FrmFactGarajes.Designer.cs">
       <DependentUpon>FrmFactGarajes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Facturas\FrmFactTrastero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Facturas\FrmFactTrastero.Designer.cs">
+      <DependentUpon>FrmFactTrastero.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Facturas\FrmFacturasRecibidas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,6 +297,9 @@
     <EmbeddedResource Include="Forms\Facturas\FrmFactGarajes.resx">
       <DependentUpon>FrmFactGarajes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Facturas\FrmFactTrastero.resx">
+      <DependentUpon>FrmFactTrastero.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Facturas\FrmFacturasRecibidas.resx">
       <DependentUpon>FrmFacturasRecibidas.cs</DependentUpon>
     </EmbeddedResource>
@@ -333,6 +342,7 @@
     <EmbeddedResource Include="Forms\Informes\FrmClientesGarajes.resx">
       <DependentUpon>FrmClientesGarajes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Informes\FacturaTrastero.rdlc" />
     <EmbeddedResource Include="Informes\FacturaClienteGaraje.rdlc" />
     <EmbeddedResource Include="Informes\FacturaLavadero.rdlc" />
     <EmbeddedResource Include="Informes\FacturasRecibidas.rdlc" />

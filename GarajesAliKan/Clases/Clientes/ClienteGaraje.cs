@@ -248,13 +248,13 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT cliGaj.id, cliGaj.nombre, cliGaj.apellidos, cliGaj.nif, cliGaj.direccion, cliGaj.telefono, cliGaj.observaciones, gaj.nombre AS garaje, veh.matricula, veh.marca, veh.modelo,
-                                                             alqCli.baseImponible, alqCli.iva, alqCli.total, plzCli.plaza, alqCli.llave, tAlq.concepto
+                                                             alqCli.baseImponible, alqCli.iva, alqCli.total, alqCli.plaza, alqCli.llave, tAlq.concepto
                                                       FROM   clientesGarajes cliGaj		 
                                                              JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                              JOIN garajes gaj ON gaj.id = alqCli.idGaraje
                                                              JOIN vehiculos veh ON veh.id = alqCli.idVehiculo
                                                              JOIN tiposAlquileres tAlq ON tAlq.id = alqCli.idTipoAlquiler
-                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                       WHERE  cliGaj.id = @id;", conexion);
 
             comando.Parameters.AddWithValue("@id", idCliente);
@@ -339,7 +339,7 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return cliente;
-        }
+        }        
 
         /// <summary>
         /// Obtiene todos los apellidos de los clientes de los garajes.
@@ -403,7 +403,7 @@ namespace GarajesAliKan.Clases
         /// </summary>
         /// <param name="idCliente">El Id de un cliente.</param>
         /// <returns>Los Ids de los tipos de alquileres a partir del Id de un cliente.</returns>
-        public static List<Alquiler> ObtenerIdTipoAlquileresPorIdCliente(int idCliente)
+        public static List<Alquiler> ObtenerIdTiposAlquileresPorIdCliente(int idCliente)
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT idTipoAlquiler

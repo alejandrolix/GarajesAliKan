@@ -1,10 +1,11 @@
 ﻿using GarajesAliKan.Clases;
-using GarajesAliKan.Forms.FacturasEInformes;
+using GarajesAliKan.Forms.Facturas;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Globalization;
+using GarajesAliKan.Forms.FacturasEInformes;
 
 namespace GarajesAliKan.Forms
 {
@@ -462,7 +463,7 @@ namespace GarajesAliKan.Forms
         private void BtnFacturarMes_Click(object sender, EventArgs e)
         {
             int idCliente = ((ClienteGaraje)BindingSource.Current).Id;
-            List<Alquiler> listaAlquileres = ClienteGaraje.ObtenerIdTipoAlquileresPorIdCliente(idCliente);
+            List<Alquiler> listaAlquileres = ClienteGaraje.ObtenerIdTiposAlquileresPorIdCliente(idCliente);
             foreach (Alquiler alquiler in listaAlquileres)
             {
                 if (alquiler.IdTipoAlquiler == 1)           // Creamos una factura de una plaza de garaje.
@@ -472,7 +473,8 @@ namespace GarajesAliKan.Forms
                 }
                 else           // Creamos una factura de una plaza de trastero.
                 {
-
+                    FrmFactTrastero frmFactTrastero = new FrmFactTrastero(idCliente);
+                    frmFactTrastero.ShowDialog();
                 }
             }
         }

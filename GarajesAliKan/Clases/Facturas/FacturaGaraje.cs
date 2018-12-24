@@ -134,12 +134,12 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, cliGaj.direccion, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
-    	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
+    	                                                     alqCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
                                                              JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
                                                              JOIN tiposAlquileres tAlq ON factGaj.idTipoAlquiler = tAlq.id
                                                              JOIN garajes gaj ON factGaj.idGaraje = gaj.id
-                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                       WHERE  factGaj.id = @id;", conexion);
 
             comando.Parameters.AddWithValue("@id", idFactura);
@@ -177,12 +177,12 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
-    	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
+    	                                                     alqCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
                                                              JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
                                                              JOIN tiposAlquileres tAlq ON factGaj.idTipoAlquiler = tAlq.id
                                                              JOIN garajes gaj ON factGaj.idGaraje = gaj.id
-                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                       WHERE  cliGaj.id = @id;", conexion);
 
             comando.Parameters.AddWithValue("@id", idCliente);
@@ -219,12 +219,12 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
-    	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
+    	                                                     alqCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
                                                              JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
                                                              JOIN tiposAlquileres tAlq ON factGaj.idTipoAlquiler = tAlq.id
                                                              JOIN garajes gaj ON factGaj.idGaraje = gaj.id
-                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                       WHERE  cliGaj.id = @id;", conexion);
 
             comando.Parameters.AddWithValue("@id", idCliente);
@@ -263,12 +263,12 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
-    	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
+    	                                                     alqCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
                                                              JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
                                                              JOIN tiposAlquileres tAlq ON factGaj.idTipoAlquiler = tAlq.id
                                                              JOIN garajes gaj ON factGaj.idGaraje = gaj.id
-                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                       WHERE  factGaj.fecha = @fecha;", conexion);
 
             comando.Parameters.AddWithValue("@fecha", fecha);
@@ -305,12 +305,12 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
-    	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
+    	                                                     alqCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
                                                              JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
                                                              JOIN tiposAlquileres tAlq ON factGaj.idTipoAlquiler = tAlq.id
                                                              JOIN garajes gaj ON factGaj.idGaraje = gaj.id
-                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                       WHERE  factGaj.fecha = @fecha;", conexion);
 
             comando.Parameters.AddWithValue("@fecha", fecha);
@@ -384,6 +384,53 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaFacturas;
+        }
+
+        /// <summary>
+        /// Obtiene los datos de un cliente de un garaje a partir de su Id para realizar una factura de un trastero.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los datos del cliente del garaje.</returns>
+        public static FacturaGaraje ObtenerClientePorIdParaFacturaTrastero(int idCliente)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT IF (cliGaj.apellidos IS NOT NULL, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos), cliGaj.nombre) AS nombre, cliGaj.nif, cliGaj.direccion, cliGaj.telefono,
+                                                             alqCli.plaza, alqCli.baseImponible, alqCli.iva, alqCli.total                                                           
+                                                      FROM   clientesGarajes cliGaj		 
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
+                                                      WHERE  cliGaj.id = @id;", conexion);
+
+            comando.Parameters.AddWithValue("@id", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();            
+            FacturaGaraje factura = new FacturaGaraje();
+
+            while (cursor.Read())
+            {
+                factura.Cliente.Nombre = cursor.GetString("nombre");                
+
+                if (cursor.IsDBNull(1))
+                    factura.Cliente.Nif = null;
+                else
+                    factura.Cliente.Nif = cursor.GetString("nif");
+
+                factura.Cliente.Direccion = cursor.GetString("direccion");
+
+                if (cursor.IsDBNull(3))
+                    factura.Cliente.Telefono = null;
+                else
+                    factura.Cliente.Telefono = cursor.GetString("telefono");
+
+                factura.Cliente.Alquiler = new Alquiler();
+                factura.Cliente.Alquiler.Plaza = cursor.GetString("plaza");
+                factura.Cliente.Alquiler.BaseImponible = cursor.GetDecimal("baseImponible");
+                factura.Cliente.Alquiler.Iva = cursor.GetDecimal("iva");
+                factura.Cliente.Alquiler.Total = cursor.GetDecimal("total");
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return factura;
         }
 
         /// <summary>
