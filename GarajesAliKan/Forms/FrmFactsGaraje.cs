@@ -70,11 +70,7 @@ namespace GarajesAliKan.Forms
                 CbGarajes.ValueMember = "Id";
             }
 
-            CbNumsFacturas.DataSource = FacturaGaraje.ObtenerIdsFacturas();
-            CbNifs.DataSource = ClienteGaraje.ObtenerNifsClientes();
-            CbNifs.DisplayMember = "Nif";
-            CbNifs.ValueMember = "Id";
-
+            CbNumsFacturas.DataSource = FacturaGaraje.ObtenerIdsFacturas();            
             CbFechas.DataSource = FacturaGaraje.ObtenerFechas();
         }
 
@@ -392,16 +388,6 @@ namespace GarajesAliKan.Forms
             int pos = ((List<FacturaGaraje>)BindingSource.DataSource).IndexOf(new FacturaGaraje((int)CbNumsFacturas.SelectedItem));
             BindingSource.Position = pos;
             RellenarDatosFactura(((List<FacturaGaraje>)BindingSource.DataSource)[pos]);
-        }
-
-        private void CbNifs_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            FrmBuscarFactsGarajes frmBuscarFactsGarajes = new FrmBuscarFactsGarajes(((ClienteGaraje)CbNifs.SelectedItem).Id);
-            frmBuscarFactsGarajes.ShowDialog();
-
-            int posicion = BindingSource.Position;
-            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();            
-            BindingSource.Position = posicion;
         }
 
         private void CbFechas_SelectionChangeCommitted(object sender, EventArgs e)

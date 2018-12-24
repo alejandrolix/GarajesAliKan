@@ -12,7 +12,7 @@ namespace GarajesAliKan.Clases
         public string Observaciones { get; set; }
         public Garaje Garaje { get; set; }
         public Vehiculo Vehiculo { get; set; }
-        public Alquiler Alquiler { get; set; }        
+        public Alquiler Alquiler { get; set; }
 
         /// <summary>
         /// Comprueba si existen clientes de los garajes guardados.
@@ -29,7 +29,34 @@ namespace GarajesAliKan.Clases
 
             return numClientes >= 1;
         }
-        
+
+        /// <summary>
+        /// Comprueba si existe un cliente a partir de su N.I.F.
+        /// </summary>
+        /// <param name="nif">El N.I.F. de un cliente.</param>
+        /// <returns>El cliente existe.</returns>
+        public static bool ExisteClientePorNif(string nif)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT COUNT(alqCli.idCliente) AS numAlquileres
+                                                      FROM   alquilerClientesGarajes alqCli
+		                                                     JOIN clientesGarajes cliGaj ON cliGaj.id = alqCli.idCliente
+                                                      WHERE  cliGaj.nif = @nif;", conexion);
+
+            comando.Parameters.AddWithValue("@nif", nif);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            int numAlquileres = 0;
+
+            while (cursor.Read())
+                numAlquileres = cursor.GetInt32("numAlquileres");
+
+            cursor.Close();
+            conexion.Close();
+
+            return numAlquileres >= 1;
+        }
+
         /// <summary>
         /// Obtiene todos los clientes de los garajes.
         /// </summary>
@@ -50,7 +77,7 @@ namespace GarajesAliKan.Clases
             List<ClienteGaraje> listaClientes = new List<ClienteGaraje>();
 
             while (cursor.Read())
-            {                
+            {
                 ClienteGaraje cliente = new ClienteGaraje();
                 cliente.Id = cursor.GetInt32("id");
                 cliente.Nombre = cursor.GetString("nombre");
@@ -76,13 +103,13 @@ namespace GarajesAliKan.Clases
                     cliente.Observaciones = null;
                 else
                     cliente.Observaciones = cursor.GetString("observaciones");
-                          
+
                 cliente.Garaje = new Garaje();
                 cliente.Garaje.Nombre = cursor.GetString("garaje");
 
-                if (!cursor.IsDBNull(8) && !cursor.IsDBNull(9) && !cursor.IsDBNull(10))                
-                    cliente.Vehiculo = new Vehiculo(cursor.GetString("matricula"), cursor.GetString("marca"), cursor.GetString("modelo"));                
-                
+                if (!cursor.IsDBNull(8) && !cursor.IsDBNull(9) && !cursor.IsDBNull(10))
+                    cliente.Vehiculo = new Vehiculo(cursor.GetString("matricula"), cursor.GetString("marca"), cursor.GetString("modelo"));
+
                 cliente.Alquiler = new Alquiler();
                 cliente.Alquiler.BaseImponible = cursor.GetDecimal("baseImponible");
                 cliente.Alquiler.Iva = cursor.GetDecimal("iva");
@@ -96,6 +123,32 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaClientes;
+        }
+
+        /// <summary>
+        /// Obtiene el Id de un cliente a partir de su N.I.F.
+        /// </summary>
+        /// <param name="nif">El N.I.F. de un cliente.</param>
+        /// <returns>El Id de un cliente a partir de su N.I.F.</returns>
+        public static int ObtenerIdClientePorNif(string nif)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT id
+                                                      FROM   clientesGarajes
+                                                      WHERE  nif = @nif;", conexion);
+
+            comando.Parameters.AddWithValue("@nif", nif);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            int idCliente = 0;
+
+            while (cursor.Read())
+                idCliente = cursor.GetInt32("id");
+
+            cursor.Close();
+            conexion.Close();
+
+            return idCliente;
         }
 
         /// <summary>
@@ -132,7 +185,7 @@ namespace GarajesAliKan.Clases
                     cliente.Observaciones = null;
                 else
                     cliente.Observaciones = cursor.GetString("observaciones");
-                
+
                 cliente.Alquiler = new Alquiler();
                 cliente.Alquiler.Total = cursor.GetDecimal("total");
                 cliente.Alquiler.Plaza = cursor.GetString("plaza");
@@ -142,6 +195,48 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaClientes;
+        }
+
+        /// <summary>
+        /// Obtiene varios datos de un cliente a partir de su Id.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los datos de un cliente a partir de su Id.</returns>
+        public static ClienteGaraje ObtenerDatosClientePorId(int idCliente)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT nombre, apellidos, direccion, telefono, observaciones
+                                                      FROM   clientesGarajes
+                                                      WHERE  id = @idCliente;", conexion);
+
+            comando.Parameters.AddWithValue("@idCliente", idCliente);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            ClienteGaraje cliente = null;
+
+            while (cursor.Read())
+            {
+                cliente = new ClienteGaraje();
+                cliente.Id = idCliente;
+                cliente.Nombre = cursor.GetString("nombre");
+
+                if (cursor.IsDBNull(1))
+                    cliente.Apellidos = null;
+                else
+                    cliente.Apellidos = cursor.GetString("apellidos");
+
+                cliente.Direccion = cursor.GetString("direccion");
+                cliente.Telefono = cursor.GetString("telefono");
+
+                if (cursor.IsDBNull(4))
+                    cliente.Observaciones = null;
+                else
+                    cliente.Observaciones = cursor.GetString("observaciones");
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return cliente;
         }
 
         /// <summary>
@@ -219,7 +314,7 @@ namespace GarajesAliKan.Clases
             ClienteGaraje cliente = new ClienteGaraje();
 
             while (cursor.Read())
-            {                
+            {
                 cliente.Nombre = cursor.GetString("nombre");
 
                 if (cursor.IsDBNull(1))
@@ -238,7 +333,7 @@ namespace GarajesAliKan.Clases
                 cliente.Alquiler = new Alquiler();
                 cliente.Alquiler.BaseImponible = cursor.GetDecimal("baseImponible");
                 cliente.Alquiler.Iva = cursor.GetDecimal("iva");
-                cliente.Alquiler.Total = cursor.GetDecimal("total");                
+                cliente.Alquiler.Total = cursor.GetDecimal("total");
             }
             cursor.Close();
             conexion.Close();
@@ -264,47 +359,16 @@ namespace GarajesAliKan.Clases
             {
                 ClienteGaraje cliente = null;
 
-                if (cursor.IsDBNull(1))                
-                    cliente = new ClienteGaraje(cursor.GetInt32("id"), null);                              
-                else                
-                    cliente = new ClienteGaraje(cursor.GetInt32("id"), cursor.GetString("apellidos"));                
+                if (cursor.IsDBNull(1))
+                    cliente = new ClienteGaraje(cursor.GetInt32("id"), null);
+                else
+                    cliente = new ClienteGaraje(cursor.GetInt32("id"), cursor.GetString("apellidos"));
                 listaApellidos.Add(cliente);
             }
             cursor.Close();
             conexion.Close();
 
             return listaApellidos;
-        }
-
-        /// <summary>
-        /// Obtiene todos los NIFs de los clientes de los garajes.
-        /// </summary>
-        /// <returns>Los NIFs de los clientes de los garajes.</returns>
-        public static List<ClienteGaraje> ObtenerNifsClientes()
-        {
-            MySqlConnection conexion = Foo.ConexionABd();
-            MySqlCommand comando = new MySqlCommand(@"SELECT id, nif
-                                                      FROM   clientesGarajes                                                      
-                                                      ORDER BY nif;", conexion);
-
-            MySqlDataReader cursor = comando.ExecuteReader();
-            List<ClienteGaraje> listaNifs = new List<ClienteGaraje>();
-
-            while (cursor.Read())
-            {
-                ClienteGaraje cliente = new ClienteGaraje();
-                cliente.Id = cursor.GetInt32("id");
-
-                if (cursor.IsDBNull(1))
-                    cliente.Nif = null;
-                else
-                    cliente.Nif = cursor.GetString("nif");
-                listaNifs.Add(cliente);
-            }
-            cursor.Close();
-            conexion.Close();
-
-            return listaNifs;
         }
 
         /// <summary>
@@ -332,8 +396,13 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaClientes;
-        }   
-        
+        }
+
+        /// <summary>
+        /// Obtiene todos los Ids de los tipos de alquileres a partir del Id de un cliente.
+        /// </summary>
+        /// <param name="idCliente">El Id de un cliente.</param>
+        /// <returns>Los Ids de los tipos de alquileres a partir del Id de un cliente.</returns>
         public static List<Alquiler> ObtenerIdTipoAlquileresPorIdCliente(int idCliente)
         {
             MySqlConnection conexion = Foo.ConexionABd();
@@ -348,8 +417,8 @@ namespace GarajesAliKan.Clases
 
             while (cursor.Read())
             {
-                Alquiler alquiler = new Alquiler();                
-                alquiler.IdTipoAlquiler = cursor.GetInt32("idTipoAlquiler");                                
+                Alquiler alquiler = new Alquiler();
+                alquiler.IdTipoAlquiler = cursor.GetInt32("idTipoAlquiler");
                 listaAlquileres.Add(alquiler);
             }
             cursor.Close();
@@ -373,7 +442,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@nif", Nif);
             comando.Parameters.AddWithValue("@direccion", Direccion);
             comando.Parameters.AddWithValue("@telefono", Telefono);
-            comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);            
+            comando.Parameters.AddWithValue("@observaciones", Observaciones == "" ? null : Observaciones);
 
             int numFila = comando.ExecuteNonQuery();
             Id = (int)comando.LastInsertedId;
@@ -430,12 +499,12 @@ namespace GarajesAliKan.Clases
         }
 
         public ClienteGaraje()
-        {            
+        {
         }
 
-        public ClienteGaraje(int id) : base(id)          
-        {            
-        }
+        public ClienteGaraje(int id) : base(id)
+        {
+        }        
 
         public ClienteGaraje(int id, string apellidos) : base(id, apellidos)
         {

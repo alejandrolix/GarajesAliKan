@@ -139,7 +139,6 @@
     <Compile Include="Clases\Facturas\FacturaLavadero.cs" />
     <Compile Include="Clases\Facturas\FacturaRecibida.cs" />
     <Compile Include="Clases\Foo.cs" />
-    <Compile Include="Clases\Plaza.cs" />
     <Compile Include="Clases\Proveedor.cs" />
     <Compile Include="Clases\Vehiculo.cs" />
     <Compile Include="DataSets\DtClientesGarajes.Designer.cs">

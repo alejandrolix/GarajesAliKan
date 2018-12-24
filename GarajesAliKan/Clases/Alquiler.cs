@@ -45,6 +45,30 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todas las plazas existentes.
+        /// </summary>
+        /// <returns>Las plazas existentes.</returns>
+        public static List<string> ObtenerPlazas()
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT plaza
+                                                      FROM   alquilerClientesGarajes                                                      
+                                                      ORDER BY plaza;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<string> listaPlazas = new List<string>();
+
+            while (cursor.Read())
+            {                
+                listaPlazas.Add(cursor.GetString("plaza"));
+            }
+            cursor.Close();
+            conexion.Close();
+
+            return listaPlazas;
+        }
+
+        /// <summary>
         /// Inserta los datos del alquiler que tiene un cliente.
         /// </summary>
         /// <param name="idGaraje">El Id de un garaje.</param>
