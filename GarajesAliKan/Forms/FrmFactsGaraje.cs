@@ -355,14 +355,6 @@ namespace GarajesAliKan.Forms
                 e.Handled = true;
         }
 
-        private void TxtPlaza_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsLetterOrDigit(e.KeyChar) || e.KeyChar == ' ' || char.IsControl(e.KeyChar))
-                e.Handled = false;
-            else
-                e.Handled = true;
-        }
-
         private void BindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
         {
             RellenarDatosFactura((FacturaGaraje)BindingSource.Current);
@@ -394,10 +386,8 @@ namespace GarajesAliKan.Forms
         {
             FrmBuscarFactsGarajes frmBuscarFactsGarajes = new FrmBuscarFactsGarajes((DateTime)CbFechas.SelectedItem);
             frmBuscarFactsGarajes.ShowDialog();
-
-            int posicion = BindingSource.Position;
-            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();
-            BindingSource.Position = posicion;
+                        
+            BindingSource.DataSource = FacturaGaraje.ObtenerFacturas();            
         }
 
         private void TxtNumFactura_KeyPress(object sender, KeyPressEventArgs e)

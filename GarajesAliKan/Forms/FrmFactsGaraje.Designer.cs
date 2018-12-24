@@ -351,7 +351,7 @@
             this.CbGarajes.FormattingEnabled = true;
             this.CbGarajes.Location = new System.Drawing.Point(641, 53);
             this.CbGarajes.Name = "CbGarajes";
-            this.CbGarajes.Size = new System.Drawing.Size(178, 26);
+            this.CbGarajes.Size = new System.Drawing.Size(193, 26);
             this.CbGarajes.TabIndex = 8;
             this.CbGarajes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CbGarajes_KeyPress);
             // 
@@ -395,7 +395,6 @@
             this.TxtPlaza.Name = "TxtPlaza";
             this.TxtPlaza.Size = new System.Drawing.Size(92, 24);
             this.TxtPlaza.TabIndex = 9;
-            this.TxtPlaza.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPlaza_KeyPress);
             // 
             // LIva
             // 
@@ -495,7 +494,7 @@
             // 
             this.CbFechas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CbFechas.FormattingEnabled = true;
-            this.CbFechas.Location = new System.Drawing.Point(360, 58);
+            this.CbFechas.Location = new System.Drawing.Point(357, 58);
             this.CbFechas.Name = "CbFechas";
             this.CbFechas.Size = new System.Drawing.Size(127, 24);
             this.CbFechas.TabIndex = 20;
@@ -506,7 +505,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(292, 61);
+            this.label3.Location = new System.Drawing.Point(289, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 17);
             this.label3.TabIndex = 24;

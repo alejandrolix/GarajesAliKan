@@ -36,7 +36,7 @@ namespace GarajesAliKan.Forms
         {
             List<FacturaGaraje> listaFacturas = FacturaGaraje.ObtenerFacturasPorFechasInforme(DtFechaInicio.Value, DtFechaFin.Value);
             if (listaFacturas.Count == 0)            
-                MessageBox.Show("No hay facturas de los garajes para mostrar a partir de la fecha de inicio y de fin escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);            
+                MessageBox.Show("No hay facturas de los garajes para mostrar según las fechas escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);            
             else
             {
                 FrmFactGarajes frmFactGarajes = new FrmFactGarajes(listaFacturas, DtFechaInicio.Value, DtFechaFin.Value);
@@ -48,7 +48,7 @@ namespace GarajesAliKan.Forms
         {
             List<FacturaLavadero> listaFacturas = FacturaLavadero.ObtenerFacturasPorFechasInforme(DtFechaInicio.Value, DtFechaFin.Value);
             if (listaFacturas.Count == 0)
-                MessageBox.Show("No hay facturas del lavadero para mostrar a partir de la fecha de inicio y de fin escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No hay facturas del lavadero para mostrar según las fechas escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
             {
                 FrmListadosLavadero frmListadosLavadero = new FrmListadosLavadero(listaFacturas, DtFechaInicio.Value, DtFechaFin.Value);
@@ -60,7 +60,7 @@ namespace GarajesAliKan.Forms
         {
             List<FacturaRecibida> listaFacturas = FacturaRecibida.ObtenerFacturasPorFechasInforme(DtFechaInicio.Value, DtFechaFin.Value);
             if (listaFacturas.Count == 0)            
-                MessageBox.Show("No hay facturas recibidas para mostrar a partir de la fecha de inicio y de fin escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);            
+                MessageBox.Show("No hay facturas recibidas para mostrar según las fechas escogidas", "No Existen Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);            
             else
             {
                 FrmFacturasRecibidas frmFacturasRecibidas = new FrmFacturasRecibidas(listaFacturas, DtFechaInicio.Value, DtFechaFin.Value);

@@ -45,12 +45,12 @@ namespace GarajesAliKan.Clases
         {
             MySqlConnection conexion = Foo.ConexionABd();
             MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, cliGaj.nif, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos) AS nombre, factGaj.estaPagada, tAlq.concepto, gaj.nombre AS nombreGaraje,
-    	                                                     plzCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
+    	                                                     alqCli.plaza, factGaj.baseImponible, factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
                                                              JOIN clientesGarajes cliGaj ON factGaj.idCliente = cliGaj.id
                                                              JOIN tiposAlquileres tAlq ON factGaj.idTipoAlquiler = tAlq.id
                                                              JOIN garajes gaj ON factGaj.idGaraje = gaj.id
-                                                             JOIN plazaClientes plzCli ON cliGaj.id = plzCli.idCliente
+                                                             JOIN alquilerClientesGarajes alqCli ON alqCli.idCliente = cliGaj.id
                                                       ORDER BY factGaj.id;", conexion);
 
             MySqlDataReader cursor = comando.ExecuteReader();
@@ -350,7 +350,7 @@ namespace GarajesAliKan.Clases
             MySqlCommand comando = new MySqlCommand(@"SELECT factGaj.id, factGaj.fecha, IF (cliGaj.apellidos IS NOT NULL, CONCAT(cliGaj.nombre, ' ', cliGaj.apellidos), cliGaj.nombre) AS nombre, cliGaj.nif, cliGaj.direccion, gaj.nombre AS nombreGaraje, factGaj.baseImponible,
 		                                                     factGaj.iva, factGaj.total
                                                       FROM   facturasGarajes factGaj
-		                                                     JOIN clientesGarajes cliGaj ON cli.id = factGaj.idCliente
+		                                                     JOIN clientesGarajes cliGaj ON cliGaj.id = factGaj.idCliente
 		                                                     JOIN garajes gaj ON gaj.id = factGaj.idGaraje
                                                       WHERE  factGaj.fecha BETWEEN @desde AND @hasta
                                                       ORDER BY factGaj.id;", conexion);
