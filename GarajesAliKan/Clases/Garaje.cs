@@ -32,7 +32,7 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaGarajes;
-        }        
+        }                
 
         public Garaje(int id, string nombre)
         {

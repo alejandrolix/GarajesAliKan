@@ -221,6 +221,18 @@
     <Compile Include="Forms\Buscadores\FrmBuscarFactsGarajes.Designer.cs">
       <DependentUpon>FrmBuscarFactsGarajes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmSeleccionMesOAnio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmSeleccionMesOAnio.Designer.cs">
+      <DependentUpon>FrmSeleccionMesOAnio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmResultados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmResultados.Designer.cs">
+      <DependentUpon>FrmResultados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Informes\FrmListadosLavadero.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,6 +323,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Buscadores\FrmBuscarFactsGarajes.resx">
       <DependentUpon>FrmBuscarFactsGarajes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmSeleccionMesOAnio.resx">
+      <DependentUpon>FrmSeleccionMesOAnio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmResultados.resx">
+      <DependentUpon>FrmResultados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Informes\FrmListadosLavadero.resx">
       <DependentUpon>FrmListadosLavadero.cs</DependentUpon>

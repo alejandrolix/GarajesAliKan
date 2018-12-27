@@ -72,6 +72,58 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene la suma de las bases imponibles de las facturas a partir del número del mes.
+        /// </summary>        
+        /// <param name="mes">El número del mes.</param>
+        /// <returns>La suma de las bases imponibles de las facturas a partir del número del mes.</returns>
+        public static decimal ObtenerSumaBaseImponiblePorMes(int mes)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT SUM(factLav.baseImponible) AS factsLavadero
+                                                      FROM   facturasLavadero factLav                                                     		                                                     
+                                                      WHERE  MONTH(factLav.fecha) = @mes AND YEAR(factLav.fecha) = YEAR(CURDATE());", conexion);
+
+            comando.Parameters.AddWithValue("@mes", mes);            
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            decimal total = 0;
+
+            while (cursor.Read())
+                if (!cursor.IsDBNull(0))
+                    total = cursor.GetDecimal("factsLavadero");
+            cursor.Close();
+            conexion.Close();
+
+            return total;
+        }
+
+        /// <summary>
+        /// Obtiene la suma de las bases imponibles de las facturas a partir del año.
+        /// </summary>        
+        /// <param name="anio">El año.</param>
+        /// <returns>La suma de las bases imponibles de las facturas a partir del año.</returns>
+        public static decimal ObtenerSumaBaseImponiblePorAnio(int anio)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT SUM(factLav.baseImponible) AS factsLavadero
+                                                      FROM   facturasLavadero factLav	                                                     		                                                     
+                                                      WHERE  YEAR(factLav.fecha) = @anio;", conexion);
+
+            comando.Parameters.AddWithValue("@anio", anio);            
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            decimal total = 0;
+
+            while (cursor.Read())
+                if (!cursor.IsDBNull(0))
+                    total = cursor.GetDecimal("factsLavadero");
+            cursor.Close();
+            conexion.Close();
+
+            return total;
+        }
+
+        /// <summary>
         /// Obtiene los Ids de las facturas del lavadero.
         /// </summary>
         /// <returns>Los Ids de las facturas del lavadero.</returns>

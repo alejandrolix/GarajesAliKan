@@ -72,5 +72,11 @@ namespace GarajesAliKan
             FrmListados frmListados = new FrmListados();
             frmListados.ShowDialog();
         }
+
+        private void ResultadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmSeleccionMesOAnio frmSeleccionMesOAnio = new FrmSeleccionMesOAnio();
+            frmSeleccionMesOAnio.ShowDialog();
+        }
     }
 }

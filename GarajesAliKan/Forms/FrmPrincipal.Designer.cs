@@ -38,6 +38,7 @@
             this.facturasRecibidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProveedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ListadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResultadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +50,8 @@
             this.ClientesLavaderoToolStripMenuItem,
             this.facturasToolStripMenuItem,
             this.ProveedoresToolStripMenuItem,
-            this.ListadosToolStripMenuItem});
+            this.ListadosToolStripMenuItem,
+            this.ResultadosToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.Size = new System.Drawing.Size(800, 28);
@@ -81,26 +83,26 @@
             this.facturasToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.facturasToolStripMenuItem.Name = "facturasToolStripMenuItem";
             this.facturasToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
-            this.facturasToolStripMenuItem.Text = "Facturas";            
+            this.facturasToolStripMenuItem.Text = "Facturas";
             // 
             // facturasGarajeToolStripMenuItem
             // 
             this.facturasGarajeToolStripMenuItem.Name = "facturasGarajeToolStripMenuItem";
-            this.facturasGarajeToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasGarajeToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.facturasGarajeToolStripMenuItem.Text = "Garaje";
             this.facturasGarajeToolStripMenuItem.Click += new System.EventHandler(this.FacturasGarajeToolStripMenuItem_Click);
             // 
             // facturasLavaderoToolStripMenuItem
             // 
             this.facturasLavaderoToolStripMenuItem.Name = "facturasLavaderoToolStripMenuItem";
-            this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasLavaderoToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.facturasLavaderoToolStripMenuItem.Text = "Lavadero";
             this.facturasLavaderoToolStripMenuItem.Click += new System.EventHandler(this.FacturasLavaderoToolStripMenuItem_Click);
             // 
             // facturasRecibidasToolStripMenuItem
             // 
             this.facturasRecibidasToolStripMenuItem.Name = "facturasRecibidasToolStripMenuItem";
-            this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.facturasRecibidasToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
             this.facturasRecibidasToolStripMenuItem.Text = "Recibidas";
             this.facturasRecibidasToolStripMenuItem.Click += new System.EventHandler(this.FacturasRecibidasToolStripMenuItem_Click);
             // 
@@ -119,6 +121,14 @@
             this.ListadosToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.ListadosToolStripMenuItem.Text = "Listados";
             this.ListadosToolStripMenuItem.Click += new System.EventHandler(this.ListadosToolStripMenuItem_Click);
+            // 
+            // ResultadosToolStripMenuItem
+            // 
+            this.ResultadosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.ResultadosToolStripMenuItem.Name = "ResultadosToolStripMenuItem";
+            this.ResultadosToolStripMenuItem.Size = new System.Drawing.Size(93, 24);
+            this.ResultadosToolStripMenuItem.Text = "Resultados";
+            this.ResultadosToolStripMenuItem.Click += new System.EventHandler(this.ResultadosToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 
@@ -153,6 +163,7 @@
         private System.Windows.Forms.ToolStripMenuItem facturasRecibidasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ProveedoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ListadosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ResultadosToolStripMenuItem;
     }
 }
 

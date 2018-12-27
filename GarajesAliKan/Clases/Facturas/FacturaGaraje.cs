@@ -60,7 +60,7 @@ namespace GarajesAliKan.Clases
             {
                 FacturaGaraje factura = new FacturaGaraje();
                 factura.Id = cursor.GetInt32("id");
-                factura.Fecha = cursor.GetDateTime("fecha");                
+                factura.Fecha = cursor.GetDateTime("fecha");
                 factura.Cliente.Nombre = cursor.GetString("nombre");
                 factura.EstaPagada = cursor.GetBoolean("estaPagada");
                 factura.Alquiler.Concepto = cursor.GetString("concepto");
@@ -75,6 +75,66 @@ namespace GarajesAliKan.Clases
             conexion.Close();
 
             return listaFacturas;
+        }
+
+        /// <summary>
+        /// Obtiene la suma de las bases imponibles de las facturas a partir del subId de un garaje y el número del mes.
+        /// </summary>
+        /// <param name="subId">El subId de un garaje.</param>
+        /// <param name="mes">El número del mes.</param>
+        /// <returns>La suma de las bases imponibles de las facturas a partir del subId de un garaje y el número del mes.</returns>
+        public static decimal ObtenerSumaBaseImponiblePorSubIdGarajeYMes(string subId, int mes)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT SUM(factGaj.baseImponible) AS factsEmitidas
+                                                      FROM   facturasGarajes factGaj	                                                     		                                                     
+                                                      WHERE  MONTH(factGaj.fecha) = @mes AND YEAR(factGaj.fecha) = YEAR(CURDATE()) AND factGaj.idGaraje IN (
+									                                                        SELECT id
+									                                                        FROM   garajes
+									                                                        WHERE  subId LIKE @subId);", conexion);
+            comando.Parameters.AddWithValue("@mes", mes);
+            comando.Parameters.AddWithValue("@subId", subId + "%");
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            decimal total = 0;
+
+            while (cursor.Read())
+                if (!cursor.IsDBNull(0))
+                    total = cursor.GetDecimal("factsEmitidas");
+            cursor.Close();
+            conexion.Close();
+
+            return total;
+        }
+
+        /// <summary>
+        /// Obtiene la suma de las bases imponibles de las facturas a partir del subId de un garaje y el año.
+        /// </summary>
+        /// <param name="subId">El subId de un garaje.</param>
+        /// <param name="anio">El año.</param>
+        /// <returns>La suma de las bases imponibles de las facturas a partir del subId de un garaje y el año.</returns>
+        public static decimal ObtenerSumaBaseImponiblePorSubIdGarajeYAnio(string subId, int anio)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT SUM(factGaj.baseImponible) AS factsEmitidas
+                                                      FROM   facturasGarajes factGaj	                                                     		                                                     
+                                                      WHERE  YEAR(factGaj.fecha) = @anio AND factGaj.idGaraje IN (
+									                                                        SELECT id
+									                                                        FROM   garajes
+									                                                        WHERE  subId LIKE @subId);", conexion);
+            comando.Parameters.AddWithValue("@anio", anio);
+            comando.Parameters.AddWithValue("@subId", subId + "%");
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            decimal total = 0;
+
+            while (cursor.Read())
+                if (!cursor.IsDBNull(0))
+                    total = cursor.GetDecimal("factsEmitidas");
+            cursor.Close();
+            conexion.Close();
+
+            return total;
         }
 
         /// <summary>
@@ -230,7 +290,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@id", idCliente);
 
             MySqlDataReader cursor = comando.ExecuteReader();
-            List<FacturaGaraje> facturas = new List<FacturaGaraje>();            
+            List<FacturaGaraje> facturas = new List<FacturaGaraje>();
 
             while (cursor.Read())
             {
@@ -316,7 +376,7 @@ namespace GarajesAliKan.Clases
             comando.Parameters.AddWithValue("@fecha", fecha);
 
             MySqlDataReader cursor = comando.ExecuteReader();
-            List<FacturaGaraje> facturas = new List<FacturaGaraje>();            
+            List<FacturaGaraje> facturas = new List<FacturaGaraje>();
 
             while (cursor.Read())
             {
@@ -368,10 +428,10 @@ namespace GarajesAliKan.Clases
                 factura.Fecha = cursor.GetDateTime("fecha");
                 factura.Cliente.Nombre = cursor.GetString("nombre");
 
-                if (cursor.IsDBNull(3))                
-                    factura.Cliente.Nif = null;                
-                else                
-                    factura.Cliente.Nif = cursor.GetString("nif");                
+                if (cursor.IsDBNull(3))
+                    factura.Cliente.Nif = null;
+                else
+                    factura.Cliente.Nif = cursor.GetString("nif");
 
                 factura.Cliente.Direccion = cursor.GetString("nombre");
                 factura.Garaje.Nombre = cursor.GetString("nombreGaraje");
@@ -402,12 +462,12 @@ namespace GarajesAliKan.Clases
 
             comando.Parameters.AddWithValue("@id", idCliente);
 
-            MySqlDataReader cursor = comando.ExecuteReader();            
+            MySqlDataReader cursor = comando.ExecuteReader();
             FacturaGaraje factura = new FacturaGaraje();
 
             while (cursor.Read())
             {
-                factura.Cliente.Nombre = cursor.GetString("nombre");                
+                factura.Cliente.Nombre = cursor.GetString("nombre");
 
                 if (cursor.IsDBNull(1))
                     factura.Cliente.Nif = null;
@@ -527,7 +587,7 @@ namespace GarajesAliKan.Clases
 
         public FacturaGaraje(int id)
         {
-            Id = id;              
+            Id = id;
         }
     }
 }

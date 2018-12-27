@@ -72,6 +72,89 @@ namespace GarajesAliKan.Clases
         }
 
         /// <summary>
+        /// Obtiene todos los años de las facturas recibidas.
+        /// </summary>
+        /// <returns>Los años de las facturas recibidas.</returns>
+        public static List<int> ObtenerAniosFechas()
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT YEAR(fecha) AS anio
+                                                      FROM   facturasRecibidas
+                                                      GROUP BY anio
+                                                      ORDER BY anio;", conexion);
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            List<int> listaAnios = new List<int>();
+
+            while (cursor.Read())            
+                listaAnios.Add(cursor.GetInt32("anio"));            
+            cursor.Close();
+            conexion.Close();
+
+            return listaAnios;
+        }
+
+        /// <summary>
+        /// Obtiene la suma de las bases imponibles de las facturas a partir del subId de un garaje y el número de un mes.
+        /// </summary>
+        /// <param name="subId">El subId de un garaje.</param>
+        /// <param name="mes">El número de un mes.</param>
+        /// <returns>La suma de las bases imponibles de las facturas a partir del subId de un garaje y el número de un mes.</returns>
+        public static decimal ObtenerSumaBaseImponiblePorSubIdGarajeYMes(string subId, int mes)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT SUM(factRec.baseImponible) AS factsRecibidas
+                                                      FROM   facturasRecibidas factRec		                                                     		                                                     
+                                                      WHERE  MONTH(factRec.fecha) = @mes AND YEAR(factRec.fecha) = YEAR(CURDATE()) AND factRec.idGaraje IN (
+									                                               SELECT id
+									                                               FROM   garajes
+									                                               WHERE  subId LIKE @subId);", conexion);
+            comando.Parameters.AddWithValue("@mes", mes);
+            comando.Parameters.AddWithValue("@subId", subId + "%");
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            decimal total = 0;
+
+            while (cursor.Read())
+                if (!cursor.IsDBNull(0))
+                    total = cursor.GetDecimal("factsRecibidas");
+            cursor.Close();
+            conexion.Close();
+
+            return total;
+        }
+
+        /// <summary>
+        /// Obtiene la suma de las bases imponibles de las facturas a partir del subId de un garaje y el año.
+        /// </summary>
+        /// <param name="subId">El subId de un garaje.</param>
+        /// <param name="anio">El año.</param>
+        /// <returns>La suma de las bases imponibles de las facturas a partir del subId de un garaje y el año.</returns>
+        public static decimal ObtenerSumaBaseImponiblePorSubIdGarajeYAnio(string subId, int anio)
+        {
+            MySqlConnection conexion = Foo.ConexionABd();
+            MySqlCommand comando = new MySqlCommand(@"SELECT SUM(factRec.baseImponible) AS factsRecibidas
+                                                      FROM   facturasRecibidas factRec	                                                     		                                                     
+                                                      WHERE  YEAR(factRec.fecha) = @anio AND factRec.idGaraje IN (
+									                                                        SELECT id
+									                                                        FROM   garajes
+									                                                        WHERE  subId LIKE @subId);", conexion);
+            comando.Parameters.AddWithValue("@anio", anio);
+            comando.Parameters.AddWithValue("@subId", subId + "%");
+
+            MySqlDataReader cursor = comando.ExecuteReader();
+            decimal total = 0;
+
+            while (cursor.Read())
+                if (!cursor.IsDBNull(0))
+                    total = cursor.GetDecimal("factsRecibidas");
+            cursor.Close();
+            conexion.Close();
+
+            return total;
+        }
+
+        /// <summary>
         /// Obtiene las fechas de las facturas recibidas.
         /// </summary>
         /// <returns>Las fechas de las facturas recibidas.</returns>
