@@ -64,6 +64,8 @@
             this.LBuscarPor = new System.Windows.Forms.Label();
             this.CbApellidos = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.TtTelefono = new System.Windows.Forms.ToolTip(this.components);
+            this.TtNif = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BindingNavigator)).BeginInit();
             this.BindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BindingSource)).BeginInit();
@@ -96,7 +98,7 @@
             this.BindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.BindingNavigator.Name = "BindingNavigator";
             this.BindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-            this.BindingNavigator.Size = new System.Drawing.Size(821, 27);
+            this.BindingNavigator.Size = new System.Drawing.Size(761, 27);
             this.BindingNavigator.TabIndex = 0;
             this.BindingNavigator.Text = "bindingNavigator1";
             // 
@@ -184,7 +186,7 @@
             this.panel1.Controls.Add(this.LNombre);
             this.panel1.Location = new System.Drawing.Point(6, 44);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(803, 232);
+            this.panel1.Size = new System.Drawing.Size(743, 232);
             this.panel1.TabIndex = 1;
             // 
             // panel3
@@ -195,7 +197,7 @@
             this.panel3.Controls.Add(this.BtnGuardar);
             this.panel3.Controls.Add(this.BtnAddCliente);
             this.panel3.Controls.Add(this.BtnEliminarCliente);
-            this.panel3.Location = new System.Drawing.Point(598, 15);
+            this.panel3.Location = new System.Drawing.Point(538, 13);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(187, 201);
             this.panel3.TabIndex = 12;
@@ -264,7 +266,7 @@
             this.TxtTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.TxtTelefono.Location = new System.Drawing.Point(107, 161);
             this.TxtTelefono.Name = "TxtTelefono";
-            this.TxtTelefono.Size = new System.Drawing.Size(114, 24);
+            this.TxtTelefono.Size = new System.Drawing.Size(164, 24);
             this.TxtTelefono.TabIndex = 5;
             this.TxtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTelefono_KeyPress);
             // 
@@ -275,7 +277,7 @@
             this.TxtNif.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.TxtNif.Location = new System.Drawing.Point(107, 127);
             this.TxtNif.Name = "TxtNif";
-            this.TxtNif.Size = new System.Drawing.Size(114, 24);
+            this.TxtNif.Size = new System.Drawing.Size(132, 24);
             this.TxtNif.TabIndex = 4;
             this.TxtNif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtNif_KeyPress);
             // 
@@ -286,7 +288,7 @@
             this.TxtDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.TxtDireccion.Location = new System.Drawing.Point(107, 93);
             this.TxtDireccion.Name = "TxtDireccion";
-            this.TxtDireccion.Size = new System.Drawing.Size(212, 24);
+            this.TxtDireccion.Size = new System.Drawing.Size(235, 24);
             this.TxtDireccion.TabIndex = 3;
             // 
             // TxtApellidos
@@ -296,7 +298,7 @@
             this.TxtApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.TxtApellidos.Location = new System.Drawing.Point(107, 59);
             this.TxtApellidos.Name = "TxtApellidos";
-            this.TxtApellidos.Size = new System.Drawing.Size(179, 24);
+            this.TxtApellidos.Size = new System.Drawing.Size(212, 24);
             this.TxtApellidos.TabIndex = 2;
             // 
             // TxtNombre
@@ -306,7 +308,7 @@
             this.TxtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.TxtNombre.Location = new System.Drawing.Point(107, 25);
             this.TxtNombre.Name = "TxtNombre";
-            this.TxtNombre.Size = new System.Drawing.Size(164, 24);
+            this.TxtNombre.Size = new System.Drawing.Size(194, 24);
             this.TxtNombre.TabIndex = 1;
             // 
             // LTelefono
@@ -368,7 +370,7 @@
             this.PBuscarPor.Controls.Add(this.panel2);
             this.PBuscarPor.Controls.Add(this.CbApellidos);
             this.PBuscarPor.Controls.Add(this.label2);
-            this.PBuscarPor.Location = new System.Drawing.Point(167, 319);
+            this.PBuscarPor.Location = new System.Drawing.Point(137, 319);
             this.PBuscarPor.Name = "PBuscarPor";
             this.PBuscarPor.Size = new System.Drawing.Size(487, 100);
             this.PBuscarPor.TabIndex = 27;
@@ -439,11 +441,29 @@
             this.label2.TabIndex = 22;
             this.label2.Text = "Apellidos: ";
             // 
+            // TtTelefono
+            // 
+            this.TtTelefono.AutoPopDelay = 7000;
+            this.TtTelefono.InitialDelay = 300;
+            this.TtTelefono.IsBalloon = true;
+            this.TtTelefono.ReshowDelay = 100;
+            this.TtTelefono.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtTelefono.ToolTipTitle = "Teléfono";
+            // 
+            // TtNif
+            // 
+            this.TtNif.AutoPopDelay = 7000;
+            this.TtNif.InitialDelay = 300;
+            this.TtNif.IsBalloon = true;
+            this.TtNif.ReshowDelay = 100;
+            this.TtNif.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TtNif.ToolTipTitle = "DNI";
+            // 
             // FrmClientesLavadero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 431);
+            this.ClientSize = new System.Drawing.Size(761, 431);
             this.Controls.Add(this.PBuscarPor);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BindingNavigator);
@@ -507,5 +527,7 @@
         private System.Windows.Forms.Button BtnGuardar;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button BtnCancelar;
+        private System.Windows.Forms.ToolTip TtTelefono;
+        private System.Windows.Forms.ToolTip TtNif;
     }
 }

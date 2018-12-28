@@ -21,6 +21,9 @@ namespace GarajesAliKan.Forms
 
         private void FrmClientesLavadero_Load(object sender, EventArgs e)
         {
+            TtTelefono.SetToolTip(TxtTelefono, "Varios Teléfonos: 123456789 / 123456789 / 123456789");
+            TtNif.SetToolTip(TxtNif, "DNI nacional: 12345678N\r\nDNI extranjero: X1234567N");
+
             CargarDatosComboBox();
             if (ClienteLavadero.HayClientes())
             {
@@ -128,6 +131,9 @@ namespace GarajesAliKan.Forms
             BtnAddCliente.Enabled = !habilitar;
             BtnModificarCliente.Enabled = !habilitar;
             BtnEliminarCliente.Enabled = !habilitar;
+
+            BtnGuardar.Enabled = Convert.ToInt32(BtnAddCliente.Tag) == 1 ? true : false;
+            BtnCancelar.Enabled = Convert.ToInt32(BtnAddCliente.Tag) == 1 ? true : false;
         }
 
         /// <summary>
